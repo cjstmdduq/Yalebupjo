@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>변호사 소개 - 법무법인(유한) 예일법조</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 네비게이션 바 스타일 */
+        .header-scrolled {
+            background: white;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+
+        /* 애니메이션 */
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slide-in {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out both;
+        }
+
+        .animate-slide-in {
+            animation: slide-in 0.6s ease-out forwards;
+        }
+
+        /* 모달 스타일 */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            animation: fade-in 0.3s ease-out;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 20px;
+            padding: 0;
+            border-radius: 20px;
+            max-width: 800px;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            animation: modal-slide-in 0.4s ease-out;
+        }
+
+        @keyframes fade-in {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modal-slide-in {
+            from {
+                opacity: 0;
+                transform: scale(0.9) translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 10;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .close:hover {
+            color: #000;
+            background: white;
+            transform: scale(1.1);
+        }
+
+        /* 필터 스타일 */
+        .filter-btn {
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: linear-gradient(135deg, #1f2937, #374151);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* 검색 스타일 */
+        .search-container {
+            position: relative;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+        }
+
+        /* 카드 호버 효과 강화 */
+        .lawyer-card {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .lawyer-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .lawyer-card:hover .lawyer-image {
+            transform: scale(1.05);
+        }
+
+        /* 스킬 태그 스타일 */
+        .skill-tag {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+            color: #374151;
+            font-size: 11px;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-weight: 500;
+        }
+
+        /* 스크롤바 스타일 */
+        .modal-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 10px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* 로딩 애니메이션 */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* 반응형 개선 */
+        @media (max-width: 768px) {
+            .modal-content {
+                margin: 10px;
+                max-height: 95vh;
+            }
+            
+            .lawyer-card:hover {
+                transform: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black">
+
+    <!-- 네비게이션 -->
+    <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
+            <div class="flex items-center z-10">
+                <a href="../index.html">
+                    <img id="logo-white" src="../assets/logo/bupjo-logo-white.png" alt="예일법조 흰색 로고" class="h-8 md:h-10">
+                    <img id="logo-black" src="../assets/logo/bupjo-logo-black.png" alt="예일법조 검은색 로고" class="h-8 md:h-10 hidden">
+                </a>
+            </div>
+            <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
+                <a href="../index.html#expertise" class="text-white hover:text-gray-300 transition">전문분야</a>
+                <a href="../about/" class="text-white hover:text-gray-300 transition">로펌소개</a>
+                <a href="../lawyers/" class="text-gray-300 font-bold transition">변호사소개</a>
+                <a href="../index.html#stats" class="text-white hover:text-gray-300 transition">성공사례</a>
+                <a href="../index.html#offices" class="text-white hover:text-gray-300 transition">전국지사</a>
+                <a href="#" class="text-white hover:text-gray-300 transition">블로그</a>
+            </div>
+            <div class="flex items-center z-10">
+                <a href="tel:02-587-7787"
+                    class="hidden md:block text-sm font-bold bg-gradient-to-br from-gray-700 via-gray-800 to-black rounded-full px-5 py-2.5 hover:scale-[1.05] transition-all duration-300 shadow-lg text-white">
+                    빠른 상담
+                </a>
+                <button class="md:hidden text-white ml-4">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 히어로 섹션 -->
+    <section class="h-[60vh] flex items-center bg-white relative overflow-hidden">
+        <!-- 배경 비디오 -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover scale-125 object-[50%_40%]">
+                <source src="../assets/video/1.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex items-center justify-center h-full">
+                <div class="text-center">
+                    <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+                        법무법인(유한) 예일법조
+                    </p>
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+                        구성원 소개
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+                        각 분야 최고의 전문가들이<br>
+                        여러분의 법적 문제 해결을 위해 함께합니다
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 아래 스크롤 화살표 -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+        </div>
+    </section>
+
+    <!-- 필터 및 검색 섹션 -->
+    <section class="py-8 bg-gray-50 border-b">
+        <div class="container mx-auto px-6 md:px-12">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <!-- 검색 -->
+                <div class="search-container w-full md:w-96">
+                    <div class="relative">
+                        <svg class="search-icon w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                        </svg>
+                        <input type="text" id="searchInput" placeholder="변호사명, 전문분야로 검색하세요..." 
+                               class="w-full pl-10 pr-4 py-3 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent transition-all">
+                    </div>
+                </div>
+                
+                <!-- 필터 버튼들 -->
+                <div class="flex flex-wrap gap-2 justify-center">
+                    <button class="filter-btn active px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="all">
+                        전체
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="representative">
+                        대표변호사
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="lawyer">
+                        소속변호사
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="adjuster">
+                        손해사정사
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="seoul">
+                        서울
+                    </button>
+                    <button class="filter-btn px-4 py-2 rounded-full border border-gray-200 text-sm font-medium hover:bg-gray-100 transition-all" data-filter="regional">
+                        지방
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 변호사 목록 -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6 md:px-12">
+            <!-- 대표 변호사 섹션 -->
+            <div class="mb-16" id="representatives">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">대표 변호사</h2>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                    <!-- 하영주 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="seoul" data-name="하영주" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/01.Ha_Young_Joo.png" 
+                                 alt="하영주 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">하영주</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 서울 본사</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">형사법 전문</span>
+                                <span class="skill-tag">법학박사</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">사법연수원 수료(1989년) • 단국대학교 대학원 법학박사</p>
+                        </div>
+                    </div>
+
+                    <!-- 엄운용 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="seoul" data-name="엄운용" data-specialty="농축산의료법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/02.Um_Woon_Yong.png" 
+                                 alt="엄운용 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">엄운용</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 서울 본사</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">농축산법</span>
+                                <span class="skill-tag">의료법</span>
+                                <span class="skill-tag">수의사</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">서울대 수의학과 졸업 • 제5회 변호사시험 합격</p>
+                        </div>
+                    </div>
+
+                    <!-- 김진환 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="seoul" data-name="김진환" data-specialty="기업법무">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/06.Kim_Jin_Hwan.png" 
+                                 alt="김진환 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">김진환</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 서울 강남</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">기업법무</span>
+                                <span class="skill-tag">45회 사법시험</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">사법연수원 35기 수료 • 한양대학교 졸업</p>
+                        </div>
+                    </div>
+
+                    <!-- 최상무 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="regional" data-name="최상무" data-specialty="기업회생">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/03.Choi_Sang_Moo.png" 
+                                 alt="최상무 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">최상무</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">기업회생</span>
+                                <span class="skill-tag">수사심의위원</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">울산지방검찰청 수사심의위원 • 중소기업진흥공단 전문컨설턴트</p>
+                        </div>
+                    </div>
+
+                    <!-- 정환희 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="regional" data-name="정환희" data-specialty="법학박사">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/04.Jung_Hwan_Hee.png" 
+                                 alt="정환희 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">정환희</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 대구</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">법학박사</span>
+                                <span class="skill-tag">변호사시험출제위원</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">서울대 법대 졸업 • 사법연수원 수료(1999년)</p>
+                        </div>
+                    </div>
+
+                    <!-- 조성전 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="regional" data-name="조성전" data-specialty="민사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/05.Jo_Sung_Jeon.png" 
+                                 alt="조성전 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">조성전</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 청주</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">민사법 전문</span>
+                                <span class="skill-tag">집회시위자문위원</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">서울대 미학과 졸업 • 충북대 법학전문대학원 졸업</p>
+                        </div>
+                    </div>
+
+                    <!-- 전정수 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="regional" data-name="전정수" data-specialty="군법무">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/07.Jeon_Jung_Soo.png" 
+                                 alt="전정수 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">전정수</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 대전</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">前 군판사</span>
+                                <span class="skill-tag">육군 검찰관</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">연세대 정법대 졸업 • 사법연수원 수료(1989년)</p>
+                        </div>
+                    </div>
+
+                    <!-- 양희선 대표변호사 -->
+                    <div class="lawyer-card group bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden" 
+                         data-category="representative" data-location="regional" data-name="양희선" data-specialty="철도법무">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/08.Yang_Hee_Sun.png" 
+                                 alt="양희선 대표변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-blue-600 text-white text-xs px-2 py-1 rounded-full font-medium">대표</span>
+                            </div>
+                            <div class="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-sm py-2 rounded-lg font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-4">
+                            <h3 class="text-lg font-bold text-gray-900 mb-1">양희선</h3>
+                            <p class="text-sm text-gray-600 mb-2">대표변호사 | 대전</p>
+                            <div class="flex flex-wrap gap-1 mb-2">
+                                <span class="skill-tag">前 철도공사법무팀장</span>
+                                <span class="skill-tag">43회 사법시험</span>
+                            </div>
+                            <p class="text-xs text-gray-500 line-clamp-2">한양대 행정학과 졸업 • 사법연수원 33기 수료</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 소속 변호사 섹션 -->
+            <div id="lawyers">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">소속 변호사</h2>
+                <div class="grid grid-cols-2 md:grid-cols-6 gap-6">
+                    <!-- 송철훈 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="송철훈" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/09.Song_Chul_Hoon.png" 
+                                 alt="송철훈 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">송철훈</h3>
+                            <p class="text-xs text-gray-600">변호사 | 서울</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">연세대 법대</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 손우태 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="손우태" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/10.Son_Woo_Tae.png" 
+                                 alt="손우태 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">손우태</h3>
+                            <p class="text-xs text-gray-600">변호사 | 서울</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">前 검사장</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 이경창 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="이경창" data-specialty="민사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/11.Lee_Kyung_Chang.png" 
+                                 alt="이경창 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">이경창</h3>
+                            <p class="text-xs text-gray-600">변호사 | 서울</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">서울대 법대</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 곽정기 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="곽정기" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/12.Kwak_Jung_Ki.png" 
+                                 alt="곽정기 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">곽정기</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">前 경찰청</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 예상균 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="예상균" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/13.Ye_Sang_Gyun.png" 
+                                 alt="예상균 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">예상균</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">前 공수처</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 박중구 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="박중구" data-specialty="민사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/14.Park_Jung_Goo.png" 
+                                 alt="박중구 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">박중구</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">51회 사법시험</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 송현석 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="송현석" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/15.Song_Hyun_Seok.png" 
+                                 alt="송현석 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">송현석</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">동아대 로스쿨</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 최한울 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="최한울" data-specialty="금융법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/16.Choi_Han_Wool.png" 
+                                 alt="최한울 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">최한울</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">9회 변호사시험</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 이상민 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="이상민" data-specialty="농축산의료법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/17.Lee_Sang_Min.png" 
+                                 alt="이상민 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">이상민</h3>
+                            <p class="text-xs text-gray-600">변호사 | 강남</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">수의사</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 김규철 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="김규철" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/18.Kim_Gyu_Cheol.png" 
+                                 alt="김규철 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">김규철</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">前 군판사</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 천성연 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="천성연" data-specialty="가사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/19.Cheon_Seong_Yeon.png" 
+                                 alt="천성연 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">천성연</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">가사법 전문</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 고은빛 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="고은빛" data-specialty="행정법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/20.Go_Eun_Bit.png" 
+                                 alt="고은빛 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">고은빛</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">경희대</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 한웅 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="seoul" data-name="한웅" data-specialty="특허법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/21.Han_Woong.png" 
+                                 alt="한웅 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">한웅</h3>
+                            <p class="text-xs text-gray-600">변호사 | 서울</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">38회 사법시험</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 이종렬 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="이종렬" data-specialty="민사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/26.Lee_Jong_Ryeol.png" 
+                                 alt="이종렬 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">이종렬</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">서울대 법학과</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 박성진 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="박성진" data-specialty="형사법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/27.Park_Sung_Jin.png" 
+                                 alt="박성진 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">박성진</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">50회 사법시험</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 정은경 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="lawyer" data-location="regional" data-name="정은경" data-specialty="이혼법">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/28.Jung_Eun_Kyung.png" 
+                                 alt="정은경 변호사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">정은경</h3>
+                            <p class="text-xs text-gray-600">변호사 | 울산</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">이혼 전문</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 손해사정사 섹션 -->
+            <div class="mt-16" id="adjusters">
+                <h2 class="text-3xl font-bold text-gray-900 mb-8 text-center">손해사정사</h2>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 max-w-5xl mx-auto">
+                    <!-- 이기창 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="adjuster" data-location="regional" data-name="이기창" data-specialty="손해사정">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/22.Lee_Ki_Chang.png" 
+                                 alt="이기창 손해사정사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">사정사</span>
+                            </div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">이기창</h3>
+                            <p class="text-xs text-gray-600">손해사정사 | 광주</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">10년 경력</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 고영수 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="adjuster" data-location="regional" data-name="고영수" data-specialty="손해사정">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/23.Go_Young_Soo.png" 
+                                 alt="고영수 손해사정사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">사정사</span>
+                            </div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">고영수</h3>
+                            <p class="text-xs text-gray-600">손해사정사 | 광주</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">임상병리사</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 박성윤 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="adjuster" data-location="regional" data-name="박성윤" data-specialty="손해사정">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/24.Park_Sung_Yoon.png" 
+                                 alt="박성윤 손해사정사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">사정사</span>
+                            </div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">박성윤</h3>
+                            <p class="text-xs text-gray-600">손해사정사 | 광주</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">前 H화재</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 이용재 -->
+                    <div class="lawyer-card group bg-white rounded-lg shadow-sm hover:shadow-md transition-all duration-300 overflow-hidden" 
+                         data-category="adjuster" data-location="regional" data-name="이용재" data-specialty="손해사정">
+                        <div class="relative overflow-hidden">
+                            <img src="../assets/lawyers/25.Lee_Yong_Jae.png" 
+                                 alt="이용재 손해사정사" 
+                                 class="lawyer-image w-full aspect-[3/4] object-cover transition-transform duration-300">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                            <div class="absolute top-3 right-3">
+                                <span class="bg-green-600 text-white text-xs px-2 py-1 rounded-full font-medium">사정사</span>
+                            </div>
+                            <div class="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                <button class="w-full bg-white/90 backdrop-blur-sm text-gray-900 text-xs py-1.5 rounded font-medium hover:bg-white transition-colors">
+                                    상세보기
+                                </button>
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h3 class="text-sm font-bold text-gray-900 mb-1">이용재</h3>
+                            <p class="text-xs text-gray-600">손해사정사 | 광주</p>
+                            <div class="flex flex-wrap gap-1 mt-1">
+                                <span class="skill-tag text-xs">방사선사</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 푸터 -->
+    <footer class="bg-black text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                <div>
+                    <img src="../assets/logo/bupjo-logo-white.png" alt="예일법조" class="h-8 mb-6">
+                    <p class="text-sm text-gray-400">
+                        믿을 수 있는 법률 파트너<br>
+                        예일법조가 함께합니다
+                    </p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">전문분야</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="../criminal/" class="text-gray-400 hover:text-white transition">형사</a></li>
+                        <li><a href="../civil/" class="text-gray-400 hover:text-white transition">민사</a></li>
+                        <li><a href="../traffic/" class="text-gray-400 hover:text-white transition">교통사고</a></li>
+                        <li><a href="../realestate/" class="text-gray-400 hover:text-white transition">부동산</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">전국지사</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울본사</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울강남</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
+                        <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold mb-4">고객센터</h4>
+                    <p class="text-white font-bold text-lg">02-587-7787</p>
+                    <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
+                </div>
+            </div>
+            <hr class="border-gray-800 mb-6">
+            <p class="text-gray-500 text-xs text-center">
+                COPYRIGHT©2025 법무법인(유한) 예일법조. ALL RIGHTS RESERVED
+            </p>
+        </div>
+    </footer>
+
+    <!-- 변호사 상세 모달 -->
+    <div id="lawyerModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalContent">
+                <!-- 모달 내용이 여기에 동적으로 삽입됩니다 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // AOS 초기화
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // 변호사 데이터
+        const lawyersData = {
+            '하영주': {
+                name: '하영주',
+                position: '대표변호사',
+                office: '서울 본사 (공동)',
+                image: '../assets/lawyers/01.Ha_Young_Joo.png',
+                specialties: ['형사법 전문', '법학박사'],
+                career: [
+                    '현) 법무법인 법조 대표변호사',
+                    '단국대학교 대학원 법학박사',
+                    '사법연수원 수료(1989년)',
+                    '저서: 《사기당하는 유형분석과 대책방법》, 《사례로 보는 생활 법률》',
+                    '사기사건·형사사건 무죄 다수, 언론보도 사건 수행',
+                    '사기예방교육(대한노인회, 학부모회, 외국인 대상) 다수',
+                    '형사사건 지역별 법리 솔루션 개발'
+                ]
+            },
+            '엄운용': {
+                name: '엄운용',
+                position: '대표변호사',
+                office: '서울 본사 (공동)',
+                image: '../assets/lawyers/02.Um_Woon_Yong.png',
+                specialties: ['농축산법', '의료법', '수의사'],
+                career: [
+                    '현) 법무법인 예일중앙 파트너변호사(2024.7~)',
+                    '경기과학고, 서울대 수의학과 졸업',
+                    '수의사면허(2009), 제5회 변호사시험 합격',
+                    '성균관대 법학전문대학원, 서울대 AHP(9기), 금융법무과정 이수(12기)',
+                    '전) 서울지방노동위원회 수료(5기)',
+                    '전) 농림축산식품부 자문변호사',
+                    '전) 대한수의사회, 대한중소병원협회, 말복지위원회 자문',
+                    '전) 원익, 경인히트펌프 자문',
+                    '전) 안성시청·경기도축산위생연구소 공무',
+                    '전) 법무법인 클레어파트너스(2016-2022)',
+                    '전) KDH 파트너 변호사(2022-2024.7)'
+                ]
+            },
+            '김진환': {
+                name: '김진환',
+                position: '대표변호사',
+                office: '서울 강남 분사무소',
+                image: '../assets/lawyers/06.Kim_Jin_Hwan.png',
+                specialties: ['기업법무', '45회 사법시험'],
+                career: [
+                    '현) 법무법인 예일중앙 대표변호사',
+                    '전) 법무법인 세령 대표변호사',
+                    '전) 법무법인 서울 파트너변호사',
+                    '전) 법률사무소 L&K 대표변호사',
+                    '전) 법무법인 코리아 변호사',
+                    '사법시험 합격(45회)',
+                    '사법연수원 수료(35기)',
+                    '태릉고등학교, 한양대학교 졸업',
+                    '(주)IMI·씨플랜 등 기업 고문변호사 다수'
+                ]
+            },
+            '최상무': {
+                name: '최상무',
+                position: '대표변호사',
+                office: '울산 지점',
+                image: '../assets/lawyers/03.Choi_Sang_Moo.png',
+                specialties: ['기업회생', '수사심의위원'],
+                career: [
+                    '현) 법무법인 법조 책임변호사',
+                    '현) 울산지방검찰청 수사심의위원',
+                    '현) 울산광역시 조례·규칙 심의위원',
+                    '현) 중소기업청 법률전문위원',
+                    '현) 중소기업진흥공단 기업회생 전문컨설턴트'
+                ]
+            },
+            '정환희': {
+                name: '정환희',
+                position: '대표변호사',
+                office: '대구 지점',
+                image: '../assets/lawyers/04.Jung_Hwan_Hee.png',
+                specialties: ['법학박사', '변호사시험출제위원'],
+                career: [
+                    '현) 법무법인 법조 책임변호사',
+                    '서울대학교 법대 졸업',
+                    '서울대 법학대학원 석·박사 수료',
+                    '사법연수원 수료(1999년)',
+                    '미국 하와이주립대 로스쿨 수료',
+                    '변호사시험 출제위원(4/6/7회)',
+                    '공정무역기구·대한치과의사협회·한국관광공사 자문변호사'
+                ]
+            },
+            '조성전': {
+                name: '조성전',
+                position: '대표변호사',
+                office: '청주 지점',
+                image: '../assets/lawyers/05.Jo_Sung_Jeon.png',
+                specialties: ['민사법 전문', '집회시위자문위원'],
+                career: [
+                    '현) 법무법인 법조 청주 책임변호사',
+                    '서울대학교 미학과 졸업',
+                    '충북대학교 법학전문대학원 졸업',
+                    '동국대 전문박사과정(민사법 전공) 수료',
+                    '현) 청주흥덕 경찰서 집회·시위 자문위원회 위원',
+                    '현) 충북지방경찰청 보안자문협의회 위원',
+                    '현) LS산전·보쉬전장 노동조합 자문변호사',
+                    '현) 충청북도 선거관리위원회 위원'
+                ]
+            },
+            '전정수': {
+                name: '전정수',
+                position: '대표변호사',
+                office: '대전 지점',
+                image: '../assets/lawyers/07.Jeon_Jung_Soo.png',
+                specialties: ['前 군판사', '육군 검찰관'],
+                career: [
+                    '현) 법무법인 법조 대전 대표변호사',
+                    '연세대 정법대 졸업',
+                    '경희대 행정대학원 사법행정과 수료',
+                    '사법연수원 수료(1989년, 법무7기)',
+                    '전) 육군 검찰관·판사·군판사',
+                    '전) 대덕합동법률사무소 대표변호사',
+                    '기업 고문변호사 다수'
+                ]
+            },
+            '양희선': {
+                name: '양희선',
+                position: '대표변호사',
+                office: '대전 지점',
+                image: '../assets/lawyers/08.Yang_Hee_Sun.png',
+                specialties: ['前 철도공사법무팀장', '43회 사법시험'],
+                career: [
+                    '현) 법무법인 예일중앙 세령 구성원 변호사',
+                    '전) 법무법인 한길 구성원 변호사',
+                    '전) 한국철도공사 법무팀장',
+                    '전) 한국철도공사 법무팀 사내 변호사',
+                    '사법시험 합격(43회)',
+                    '사법연수원 수료(33기)',
+                    '나주 봉황고등학교, 한양대학교 행정학과 졸업',
+                    '한국철도공사, 한국도시설공단, 한국토지주택공사, 코레일유통, 코레일로지스, 한국수자원공사, 한국자산관리공사, 국토교통부, 대전시청 등 다수 기관 고문변호사',
+                    '대전광역시 행정심판위원회 위원',
+                    '한국과학기술정보연구원 징계심의위원 등 활동 중'
+                                 ]
+             },
+             '송철훈': {
+                 name: '송철훈',
+                 position: '소속변호사',
+                 office: '서울 본사 (공동)',
+                 image: '../assets/lawyers/09.Song_Chul_Hoon.png',
+                 specialties: ['형사법', '연세대 법대'],
+                 career: [
+                     '현) 법무법인 법조 책임변호사',
+                     '연세대학교 법대 졸업',
+                     '사법연수원 수료(1989년)',
+                     '전) 육군대학 법률학 교수',
+                     '전) 법무법인 한라 구성원 변호사',
+                     '전) 기아자동차·모텍코리아 자문변호사',
+                     '법조윤리협의회 전문위원 역임'
+                 ]
+             },
+             '손우태': {
+                 name: '손우태',
+                 position: '소속변호사',
+                 office: '서울 본사 (공동)',
+                 image: '../assets/lawyers/10.Son_Woo_Tae.png',
+                 specialties: ['형사법', '前 검사장'],
+                 career: [
+                     '현) 법무법인 법조 책임변호사',
+                     '서울대 토목과 졸업',
+                     '제22회 사법시험 합격',
+                     '사법연수원 수료(1982년)',
+                     '전) 대구지검 검사',
+                     '전) 원주지검 검사장',
+                     '전) 한국외대 법학전문대학원 교수'
+                 ]
+             },
+             '이경창': {
+                 name: '이경창',
+                 position: '소속변호사',
+                 office: '서울 본사 (공동)',
+                 image: '../assets/lawyers/11.Lee_Kyung_Chang.png',
+                 specialties: ['민사법', '서울대 법대'],
+                 career: [
+                     '현) 법무법인 법조 책임변호사',
+                     '서울대 법대 졸업',
+                     '서울대 법학대학원 석사 졸업',
+                     '제39회 사법시험 합격',
+                     '사법연수원 수료(2000년)',
+                     '전) 메트로병원·상지고·택시조합 자문변호사',
+                     '서울지방변호사회 심사위원',
+                     '민주사회를 위한 변호사모임 회원'
+                 ]
+             },
+             '곽정기': {
+                 name: '곽정기',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/12.Kwak_Jung_Ki.png',
+                 specialties: ['형사법', '前 경찰청'],
+                 career: [
+                     '현) 법무법인 예일중앙 대표변호사(2024~)',
+                     '제40회 사법시험 합격(1998)',
+                     '사법연수원 수료(30기)',
+                     '전) 경찰청 법무과',
+                     '전) 서울 강남·서초·영등포·용산·강동경찰서 수사 및 형사과장(2006-2011)',
+                     '전) 경기지방경찰청 수사과장(2013)',
+                     '전) 경기 평택경찰서장(2014)',
+                     '전) 경찰청 외사수사과장, 특수수사과장',
+                     '전) 광진경찰서장, 지능범죄수사대장',
+                     '전) 김앤장 법률사무소(2019-2021)',
+                     '전) 서강대학교 겸임교수(2023)'
+                 ]
+             },
+             '예상균': {
+                 name: '예상균',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/13.Ye_Sang_Gyun.png',
+                 specialties: ['형사법', '前 공수처'],
+                 career: [
+                     '현) 법무법인 예일중앙 대표변호사(2024)',
+                     '제40회 사법시험 합격(1998)',
+                     '사법연수원 수료(30기)',
+                     '전) 인천지검 등 검사(2001-2014), 특수·조세·지식재산권 등 담당',
+                     '전) 공인전문검사(블루벨트)',
+                     '전) 영남대 로스쿨 교수(2014-2021)',
+                     '전) 변호사시험 및 국세심사위원',
+                     '전) 의료분쟁조정위원회 위원',
+                     '전) 고위공직자범죄수사처 부장검사(2021-2023)'
+                 ]
+             },
+             '이기창': {
+                 name: '이기창',
+                 position: '손해사정사',
+                 office: '광주 지점',
+                 image: '../assets/lawyers/22.Lee_Ki_Chang.png',
+                 specialties: ['손해사정', '10년 경력'],
+                 career: [
+                     '현) 법무법인(유한) 예일중앙 손해배상연구소 소장',
+                     '전) 주식회사 빛세움손해사정 대표',
+                     '국가 공인손해사정사 자격보유',
+                     '10년 이상의 손해사정 업무 경력',
+                     'GA법인 보상 전문 강의',
+                     '한국손해사정사회 정회원',
+                     '전국손해사정사회 정회원',
+                     '조선대학교 법학과 졸업'
+                 ]
+             },
+             '박중구': {
+                 name: '박중구',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/14.Park_Jung_Goo.png',
+                 specialties: ['민사법', '51회 사법시험'],
+                 career: [
+                     '현) 법무법인 예일중앙 파트너변호사',
+                     '전) 법무법인 세령 파트너변호사',
+                     '전) 법무법인 율현 변호사',
+                     '전) J&Partners 법률사무소 변호사',
+                     '전) 대법원·서울동부지방법원 국선변호인',
+                     '전) 서울중앙지검 검사직무대리',
+                     '전) 서울중앙지방법원 민사조정위원',
+                     '사법시험 합격(51회)',
+                     '사법연수원 수료(43기)',
+                     '전주 상산고등학교, 한양대학교 법과대학 및 대학원 민사법 석사 졸업',
+                     '농협중앙회, 농협손해보험, 세방, 한국해운조합 등 자문변호사 다수',
+                     '논문: 「채권자취소권의 주관적 요건에 관한 연구」'
+                 ]
+             },
+             '송현석': {
+                 name: '송현석',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/15.Song_Hyun_Seok.png',
+                 specialties: ['형사법', '동아대 로스쿨'],
+                 career: [
+                     '현) 법무법인(유한) 예일중앙 변호사',
+                     '대일 외국어고등학교 졸업',
+                     '한양대학교 법학과 졸업',
+                     '동아대학교 법학전문대학원 졸업',
+                     '전) 법무법인(유한)정률 변호사',
+                     '전) 손현석 법률사무소',
+                     '전) 대한변호사협회 공보위원',
+                     '전) 서울중앙지방법원 국선변호인',
+                     '전) 서울동부지방법원 국선변호인',
+                     '전) 서울북부지방법원 국선변호인'
+                 ]
+             },
+             '최한울': {
+                 name: '최한울',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/16.Choi_Han_Wool.png',
+                 specialties: ['금융법', '9회 변호사시험'],
+                 career: [
+                     '현) 법무법인 예일중앙 변호사(2024~)',
+                     '제9회 변호사시험 합격',
+                     '전) 파생상품투자·증권·펀드 투자상담사',
+                     '전) 법무법인(유한) 클래스(2022-2023.2)',
+                     '전) KDH로펌(2023-2024)'
+                 ]
+             },
+             '이상민': {
+                 name: '이상민',
+                 position: '소속변호사',
+                 office: '서울 강남 분사무소',
+                 image: '../assets/lawyers/17.Lee_Sang_Min.png',
+                 specialties: ['농축산의료법', '수의사'],
+                 career: [
+                     '현) 법무법인 예일중앙 파트너변호사(2024.7~)',
+                     '경기과학고, 서울대 수의학과 졸업',
+                     '수의사면허(2009), 제5회 변호사시험 합격',
+                     '성균관대 법학전문대학원',
+                     '서울대 AHP(9기), 금융법무과정 이수(12기)',
+                     '전) 서울지방노동위원회 수료(5기)',
+                     '전) 농림축산식품부 자문변호사',
+                     '전) 대한수의사회, 대한중소병원협회, 말복지위원회 자문',
+                     '전) 원익, 경인히트펌프 자문',
+                     '전) 안성시청·경기도축산위생연구소 공무',
+                     '전) 법무법인 클레어파트너스(2016-2022)',
+                     '전) KDH 파트너 변호사(2022-2024.7)'
+                 ]
+             },
+             '김규철': {
+                 name: '김규철',
+                 position: '소속변호사',
+                 office: '울산 지점',
+                 image: '../assets/lawyers/18.Kim_Gyu_Cheol.png',
+                 specialties: ['형사법', '前 군판사'],
+                 career: [
+                     '현) 법무법인 법조 울산 변호사',
+                     '성균관대학교 법학과 졸업',
+                     '연세대학교 법무대학원 졸업',
+                     '사법연수원 수료(1999년)',
+                     '전) 공군군사법원 군판사',
+                     '전) 국방부 승무1과장',
+                     '현) 울산상공회의소 울산지식센터 자문위원'
+                 ]
+             },
+             '천성연': {
+                 name: '천성연',
+                 position: '소속변호사',
+                 office: '울산 지점',
+                 image: '../assets/lawyers/19.Cheon_Seong_Yeon.png',
+                 specialties: ['가사법 전문', '건설법'],
+                 career: [
+                     '현) 울산광역시 교육청 공직자윤리 심의위원회 위원',
+                     '현) 울산광역시 교육청 적극행정지원위원회 위원',
+                     '부산대학교 법학과 졸업',
+                     '부산대학교 법학전문대학원 3기',
+                     '가사법·건설법 전문 분야 등기 변호사',
+                     '현) 울산광역시 중구 지방세심의위원회 위원'
+                 ]
+             },
+             '고은빛': {
+                 name: '고은빛',
+                 position: '소속변호사',
+                 office: '울산 지점',
+                 image: '../assets/lawyers/20.Go_Eun_Bit.png',
+                 specialties: ['행정법', '경희대'],
+                 career: [
+                     '현) 법무법인(유한) 법조 울산 변호사',
+                     '경희대학교 행정학과 수석 졸업',
+                     '부산대학교 법학전문대학원 졸업',
+                     '전) 이강진 법률사무소 변호사'
+                 ]
+             },
+             '한웅': {
+                 name: '한웅',
+                 position: '소속변호사 (예일)',
+                 office: '서울 본사 (공동)',
+                 image: '../assets/lawyers/21.Han_Woong.png',
+                 specialties: ['특허법', '38회 사법시험'],
+                 career: [
+                     '현) 법무법인 예일중앙 구성원변호사',
+                     '광주 대동고 졸업',
+                     '고려대학교 법학과 졸업',
+                     '사법시험 합격(38회)',
+                     '사법연수원 수료(28기)',
+                     '전) 용인 송담대 교수',
+                     '전) 용인법무법인 구성원 변호사',
+                     '전) 법무법인 바로세움 구성원',
+                     '전) 특허법무법인 아주 구성원',
+                     '전) 한웅 법률사무소·일리·필로 대표변호사'
+                 ]
+             },
+             '이종렬': {
+                 name: '이종렬',
+                 position: '변호사',
+                 office: '울산',
+                 image: '../assets/lawyers/26.Lee_Jong_Ryeol.png',
+                 specialties: ['민사법', '서울대 법학과'],
+                 career: [
+                     '현) 법무법인(유한) 법조 울산 변호사',
+                     '서울대학교 법학과 졸업',
+                     '경북대학교 법학전문대학원 졸업',
+                     '사법연수원 법학전문대학원생 연수',
+                     '전) 법무법인(유한) 지평 부산 변호사'
+                 ]
+             },
+             '박성진': {
+                 name: '박성진',
+                 position: '변호사',
+                 office: '울산',
+                 image: '../assets/lawyers/27.Park_Sung_Jin.png',
+                 specialties: ['형사법', '50회 사법시험'],
+                 career: [
+                     '현) 법무법인(유한) 법조 소속변호사',
+                     '부산대학교 법학과 졸업',
+                     '제50회 사법시험 합격',
+                     '사법연수원 40기 수료(2011년)',
+                     '전) 울산지방노동위원회 공익위원',
+                     '전) 법무법인 율율 소속변호사',
+                     '전) 법무법인 법률로 구성원변호사'
+                 ]
+             },
+             '정은경': {
+                 name: '정은경',
+                 position: '변호사',
+                 office: '울산',
+                 image: '../assets/lawyers/28.Jung_Eun_Kyung.png',
+                 specialties: ['이혼 전문', '민사법'],
+                 career: [
+                     '현) 법무법인 법조 울산 변호사',
+                     '이화여자대학교 법학과(주전공), 미술사학과(복수전공) 졸업',
+                     '경희대학교 법학전문대학원 졸업',
+                     '민사법, 이혼 전문 분야 등록 변호사'
+                 ]
+             },
+             '고영수': {
+                 name: '고영수',
+                 position: '손해사정사',
+                 office: '광주 지점',
+                 image: '../assets/lawyers/23.Go_Young_Soo.png',
+                 specialties: ['손해사정', '임상병리사'],
+                 career: [
+                     '현) 법무법인(유한) 예일중앙 손해배상연구소 소장',
+                     '전) 주식회사 빛세움손해사정 이사',
+                     '국가 공인 손해사정사 자격보유',
+                     '임상병리사 면허보유',
+                     '10년 이상의 손해사정 업무 경력',
+                     'GA법인 보상 전문 강의',
+                     '공기업 자동차보험 강의',
+                     '청년센터 보험보상 강의',
+                     '대한의료감정학회 교육이수',
+                     '한국손해사정사회 정회원',
+                     '전국손해사정사회 정회원',
+                     '중국 흑룡강 대학 인체 해부 과정이수'
+                 ]
+             },
+             '박성윤': {
+                 name: '박성윤',
+                 position: '손해사정사',
+                 office: '광주 지점',
+                 image: '../assets/lawyers/24.Park_Sung_Yoon.png',
+                 specialties: ['손해사정', '前 H화재'],
+                 career: [
+                     '현) 법무법인(유한) 예일중앙 손해배상연구소 소장',
+                     '전) 주식회사 빛세움손해사정 이사',
+                     '전) H화재 보상 실무',
+                     '국가 공인 손해사정사 자격보유',
+                     '10년 이상의 손해사정 업무 경력',
+                     'GA법인 보상 전문 강의',
+                     '한국손해사정사회 정회원',
+                     '전국손해사정사회 정회원'
+                 ]
+             },
+             '이용재': {
+                 name: '이용재',
+                 position: '손해사정사',
+                 office: '광주 지점',
+                 image: '../assets/lawyers/25.Lee_Yong_Jae.png',
+                 specialties: ['손해사정', '방사선사'],
+                 career: [
+                     '현) 법무법인(유한) 예일중앙 광주분사무소 팀장',
+                     '전) 손해사정법인 빛세움 부장',
+                     '전) H생명 보상 실무',
+                     '국가 공인 손해사정사 자격보유',
+                     '10년 이상의 손해사정 업무경력',
+                     '방사선사 자격 보유'
+                 ]
+             }
+         };
+
+        // 모달 관련 함수들
+        const modal = document.getElementById('lawyerModal');
+        const closeBtn = document.getElementsByClassName('close')[0];
+
+        function openModal(lawyerName) {
+            const lawyer = lawyersData[lawyerName];
+            if (!lawyer) return;
+
+            const modalContent = document.getElementById('modalContent');
+            modalContent.innerHTML = `
+                <div class="bg-gray-50 p-8">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="md:w-1/3">
+                            <img src="${lawyer.image}" alt="${lawyer.name}" class="w-full rounded-lg">
+                            <div class="mt-3 text-center">
+                                <div class="flex flex-wrap gap-2 justify-center mt-2">
+                                    ${lawyer.specialties.map(specialty => 
+                                        `<span class="bg-gray-200 text-gray-700 text-xs px-2 py-1 rounded font-medium">${specialty}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="md:w-2/3">
+                            <div class="mb-4">
+                                <h2 class="text-2xl font-bold text-gray-900 mb-1">${lawyer.name}</h2>
+                                <p class="text-gray-600 mb-1">${lawyer.position}</p>
+                                <p class="text-gray-500 text-sm">${lawyer.office}</p>
+                            </div>
+                            
+                            <div class="bg-white rounded-lg p-4 border border-gray-200">
+                                <h3 class="text-lg font-bold text-gray-900 mb-3">주요 경력</h3>
+                                <ul class="space-y-2">
+                                    ${lawyer.career.map(item => 
+                                        `<li class="flex items-start">
+                                            <span class="w-1.5 h-1.5 bg-gray-400 rounded-full mt-2 mr-2 flex-shrink-0"></span>
+                                            <span class="text-gray-600 text-sm leading-relaxed">${item}</span>
+                                        </li>`
+                                    ).join('')}
+                                </ul>
+                            </div>
+                            
+                            <div class="mt-4 flex gap-2">
+                                <a href="tel:02-587-7787" 
+                                   class="bg-gray-800 text-white px-4 py-2 rounded font-medium hover:bg-gray-900 transition-colors text-sm">
+                                    상담 문의
+                                </a>
+                                <button class="bg-gray-200 text-gray-700 px-4 py-2 rounded font-medium hover:bg-gray-300 transition-colors text-sm">
+                                    프로필 공유
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+
+        // 이벤트 리스너
+        closeBtn.onclick = closeModal;
+        
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closeModal();
+            }
+        }
+
+        // 변호사 카드 클릭 이벤트
+        document.addEventListener('DOMContentLoaded', function() {
+            const lawyerCards = document.querySelectorAll('.lawyer-card');
+            lawyerCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const lawyerName = this.getAttribute('data-name');
+                    openModal(lawyerName);
+                });
+            });
+
+            // 필터 기능
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 필터 버튼 활성화 스타일
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+                    filterLawyers(filter, searchInput.value);
+                });
+            });
+
+            // 검색 기능
+            searchInput.addEventListener('input', function() {
+                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
+                filterLawyers(activeFilter, this.value);
+            });
+
+            function filterLawyers(filter, searchTerm) {
+                const cards = document.querySelectorAll('.lawyer-card');
+                
+                cards.forEach(card => {
+                    let showCard = true;
+                    
+                    // 필터 조건 확인
+                    if (filter !== 'all') {
+                        const category = card.getAttribute('data-category');
+                        const location = card.getAttribute('data-location');
+                        
+                        if (filter === 'representative' && category !== 'representative') showCard = false;
+                        if (filter === 'lawyer' && category !== 'lawyer') showCard = false;
+                        if (filter === 'adjuster' && category !== 'adjuster') showCard = false;
+                        if (filter === 'seoul' && location !== 'seoul') showCard = false;
+                        if (filter === 'regional' && location !== 'regional') showCard = false;
+                    }
+                    
+                    // 검색어 조건 확인
+                    if (searchTerm) {
+                        const name = card.getAttribute('data-name');
+                        const specialty = card.getAttribute('data-specialty');
+                        const searchText = (name + ' ' + specialty).toLowerCase();
+                        
+                        if (!searchText.includes(searchTerm.toLowerCase())) showCard = false;
+                    }
+                    
+                    // 카드 표시/숨김
+                    if (showCard) {
+                        card.style.display = 'block';
+                        card.classList.add('animate-slide-in');
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+
+            // 스크롤 애니메이션
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-slide-in');
+                    }
+                });
+            }, observerOptions);
+
+            // 모든 카드에 관찰자 적용
+            document.querySelectorAll('.lawyer-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape' && modal.classList.contains('show')) {
+                closeModal();
+            }
+        });
+
+        // 헤더 스크롤 효과
+        window.addEventListener('scroll', function () {
+            const header = document.getElementById('header');
+            const logoWhite = document.getElementById('logo-white');
+            const logoBlack = document.getElementById('logo-black');
+
+            if (window.scrollY > 50) {
+                // 네비게이션 바 변경
+                header.classList.remove('header-transparent');
+                header.classList.add('header-scrolled');
+
+                // 로고 전환
+                logoWhite.classList.add('hidden');
+                logoBlack.classList.remove('hidden');
+
+                // 링크 색상 변경
+                header.querySelectorAll('a').forEach(el => {
+                    if (!el.classList.contains('bg-gradient-to-br')) {
+                        el.classList.remove('text-white', 'hover:text-gray-300', 'text-gray-300');
+                        el.classList.add('text-black', 'hover:text-gray-600');
+                    }
+                });
+                header.querySelector('button').classList.remove('text-white');
+                header.querySelector('button').classList.add('text-black');
+            } else {
+                // 네비게이션 바 원상복구
+                header.classList.remove('header-scrolled');
+                header.classList.add('header-transparent');
+
+                // 로고 전환
+                logoBlack.classList.add('hidden');
+                logoWhite.classList.remove('hidden');
+
+                // 링크 색상 복구
+                header.querySelectorAll('a').forEach(el => {
+                    if (!el.classList.contains('bg-gradient-to-br')) {
+                        el.classList.remove('text-black', 'hover:text-gray-600');
+                        if (el.href.includes('lawyers')) {
+                            el.classList.add('text-gray-300');
+                        } else {
+                            el.classList.add('text-white', 'hover:text-gray-300');
+                        }
+                    }
+                });
+                header.querySelector('button').classList.remove('text-black');
+                header.querySelector('button').classList.add('text-white');
+            }
+        });
+    </script>
+
+</body>
+</html>

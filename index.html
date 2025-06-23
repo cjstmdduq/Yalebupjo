@@ -1,0 +1,2356 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>법무법인(유한) 예일법조</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
+
+    <!-- 네이버 맵 API 스크립트를 head에서 먼저 로드 -->
+    <script type="text/javascript"
+        src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpKeyId=jk7c5vaa27&callback=initNaverMap"></script>
+
+    <style>
+        body {
+            font-family: 'Pretendard', sans-serif;
+        }
+
+        /* 메가메뉴 스타일 */
+        .mega-menu {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .mega-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 모바일에서 메가메뉴 숨기기 */
+        @media (max-width: 768px) {
+            .mega-menu {
+                display: none;
+            }
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .hero-overlay {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .navy-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+        }
+
+        /* 네비게이션 바 스타일 추가 */
+        .header-transparent {
+            background: transparent;
+            border-bottom: none;
+        }
+
+        .header-scrolled {
+            background: white;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.3s ease;
+        }
+
+        /* 메가메뉴 열렸을 때 헤더 스타일 */
+        .header-transparent.mega-menu-open {
+            background: white;
+            border-bottom: 1px solid #f3f4f6;
+        }
+
+        .header-transparent.mega-menu-open a {
+            color: #111827 !important;
+        }
+
+        /* 애니메이션 추가 */
+        @keyframes fade-in-up {
+            0% {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.8s ease-out both;
+        }
+
+        /* 플로팅 버튼 영역 스타일 */
+        .floating-buttons {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+            box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+            transform: translateY(100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            padding: 0;
+        }
+
+        .floating-buttons.show {
+            transform: translateY(0);
+        }
+
+        .floating-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 15px 0;
+        }
+
+        .floating-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            color: white;
+        }
+
+        .floating-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .floating-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .floating-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .floating-value {
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        .floating-cta {
+            background: white;
+            color: #1e3a8a;
+            padding: 12px 30px;
+            border-radius: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .floating-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .floating-content {
+                flex-direction: column;
+                gap: 15px;
+                padding: 15px 20px;
+            }
+
+            .floating-info {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .floating-item:not(:first-child) {
+                display: none;
+            }
+
+            .floating-cta {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* 커스텀 그라디언트 */
+        .bg-gradient-radial {
+            background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+
+        /* 모바일 메뉴 아코디언 스타일 */
+        .mobile-accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .mobile-accordion-content.active {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .mobile-accordion-arrow {
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-accordion-arrow.rotate {
+            transform: rotate(180deg);
+        }
+
+        /* 부드러운 애니메이션 */
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) scale(1);
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.05);
+            }
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .animate-float-delayed {
+            animation: float 8s ease-in-out infinite;
+            animation-delay: 2s;
+        }
+
+        /* 맵 로딩 스타일 추가 */
+        .map-loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            background: #f9fafb;
+        }
+
+        .map-loaded {
+            height: 100%;
+        }
+
+        /* 텍스트 줄임표 스타일 */
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body class="bg-white text-black">
+
+    <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
+            <!-- 로고 -->
+            <div class="flex items-center z-10">
+                <a href="index.html">
+                    <img id="logo-white" src="assets/logo/bupjo-logo-white.png" alt="예일법조 흰색 로고" class="h-8 md:h-10">
+                    <img id="logo-black" src="assets/logo/bupjo-logo-black.png" alt="예일법조 검은색 로고"
+                        class="h-8 md:h-10 hidden">
+                </a>
+            </div>
+
+            <!-- 데스크톱 메뉴 -->
+            <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
+                <a href="#" class="text-white hover:text-gray-300 transition nav-link">로펌소개</a>
+                <a href="#" class="text-white hover:text-gray-300 transition nav-link">전문분야</a>
+                <a href="#" class="text-white hover:text-gray-300 transition nav-link">성공사례</a>
+                <a href="#" class="text-white hover:text-gray-300 transition nav-link">전국사무소</a>
+            </div>
+
+            <!-- 우측 컨트롤 -->
+            <div class="flex items-center z-10">
+                <!-- 데스크톱 전화번호 -->
+                <a href="tel:02-587-7787" class="hidden md:block text-white hover:text-gray-300 transition-colors">
+                    <div class="text-right">
+                        <div class="text-sm opacity-80 font-medium">상담문의</div>
+                        <div class="text-xl font-bold">02-587-7787</div>
+                    </div>
+                </a>
+
+                <!-- 모바일 전화번호 버튼 -->
+                <a href="tel:02-587-7787" class="md:hidden mr-4 text-white hover:text-gray-300 transition">
+                    <div class="text-right">
+                        <div class="text-xs opacity-80">상담문의</div>
+                        <div class="text-lg font-bold">02-587-7787</div>
+                    </div>
+                </a>
+
+                <!-- 모바일 햄버거 메뉴 버튼 -->
+                <button id="mobile-menu-btn"
+                    class="md:hidden text-white ml-2 p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    <svg id="hamburger-icon" class="w-6 h-6 transition-transform duration-300" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                    <svg id="close-icon" class="w-6 h-6 hidden transition-transform duration-300" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- 통합 메가메뉴 -->
+        <div id="mega-menu" class="mega-menu">
+            <div class="container mx-auto px-4 py-8">
+                <div class="grid grid-cols-4 gap-8">
+                    <!-- 로펌소개 -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
+                        <ul class="space-y-2">
+                            <li><a href="about/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대표변호사
+                                    인사말</a></li>
+                            <li><a href="lawyers/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">구성원 소개</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 전문분야 -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">전문분야</h3>
+                        <ul class="space-y-2">
+                            <li><a href="criminal/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">형사</a></li>
+                            <li><a href="civil/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">민사</a></li>
+                            <li><a href="realestate/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">부동산</a></li>
+                            <li><a href="traffic/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고</a></li>
+                            <li><a href="corporate/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">기업</a></li>
+                            <li><a href="family/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">가사</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 성공사례 -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">성공사례</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#criminal-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">형사 사례</a></li>
+                            <li><a href="#civil-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">민사 사례</a></li>
+                            <li><a href="#realestate-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">부동산 사례</a></li>
+                            <li><a href="#traffic-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고 사례</a></li>
+                            <li><a href="#corporate-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">기업 사례</a></li>
+                            <li><a href="#family-cases"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">가사 사례</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 전국사무소 -->
+                    <div>
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
+                        <ul class="space-y-2">
+                            <li><a href="location/seoul.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">서울본사</a></li>
+                            <li><a href="location/gangnam.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">서울강남</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">울산</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대구</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">청주</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대전</a></li>
+                            <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">광주</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 하단 상담 안내 -->
+                <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+                    <p class="text-gray-600">빠른 상담이 필요하신가요? <span class="font-bold text-gray-900">02-587-7787</span> 로
+                        연락주세요. <span class="text-sm text-gray-500">(평일 09:00-18:00)</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 모바일 메뉴 오버레이 -->
+        <div id="mobile-menu"
+            class="md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+            <div class="flex flex-col h-full max-h-screen">
+                <!-- 메뉴 헤더 -->
+                <div class="flex items-center justify-between p-6 border-b border-white/10">
+                    <img src="assets/logo/bupjo-logo-white.png" alt="예일법조" class="h-8">
+
+                    <!-- 닫기 버튼 -->
+                    <button onclick="closeMobileMenu()"
+                        class="text-white hover:text-gray-300 p-2 hover:bg-white/10 rounded-lg transition-colors">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- 메뉴 내용 -->
+                <div class="flex-1 flex flex-col p-6 min-h-0">
+                    <!-- 메뉴 리스트 -->
+                    <nav class="flex-1 space-y-4 overflow-y-auto min-h-0">
+                        <!-- 로펌소개 아코디언 -->
+                        <div class="border-b border-white/10 pb-4">
+                            <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                                onclick="toggleMobileAccordion('about')">
+                                <span>로펌소개</span>
+                                <svg class="w-5 h-5 mobile-accordion-arrow" id="about-arrow" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="mobile-accordion-content" id="about-content">
+                                <div class="pl-4 space-y-2 mt-2">
+                                    <a href="about/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">법인소개</a>
+                                    <a href="#" class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">대표변호사 인사말</a>
+                                    <a href="lawyers/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">구성원소개</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 전문분야 아코디언 -->
+                        <div class="border-b border-white/10 pb-4">
+                            <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                                onclick="toggleMobileAccordion('expertise')">
+                                <span>전문분야</span>
+                                <svg class="w-5 h-5 mobile-accordion-arrow" id="expertise-arrow" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="mobile-accordion-content" id="expertise-content">
+                                <div class="pl-4 space-y-2 mt-2">
+                                    <a href="criminal/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">형사</a>
+                                    <a href="civil/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">민사</a>
+                                    <a href="realestate/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">부동산</a>
+                                    <a href="traffic/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">교통사고</a>
+                                    <a href="corporate/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">기업</a>
+                                    <a href="family/index.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">가사</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 오시는길 아코디언 -->
+                        <div class="border-b border-white/10 pb-4">
+                            <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                                onclick="toggleMobileAccordion('location')">
+                                <span>오시는길</span>
+                                <svg class="w-5 h-5 mobile-accordion-arrow" id="location-arrow" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="mobile-accordion-content" id="location-content">
+                                <div class="pl-4 space-y-2 mt-2">
+                                    <a href="location/seoul.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">서울본사</a>
+                                    <a href="location/gangnam.html"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">서울강남</a>
+                                    <a href="#offices"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">울산</a>
+                                    <a href="#offices"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">대구</a>
+                                    <a href="#offices"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">청주</a>
+                                    <a href="#offices"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">대전</a>
+                                    <a href="#offices"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">광주</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 성공사례 아코디언 -->
+                        <div class="border-b border-white/10 pb-4">
+                            <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                                onclick="toggleMobileAccordion('cases')">
+                                <span>성공사례</span>
+                                <svg class="w-5 h-5 mobile-accordion-arrow" id="cases-arrow" fill="none"
+                                    stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M19 9l-7 7-7-7"></path>
+                                </svg>
+                            </button>
+                            <div class="mobile-accordion-content" id="cases-content">
+                                <div class="pl-4 space-y-2 mt-2">
+                                    <a href="#criminal-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">형사 사례</a>
+                                    <a href="#civil-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">민사 사례</a>
+                                    <a href="#realestate-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">부동산 사례</a>
+                                    <a href="#traffic-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">교통사고 사례</a>
+                                    <a href="#corporate-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">기업 사례</a>
+                                    <a href="#family-cases"
+                                        class="block text-gray-300 hover:text-white transition-colors py-2"
+                                        onclick="closeMobileMenu()">가사 사례</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 단일 메뉴들 -->
+                        <a href="#"
+                            class="block text-xl font-medium text-white hover:text-gray-300 transition-colors py-3 border-b border-white/10"
+                            onclick="closeMobileMenu()">
+                            상담예약
+                        </a>
+                    </nav>
+
+                    <!-- 하단 연락처 정보 -->
+                    <div class="mt-6 pt-6 border-t border-white/10 space-y-6 flex-shrink-0">
+                        <!-- 대표 전화번호 -->
+                        <a href="tel:02-587-7787"
+                            class="block bg-white text-black rounded-2xl p-6 hover:bg-gray-100 transition-colors">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <div class="text-sm text-gray-600 mb-1">대표 상담 전화</div>
+                                    <div class="text-2xl font-bold">02-587-7787</div>
+                                </div>
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </a>
+
+                        <!-- 운영시간 -->
+                        <div class="text-center text-white/70">
+                            <div class="text-sm">평일 09:00 - 18:00</div>
+                            <div class="text-xs mt-1">24시간 상담 접수 가능</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
+        <!-- 배경 비디오 -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay muted loop playsinline class="w-full h-full object-cover scale-125 object-[50%_40%]">
+                <source src="assets/video/1.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-black/50"></div>
+        </div>
+
+        <!-- 콘텐츠 영역 -->
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="text-center">
+                    <p
+                        class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+                        지금, 여러분을 도우러 갑니다.
+                    </p>
+                    <h1
+                        class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+                        실전에 강한,<br>대응이 빠른 로펌.
+                    </h1>
+                    <p
+                        class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+                        저희 법무법인 예일법조는 획일적인 조언을 넘어<br>
+                        실행 가능한 해답을 제시합니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 아래 스크롤 화살표 -->
+        <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+            </svg>
+        </div>
+    </section>
+
+
+
+
+
+
+
+    <!-- 로펌 소개 (스탯형) -->
+    <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
+        <!-- 배경 그라디언트 효과 -->
+        <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
+
+        <!-- 메인 그라디언트 원형들 -->
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse">
+        </div>
+        <div
+            class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse">
+        </div>
+
+        <!-- 추가 그라디언트 효과들 -->
+        <div
+            class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float">
+        </div>
+        <div
+            class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed">
+        </div>
+        <div
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse">
+        </div>
+
+        <!-- 기하학적 그라디언트 라인들 -->
+        <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent">
+        </div>
+        <div
+            class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent">
+        </div>
+
+        <!-- 대각선 그라디언트 -->
+        <div
+            class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent">
+        </div>
+        <div
+            class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent">
+        </div>
+
+        <div class="container mx-auto px-6 md:px-12 relative z-10">
+            <!-- 헤더 -->
+            <div class="text-center mb-20">
+                <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">By The
+                    Numbers</span>
+                <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+                    예일법조의 약속
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                    20년간 쌓아온 신뢰와 전문성. 우리의 숫자가 말하는 것은 단순한 실적이 아닌,
+                    의뢰인과 함께 만들어낸 성공의 역사입니다.
+                </p>
+            </div>
+
+            <!-- 메인 스탯 그리드 -->
+            <div id="stats" class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
+                <!-- 누적 사건 해결 -->
+                <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="border-t border-white/20 pt-6 mb-4"></div>
+                        <div
+                            class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+                            <span class="counter" data-target="2300">0</span>+
+                        </div>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Total Cases</p>
+                        <p class="text-xl text-white font-medium">성공적인 사건 해결</p>
+                        <p class="text-gray-400 mt-2">형사·민사·기업 법무 전 분야</p>
+                    </div>
+                </div>
+
+                <!-- 승소율 -->
+                <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="border-t border-white/20 pt-6 mb-4"></div>
+                        <div
+                            class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+                            <span class="counter" data-target="74">0</span>%
+                        </div>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Success Rate</p>
+                        <p class="text-xl text-white font-medium">평균 승소율</p>
+                        <p class="text-gray-400 mt-2">업계 최고 수준의 성과</p>
+                    </div>
+                </div>
+
+                <!-- 전문 변호사 -->
+                <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+                    <div
+                        class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl">
+                    </div>
+                    <div class="relative z-10">
+                        <div class="border-t border-white/20 pt-6 mb-4"></div>
+                        <div
+                            class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+                            <span class="counter" data-target="28">0</span>명
+                        </div>
+                        <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Expert Lawyers</p>
+                        <p class="text-xl text-white font-medium">분야별 전문가</p>
+                        <p class="text-gray-400 mt-2">형사·민사·기업 법무 전 분야</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA 버튼 -->
+            <div class="text-center">
+                <button
+                    class="group bg-white text-black px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all duration-300 inline-flex items-center justify-center gap-3">
+                    예일법조 더 알아보기
+                    <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                        stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+
+    <script>
+
+        // ===================================
+        // 스탯 섹션 관련 기능 (카운터 애니메이션)
+        // ===================================
+
+        // 숫자 카운트업 애니메이션 (개선된 버전)
+        function animateCounter(element) {
+            // 이미 애니메이션이 실행 중이면 중복 실행 방지
+            if (element.isAnimating) {
+                return;
+            }
+            element.isAnimating = true;
+
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 3000; // 3초로 조금 더 길게
+            const start = 0;
+            let current = start;
+            let startTime = null;
+
+            // requestAnimationFrame을 사용하여 더 부드러운 애니메이션
+            function animate(currentTime) {
+                if (startTime === null) startTime = currentTime;
+                const progress = Math.min((currentTime - startTime) / duration, 1);
+
+                // easeOutQuart 이징 함수 적용
+                const easeProgress = 1 - Math.pow(1 - progress, 4);
+                current = Math.floor(target * easeProgress);
+
+                element.textContent = current.toLocaleString();
+
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                } else {
+                    element.textContent = target.toLocaleString();
+                    element.isAnimating = false;
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+
+        // 옵저버 설정 (모바일 최적화)
+        const observerOptions = {
+            threshold: [0, 0.1, 0.2], // 여러 임계점 설정으로 더 정확한 감지
+            rootMargin: '-20px 0px -20px 0px' // 상하 20px 여유 (모바일 친화적)
+        };
+
+        // Intersection Observer로 스크롤 시 애니메이션 트리거 (개선된 버전)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    console.log('스탯 섹션이 화면에 나타남'); // 디버깅용
+
+                    const counters = entry.target.querySelectorAll('.counter');
+                    console.log('찾은 카운터 개수:', counters.length); // 디버깅용
+
+                    counters.forEach((counter, index) => {
+                        if (!counter.classList.contains('animated')) {
+                            counter.classList.add('animated');
+
+                            // 각 카운터를 순차적으로 애니메이션 (0.2초 간격)
+                            setTimeout(() => {
+                                animateCounter(counter);
+                            }, index * 200);
+                        }
+                    });
+
+                    // 애니메이션이 시작되면 옵저버 해제 (중복 실행 방지)
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // ===================================
+        // 초기화 및 fallback 처리
+        // ===================================
+
+        // 페이지 로드 시 스탯 섹션 관찰 시작
+        document.addEventListener('DOMContentLoaded', function () {
+            // 스탯 섹션 관찰 시작
+            const statsSection = document.getElementById('stats');
+            if (statsSection) {
+                observer.observe(statsSection);
+
+                // 모바일에서 Intersection Observer가 작동하지 않을 때를 대비한 fallback
+                // 5초 후에 스탯 섹션이 여전히 애니메이션되지 않았다면 강제 실행
+                setTimeout(() => {
+                    const counters = statsSection.querySelectorAll('.counter:not(.animated)');
+                    if (counters.length > 0) {
+                        console.log('Fallback: 스탯 애니메이션을 강제 실행합니다');
+                        counters.forEach((counter, index) => {
+                            counter.classList.add('animated');
+                            setTimeout(() => {
+                                animateCounter(counter);
+                            }, index * 200);
+                        });
+                    }
+                }, 5000);
+            }
+        });
+    </script>
+
+
+        <section id="expertise" class="py-24 sm:py-32 bg-white">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+
+                <div class="text-center mb-16 sm:mb-20">
+                    <span class="text-gray-500 font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+                        예일법조의 전문 분야
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        각 분야 최고의 전문가들이 고객님의 성공적인 해결을 위해 함께합니다
+                    </p>
+                </div>
+
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid grid-cols-1 md:grid-cols-6 gap-6 md:auto-rows-[280px] [grid-auto-flow:dense]">
+
+                        <a href="criminal/index.html"
+                            class="group relative md:col-span-3 md:row-span-2 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5" />
+                                </svg>
+                            </div>
+
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-3xl font-bold text-gray-900 mb-2">형사</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Criminal Law</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>사기, 횡령, 배임 등
+                                        경제범죄</li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>폭행, 상해, 협박 등
+                                        폭력범죄</li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>성범죄 전문 변호 및
+                                        피해자
+                                        지원</li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>음주운전, 무면허 운전
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>명예훼손, 모욕 등
+                                        표현범죄
+                                    </li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="civil/"
+                            class="group relative md:col-span-3 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">민사</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Civil Law</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>계약 분쟁 및 손해배상
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>대여금, 매매대금 청구
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>건물명도 및 임대차
+                                        분쟁
+                                    </li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="realestate/"
+                            class="group relative md:col-span-3 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">부동산</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Real Estate Law</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>재개발·재건축 조합
+                                        분쟁
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>부동산 매매·임대차
+                                        계약
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>명도소송 및 권리금
+                                        분쟁
+                                    </li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+
+                        <a href="traffic/"
+                            class="group relative md:col-span-2 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M7 4V2a1 1 0 011-1h8a1 1 0 011 1v2M7 4h10l1.5 9H5.5L7 4zM7 4l-1.5 9M17 4l1.5 9" />
+                                    <circle cx="8" cy="17" r="2" stroke-width="1.5" />
+                                    <circle cx="16" cy="17" r="2" stroke-width="1.5" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">교통사고</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Traffic Accident</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>대인사고 손해배상
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>중상해 및 후유장해
+                                    </li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="corporate/"
+                            class="group relative md:col-span-2 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">기업</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Corporate Law</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>M&A 및 기업인수
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>법인설립 대행</li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="family/"
+                            class="group relative md:col-span-2 bg-gray-50 border border-gray-100 rounded-3xl p-8 transition-all duration-300 hover:shadow-xl hover:bg-white hover:-translate-y-1">
+                            <div
+                                class="absolute top-8 right-8 w-16 h-16 bg-white border border-gray-200/80 rounded-2xl flex items-center justify-center">
+                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                    stroke-width="1.5">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                            <div class="relative z-10 h-full flex flex-col">
+                                <div class="mb-4">
+                                    <h3 class="text-2xl font-bold text-gray-900 mb-2">가사</h3>
+                                    <p class="text-gray-500 text-sm uppercase tracking-wider">Family Law</p>
+                                </div>
+                                <ul class="text-gray-700 text-base space-y-2 flex-grow">
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>이혼 및 재산분할
+                                    </li>
+                                    <li class="flex items-start"><span class="text-gray-500 mr-2.5">•</span>상속 및 유류분
+                                    </li>
+                                </ul>
+                                <div
+                                    class="mt-6 flex items-center text-gray-800 font-semibold group-hover:text-blue-600 transition-colors">
+                                    자세히 보기
+                                    <svg class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none"
+                                        stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="M13 7l5 5-5 5M6 12h12" />
+                                    </svg>
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- 성공사례 섹션 -->
+        <section id="success-cases" class="py-24 sm:py-32 bg-gray-50">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <!-- 헤더 -->
+                <div class="text-center mb-16 sm:mb-20">
+                    <span class="text-gray-500 font-medium text-sm mb-4 block tracking-wider">SUCCESS STORIES</span>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+                        예일법조의 성공사례
+                    </h2>
+                    <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                        실제 사건을 통해 검증된 전문성과 성공적인 결과를 확인해보세요
+                    </p>
+                </div>
+
+                <!-- 성공사례 그리드 -->
+                <div id="cases-grid" class="max-w-7xl mx-auto">
+                    <!-- 로딩 상태 -->
+                    <div id="cases-loading" class="text-center py-12">
+                        <div
+                            class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                            <svg class="w-8 h-8 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-600 text-lg font-medium">성공사례 로딩 중...</p>
+                    </div>
+
+                    <!-- 성공사례 컨테이너 -->
+                    <div id="cases-container" class="hidden grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- 성공사례 카드들이 JavaScript로 동적 생성됩니다 -->
+                    </div>
+                </div>
+
+                <!-- 더보기 버튼 -->
+                <div class="text-center mt-12">
+                    <a href="cases/index.html"
+                        class="inline-flex items-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-blue-700 transition-all duration-300 group">
+                        더 많은 성공사례 보기
+                        <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M13 7l5 5-5 5M6 12h12" />
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- 전국 지사 안내 -->
+        <section id="offices" class="py-32 bg-white">
+            <div class="container mx-auto px-6 md:px-12">
+                <!-- 헤더 -->
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4 text-gray-900">
+                        전국 사무소 안내
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        지도를 터치하여 가까운 사무소의 위치를 확인해보세요
+                    </p>
+                </div>
+
+                <div class="max-w-6xl mx-auto">
+                    <!-- 지도 영역 -->
+                    <div id="map" class="bg-gray-100 rounded-2xl overflow-hidden mb-8" style="height: 450px;">
+                        <!-- 지도가 여기에 로드됩니다 -->
+                        <div id="map-loading" class="map-loading">
+                            <div class="text-center">
+                                <div
+                                    class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
+                                    <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor"
+                                        viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <p class="text-gray-600 text-lg font-medium">지도 로딩 중...</p>
+                                <p class="text-gray-500 text-sm mt-2">네이버 맵을 불러오고 있습니다</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 지점 선택 버튼들 -->
+                    <div class="flex flex-wrap justify-center gap-2 mb-12">
+                        <button
+                            class="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium transition-colors"
+                            onclick="showOffice('seoul')">
+                            서울 본사
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('gangnam')">
+                            서울 강남
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('ulsan')">
+                            울산
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('daegu')">
+                            대구
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('cheongju')">
+                            청주
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('daejeon')">
+                            대전
+                        </button>
+                        <button
+                            class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
+                            onclick="showOffice('gwangju')">
+                            광주
+                        </button>
+                    </div>
+
+                    <div id="office-info" class="border border-gray-200 rounded-2xl p-8">
+                        <div class="text-center py-12">
+                            <div
+                                class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">지점을 선택해주세요</h3>
+                            <p class="text-gray-500">위의 버튼을 클릭하여 원하는 지점 정보를 확인하실 수 있습니다.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- 푸터 -->
+        <footer class="bg-black text-white pt-12 pb-24">
+            <div class="container mx-auto px-4">
+                <!-- 메뉴 섹션 -->
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+                    <!-- 로고 -->
+                    <div>
+                        <img src="assets/logo/bupjo-logo-white.png" alt="예일법조" class="h-8 mb-6">
+                        <p class="text-sm text-gray-400">
+                            믿을 수 있는 법률 파트너<br>
+                            예일법조가 함께합니다
+                        </p>
+                    </div>
+
+                    <!-- 전문분야 -->
+                    <div>
+                        <h4 class="text-white font-bold mb-4">전문분야</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="criminal/index.html" class="text-gray-400 hover:text-white transition">형사</a>
+                            </li>
+                            <li><a href="civil/index.html" class="text-gray-400 hover:text-white transition">민사</a></li>
+                            <li><a href="traffic/index.html" class="text-gray-400 hover:text-white transition">교통사고</a>
+                            </li>
+                            <li><a href="realestate/index.html"
+                                    class="text-gray-400 hover:text-white transition">부동산</a>
+                            </li>
+                            <li><a href="corporate/index.html"
+                                    class="text-gray-400 hover:text-white transition">기업법무</a>
+                            </li>
+                            <li><a href="family/index.html" class="text-gray-400 hover:text-white transition">가사</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- 예일법조 서비스 -->
+                    <div>
+                        <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">24시간 대응</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 전국지사 -->
+                    <div>
+                        <h4 class="text-white font-bold mb-4">전국지사</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">서울본사</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">서울강남</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">청주</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">대전</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">광주</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- 고객센터 -->
+                    <div>
+                        <h4 class="text-white font-bold mb-4">고객센터</h4>
+                        <ul class="space-y-2 text-sm">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">공지사항</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">자주묻는질문</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition">1:1 문의</a></li>
+                            <li class="pt-2">
+                                <p class="text-white font-bold text-lg">02-587-7787</p>
+                                <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- 구분선 -->
+                <hr class="border-gray-800 mb-6">
+
+                <!-- 회사 정보 -->
+                <div class="flex flex-col space-y-4">
+                    <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
+                        <span class="text-gray-400">법무법인(유한) 예일법조</span>
+                        <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+                        <span class="text-gray-400">사업자등록번호 : 000-00-00000</span>
+                        <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+                        <span class="text-gray-400">대표변호사 : 김예일</span>
+                        <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+                        <span class="text-gray-400">광고책임변호사 : 박법조</span>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
+                        <span class="text-gray-400">서울특별시 서초구 반포대로 98 일신빌딩 4층</span>
+                        <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+                        <span class="text-gray-400">대표전화 : 02-587-7787</span>
+                        <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+                        <span class="text-gray-400">팩스 : 02-587-7788</span>
+                    </div>
+
+                    <div class="flex flex-wrap items-center gap-4 mt-4">
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이용약관</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">개인정보처리방침</a>
+                        <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이메일무단수집거부</a>
+                    </div>
+
+                    <p class="text-gray-500 text-xs mt-4">
+                        COPYRIGHT©2025 법무법인(유한) 예일법조. ALL RIGHTS RESERVED
+                    </p>
+                </div>
+            </div>
+        </footer>
+
+        <!-- 플로팅 버튼 영역 -->
+        <div id="floating-buttons" class="floating-buttons">
+            <div class="container mx-auto px-4">
+                <div class="floating-content">
+                    <!-- 좌측 정보 영역 -->
+                    <div class="floating-info">
+                        <!-- 상담시간 -->
+                        <div class="floating-item">
+                            <div class="floating-icon">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="floating-text">
+                                <span class="floating-label">상담시간</span>
+                                <span class="floating-value">평일 09:00-18:00</span>
+                            </div>
+                        </div>
+                        <!-- 빠른상담 -->
+                        <div class="floating-item">
+                            <div class="floating-icon">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </div>
+                            <div class="floating-text">
+                                <span class="floating-label">빠른상담</span>
+                                <span class="floating-value">30분 내 연락</span>
+                            </div>
+                        </div>
+                        <!-- 24시간 접수 -->
+                        <div class="floating-item">
+                            <div class="floating-icon">
+                                <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <div class="floating-text">
+                                <span class="floating-label">온라인</span>
+                                <span class="floating-value">24시간 접수</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 우측 CTA 버튼 -->
+                    <a href="tel:02-587-7787" class="floating-cta">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                            </path>
+                        </svg>
+                        <span>02-587-7787</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+
+
+        <script>
+            // ===================================
+            // 전역 변수 선언
+            // ===================================
+
+            // 네이버 맵 관련 변수
+            let map = null;
+            let markers = [];
+            let currentOffice = 'null';
+            let mapInitialized = false;
+
+            // 지점별 좌표 정보
+            const officeLocations = {
+                seoul: {
+                    lat: 37.4890973155091,
+                    lng: 127.009460493994,
+                    name: '서울 본사',
+                    address: '서울특별시 서초구 반포대로 98 일신빌딩 4층'
+                },
+                gangnam: {
+                    lat: 37.5027877189554,
+                    lng: 127.040637438123,
+                    name: '서울 강남 분사무소',
+                    address: '서울특별시 강남구 테헤란로37길 7 12층'
+                },
+                ulsan: {
+                    lat: 35.5352418294233,
+                    lng: 129.287582730308,
+                    name: '울산 지점',
+                    address: '울산광역시 남구 문수로 312 2-3층'
+                },
+                daegu: {
+                    lat: 35.8583102481025,
+                    lng: 128.624460988698,
+                    name: '대구 지점',
+                    address: '대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호'
+                },
+                cheongju: {
+                    lat: 36.61203063119757,
+                    lng: 127.46646261061888,
+                    name: '청주 지점',
+                    address: '충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호'
+                },
+                daejeon: {
+                    lat: 36.3522602215555,
+                    lng: 127.387265177983,
+                    name: '대전 지점',
+                    address: '대전 서구 둔산로123번길 21 엠시티타워 701호'
+                },
+                gwangju: {
+                    lat: 35.1249436144535,
+                    lng: 126.855408859749,
+                    name: '광주 지점',
+                    address: '광주광역시 서구 화개중앙로 59 5층'
+                }
+            };
+
+            // ===================================
+            // 네이버 맵 관련 함수들 (개선된 버전)
+            // ===================================
+
+            // 네이버 맵 API 콜백 함수 - API 스크립트에서 자동 호출됨
+            function initNaverMap() {
+                console.log('네이버 맵 API 로드 완료');
+
+                // 잠깐 대기 후 지도 초기화 (DOM 준비 확인)
+                setTimeout(() => {
+                    if (document.readyState === 'loading') {
+                        document.addEventListener('DOMContentLoaded', initMap);
+                    } else {
+                        initMap();
+                    }
+                }, 100);
+            }
+
+            // 네이버 맵 초기화 함수 (개선된 버전)
+            function initMap() {
+                console.log('지도 초기화 시작...');
+
+                // 네이버 맵 API 확인
+                if (typeof naver === 'undefined' || !naver.maps) {
+                    console.error('네이버 맵 API가 로드되지 않았습니다.');
+                    showMapError('네이버 맵 API 로드 실패');
+                    return;
+                }
+
+                // 지도 컨테이너 확인
+                const mapContainer = document.getElementById('map');
+                if (!mapContainer) {
+                    console.error('지도 컨테이너를 찾을 수 없습니다.');
+                    return;
+                }
+
+                try {
+                    // 로딩 메시지 숨기기
+                    const loadingElement = document.getElementById('map-loading');
+                    if (loadingElement) {
+                        loadingElement.style.display = 'none';
+                    }
+
+                    // 서울 본사를 중심으로 지도 초기화
+                    const mapOptions = {
+                        center: new naver.maps.LatLng(officeLocations.seoul.lat, officeLocations.seoul.lng),
+                        zoom: 15,
+                        mapTypeControl: true,
+                        mapTypeControlOptions: {
+                            style: naver.maps.MapTypeControlStyle.BUTTON,
+                            position: naver.maps.Position.TOP_RIGHT
+                        },
+                        zoomControl: true,
+                        zoomControlOptions: {
+                            style: naver.maps.ZoomControlStyle.LARGE,
+                            position: naver.maps.Position.TOP_LEFT
+                        },
+                        logoControl: false,
+                        mapDataControl: false
+                    };
+
+                    map = new naver.maps.Map(mapContainer, mapOptions);
+                    mapInitialized = true;
+
+                    console.log('지도 초기화 성공');
+
+                    // 지도 로드 완료 후 마커 추가
+                    naver.maps.Event.once(map, 'idle', function () {
+                        console.log('지도 로드 완료, 마커 추가 중...');
+                        addAllMarkers();
+                        // 기본 지점 선택 (서울 본사)
+                        selectOffice('seoul');
+                    });
+
+                } catch (error) {
+                    console.error('지도 초기화 중 오류 발생:', error);
+                    showMapError('지도 초기화 실패: ' + error.message);
+                }
+            }
+
+            // 모든 지점에 마커 추가 (개선된 버전)
+            function addAllMarkers() {
+                if (!map || !mapInitialized) {
+                    console.error('지도가 초기화되지 않았습니다.');
+                    return;
+                }
+
+                try {
+                    // 기존 마커 제거
+                    Object.values(markers).forEach(marker => {
+                        if (marker) marker.setMap(null);
+                    });
+                    markers = {};
+
+                    Object.keys(officeLocations).forEach(key => {
+                        const office = officeLocations[key];
+
+                        const marker = new naver.maps.Marker({
+                            position: new naver.maps.LatLng(office.lat, office.lng),
+                            map: map,
+                            title: office.name,
+                            icon: {
+                                url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`
+                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40">
+                                     <path d="M16 0C7.163 0 0 7.163 0 16c0 8.837 16 24 16 24s16-15.163 16-24C32 7.163 24.837 0 16 0z" fill="#dc2626"/>
+                                     <circle cx="16" cy="16" r="8" fill="white"/>
+                                     <circle cx="16" cy="16" r="4" fill="#dc2626"/>
+                                 </svg>
+                             `),
+                                size: new naver.maps.Size(32, 40),
+                                anchor: new naver.maps.Point(16, 40),
+                                scaledSize: new naver.maps.Size(32, 40)
+                            }
+                        });
+
+                        // 마커 클릭 이벤트 (무한 루프 방지)
+                        naver.maps.Event.addListener(marker, 'click', function () {
+                            selectOffice(key);
+                        });
+
+                        markers[key] = marker;
+                    });
+
+                    console.log('마커 추가 완료:', Object.keys(markers).length + '개');
+
+                } catch (error) {
+                    console.error('마커 추가 중 오류 발생:', error);
+                }
+            }
+
+            // 🗺️ 안전한 지도 표시 함수 (무한 루프 방지)
+            function showOfficeOnMapSafe(officeKey) {
+                if (!map || !mapInitialized || !officeLocations[officeKey]) {
+                    console.error('지도 또는 지점 정보가 없습니다:', officeKey);
+                    return;
+                }
+
+                try {
+                    const office = officeLocations[officeKey];
+                    const position = new naver.maps.LatLng(office.lat, office.lng);
+
+                    // 지도 중심을 해당 지점으로 이동
+                    map.setCenter(position);
+                    map.setZoom(16);
+
+                    // 기존 정보창 모두 닫기
+                    if (window.currentInfoWindow) {
+                        window.currentInfoWindow.close();
+                    }
+
+                    // 새 정보창 생성
+                    const infoWindow = new naver.maps.InfoWindow({
+                        content: `
+                        <div style="
+                            padding: 16px; 
+                            min-width: 200px; 
+                            font-family: 'Pretendard', sans-serif;
+                            line-height: 1.5;
+                        ">
+                            <h4 style="
+                                margin: 0 0 8px 0; 
+                                font-size: 16px; 
+                                font-weight: bold; 
+                                color: #1f2937;
+                            ">${office.name}</h4>
+                            <p style="
+                                margin: 0 0 8px 0; 
+                                font-size: 13px; 
+                                color: #6b7280;
+                            ">${office.address}</p>
+                            <a href="https://map.naver.com/v5/search/${encodeURIComponent(office.address)}" 
+                               target="_blank" 
+                               style="
+                                   color: #2563eb; 
+                                   text-decoration: none; 
+                                   font-size: 12px;
+                                   font-weight: 500;
+                               ">
+                                길찾기 →
+                            </a>
+                        </div>
+                    `,
+                        backgroundColor: 'white',
+                        borderColor: '#e5e7eb',
+                        borderWidth: 1,
+                        anchorSize: new naver.maps.Size(10, 10),
+                        pixelOffset: new naver.maps.Point(0, -10)
+                    });
+
+                    if (markers[officeKey]) {
+                        infoWindow.open(map, markers[officeKey]);
+                        window.currentInfoWindow = infoWindow;
+                    }
+
+                    console.log('지도 표시 완료:', office.name);
+
+                } catch (error) {
+                    console.error('지점 표시 중 오류 발생:', error);
+                }
+            }
+
+            // 지도 에러 표시 함수
+            function showMapError(errorMessage) {
+                const loadingElement = document.getElementById('map-loading');
+                if (loadingElement) {
+                    loadingElement.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-600 text-lg font-medium">지도 로드 실패</p>
+                        <p class="text-gray-500 text-sm mt-2">${errorMessage}</p>
+                        <div class="mt-4 text-left max-w-md mx-auto">
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>서울 본사:</strong> 서초구 반포대로 98</p>
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>서울 강남:</strong> 강남구 테헤란로37길 7</p>
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>울산:</strong> 남구 문수로 312</p>
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>대구:</strong> 수성구 달구벌대로480길 9</p>
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>청주:</strong> 서원구 산남로70번길 18</p>
+                            <p class="text-sm text-gray-600 mb-2">📍 <strong>대전:</strong> 서구 둔산로123번길 21</p>
+                            <p class="text-sm text-gray-600">📍 <strong>광주:</strong> 서구 화개중앙로 59</p>
+                        </div>
+                    </div>
+                `;
+                }
+            }
+
+            // 🎯 지점 버튼 상태 업데이트 (안전 버전)
+            function updateOfficeButtons(selectedOffice) {
+                try {
+                    const buttons = document.querySelectorAll('[onclick^="showOffice"]');
+                    buttons.forEach(btn => {
+                        btn.classList.remove('bg-gray-900', 'text-white');
+                        btn.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+
+                    // 선택된 버튼 찾기
+                    const selectedButton = Array.from(buttons).find(btn =>
+                        btn.getAttribute('onclick').includes(`'${selectedOffice}'`)
+                    );
+
+                    if (selectedButton) {
+                        selectedButton.classList.remove('bg-gray-100', 'text-gray-700');
+                        selectedButton.classList.add('bg-gray-900', 'text-white');
+                    }
+
+                    console.log('버튼 상태 업데이트 완료:', selectedOffice);
+                } catch (error) {
+                    console.error('버튼 업데이트 중 오류 발생:', error);
+                }
+            }
+
+
+
+
+
+
+            // ===================================
+            // 1. 헤더/네비게이션 관련 기능
+            // ===================================
+
+            // 메가메뉴 제어 함수
+            function setupMegaMenu() {
+                const megaMenu = document.getElementById('mega-menu');
+                const header = document.getElementById('header');
+                const navArea = document.querySelector('.hidden.md\\:flex');
+                let menuTimeout = null;
+                let isMenuOpen = false;
+
+                // 네비게이션 영역 전체에 대한 호버 처리
+                navArea.addEventListener('mouseenter', () => {
+                    clearTimeout(menuTimeout);
+                    openMegaMenu();
+                });
+
+                navArea.addEventListener('mouseleave', () => {
+                    menuTimeout = setTimeout(() => {
+                        if (!megaMenu.matches(':hover')) {
+                            closeMegaMenu();
+                        }
+                    }, 100);
+                });
+
+                // 메가메뉴 호버 처리
+                megaMenu.addEventListener('mouseenter', () => {
+                    clearTimeout(menuTimeout);
+                });
+
+                megaMenu.addEventListener('mouseleave', () => {
+                    menuTimeout = setTimeout(() => {
+                        closeMegaMenu();
+                    }, 100);
+                });
+
+                // 메가메뉴 열기 함수
+                function openMegaMenu() {
+                    megaMenu.classList.add('active');
+                    isMenuOpen = true;
+
+                    // 헤더가 투명한 경우 흰색 배경으로 변경
+                    if (header.classList.contains('header-transparent')) {
+                        header.classList.add('mega-menu-open');
+
+                        // 로고 전환
+                        document.getElementById('logo-white').classList.add('hidden');
+                        document.getElementById('logo-black').classList.remove('hidden');
+
+                        // 메뉴 색상 변경
+                        const navLinks = navArea.querySelectorAll('a');
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-white', 'hover:text-gray-300');
+                            link.classList.add('text-black', 'hover:text-gray-600');
+                        });
+
+                        // 전화번호 색상 변경
+                        const phoneLink = header.querySelector('.hidden.md\\:block');
+                        phoneLink.classList.remove('text-white', 'hover:text-gray-300');
+                        phoneLink.classList.add('text-black', 'hover:text-gray-600');
+                    }
+                }
+
+                // 메가메뉴 닫기 함수
+                function closeMegaMenu() {
+                    megaMenu.classList.remove('active');
+                    isMenuOpen = false;
+
+                    // 스크롤이 상단이면 헤더를 다시 투명하게
+                    if (window.scrollY <= 50) {
+                        header.classList.remove('mega-menu-open');
+
+                        // 로고 전환
+                        document.getElementById('logo-black').classList.add('hidden');
+                        document.getElementById('logo-white').classList.remove('hidden');
+
+                        // 메뉴 색상 원상복구
+                        const navLinks = navArea.querySelectorAll('a');
+                        navLinks.forEach(link => {
+                            link.classList.remove('text-black', 'hover:text-gray-600');
+                            link.classList.add('text-white', 'hover:text-gray-300');
+                        });
+
+                        // 전화번호 색상 원상복구
+                        const phoneLink = header.querySelector('.hidden.md\\:block');
+                        phoneLink.classList.remove('text-black', 'hover:text-gray-600');
+                        phoneLink.classList.add('text-white', 'hover:text-gray-300');
+                    }
+                }
+
+                // 페이지 클릭 시 메뉴 닫기
+                document.addEventListener('click', (e) => {
+                    if (!e.target.closest('.nav-link') && !e.target.closest('.mega-menu')) {
+                        closeMegaMenu();
+                    }
+                });
+            }
+
+            // 모바일 메뉴 토글 기능
+            function toggleMobileMenu() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const hamburgerIcon = document.getElementById('hamburger-icon');
+                const closeIcon = document.getElementById('close-icon');
+                const body = document.body;
+
+                const isOpen = !mobileMenu.classList.contains('translate-x-full');
+
+                if (isOpen) {
+                    // 메뉴 닫기
+                    mobileMenu.classList.add('translate-x-full');
+                    hamburgerIcon.classList.remove('hidden');
+                    closeIcon.classList.add('hidden');
+                    body.style.overflow = '';
+                } else {
+                    // 메뉴 열기
+                    mobileMenu.classList.remove('translate-x-full');
+                    hamburgerIcon.classList.add('hidden');
+                    closeIcon.classList.remove('hidden');
+                    body.style.overflow = 'hidden';
+                }
+            }
+
+            // 모바일 메뉴 닫기 함수
+            function closeMobileMenu() {
+                const mobileMenu = document.getElementById('mobile-menu');
+                const hamburgerIcon = document.getElementById('hamburger-icon');
+                const closeIcon = document.getElementById('close-icon');
+                const body = document.body;
+
+                mobileMenu.classList.add('translate-x-full');
+                hamburgerIcon.classList.remove('hidden');
+                closeIcon.classList.add('hidden');
+                body.style.overflow = '';
+            }
+
+            // 모바일 아코디언 토글 함수
+            function toggleMobileAccordion(sectionId) {
+                const content = document.getElementById(sectionId + '-content');
+                const arrow = document.getElementById(sectionId + '-arrow');
+
+                // 다른 모든 아코디언 닫기
+                const allContents = document.querySelectorAll('.mobile-accordion-content');
+                const allArrows = document.querySelectorAll('.mobile-accordion-arrow');
+
+                allContents.forEach((item, index) => {
+                    if (item.id !== sectionId + '-content') {
+                        item.classList.remove('active');
+                        allArrows[index].classList.remove('rotate');
+                    }
+                });
+
+                // 현재 아코디언 토글
+                content.classList.toggle('active');
+                arrow.classList.toggle('rotate');
+            }
+
+            // 헤더 스크롤 효과 및 플로팅 버튼 제어
+            window.addEventListener('scroll', function () {
+                const header = document.getElementById('header');
+                const logoWhite = document.getElementById('logo-white');
+                const logoBlack = document.getElementById('logo-black');
+                const floatingButtons = document.getElementById('floating-buttons');
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+                // 히어로 섹션 높이 (대략적으로 뷰포트 높이)
+                const heroHeight = window.innerHeight;
+
+                if (window.scrollY > 50) {
+                    // 네비게이션 바 변경
+                    header.classList.remove('header-transparent');
+                    header.classList.add('header-scrolled');
+
+                    // 메가메뉴가 열려있으면 그대로 유지
+                    if (document.querySelector('.mega-menu.active')) {
+                        header.classList.add('mega-menu-open');
+                    }
+
+                    // 로고 전환
+                    logoWhite.classList.add('hidden');
+                    logoBlack.classList.remove('hidden');
+
+                    // 데스크톱 메뉴 색상 변경
+                    const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                    desktopLinks.forEach(el => {
+                        el.classList.remove('text-white', 'hover:text-gray-300');
+                        el.classList.add('text-black', 'hover:text-gray-600');
+                    });
+
+                    // 데스크톱 전화번호 색상 변경
+                    const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                    if (desktopPhoneBtn) {
+                        desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                        desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                    }
+
+                    // 모바일 전화번호와 햄버거 버튼 색상 변경
+                    const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                    if (mobilePhoneBtn) {
+                        mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                        mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                    }
+
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.classList.remove('text-white');
+                        mobileMenuBtn.classList.add('text-black');
+                    }
+                } else {
+                    // 네비게이션 바 원상복구
+                    header.classList.remove('header-scrolled');
+                    header.classList.add('header-transparent');
+
+                    // 메가메뉴가 열려있지 않으면 mega-menu-open 클래스 제거
+                    if (!document.querySelector('.mega-menu.active')) {
+                        header.classList.remove('mega-menu-open');
+                    }
+
+                    // 로고 전환
+                    logoBlack.classList.add('hidden');
+                    logoWhite.classList.remove('hidden');
+
+                    // 데스크톱 메뉴 색상 원상복구
+                    const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                    desktopLinks.forEach(el => {
+                        el.classList.remove('text-black', 'hover:text-gray-600');
+                        el.classList.add('text-white', 'hover:text-gray-300');
+                    });
+
+                    // 데스크톱 전화번호 색상 원상복구
+                    const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                    if (desktopPhoneBtn) {
+                        desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                        desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                    }
+
+                    // 모바일 전화번호와 햄버거 버튼 색상 원상복구
+                    const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                    if (mobilePhoneBtn) {
+                        mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                        mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                    }
+
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.classList.remove('text-black');
+                        mobileMenuBtn.classList.add('text-white');
+                    }
+                }
+
+                // 플로팅 버튼 제어 - 히어로 섹션을 벗어나면 표시
+                if (window.scrollY > heroHeight * 0.8) {
+                    floatingButtons.classList.add('show');
+                } else {
+                    floatingButtons.classList.remove('show');
+                }
+            });
+
+
+        // ===================================
+        // 3. 전국 지사 섹션 관련 기능
+        // ===================================
+
+            // 📍 마스터 함수: 모든 지점 선택 로직을 제어하는 단일 함수
+            function selectOffice(officeKey) {
+                console.log('지점 선택:', officeKey);
+
+                // 🛡️ 무한 루프 방지 방어 코드
+                if (currentOffice === officeKey) {
+                    console.log('이미 선택된 지점입니다. 중복 실행 방지.');
+                    return; // 같은 지점이면 즉시 종료
+                }
+
+                // ✅ currentOffice 변수 업데이트
+                currentOffice = officeKey;
+
+                // 🎯 1. 지점 버튼 UI 업데이트
+                updateOfficeButtons(officeKey);
+
+                // 🗺️ 2. 지도에 해당 위치 표시 (지도가 초기화된 경우만)
+                if (mapInitialized && map) {
+                    showOfficeOnMapSafe(officeKey);
+                }
+
+                // 📋 3. 하단 상세 정보창 업데이트
+                const officeInfo = getOfficeInfo(officeKey);
+                if (officeInfo) {
+                    updateOfficeDisplay(officeInfo);
+                }
+            }
+
+            // 🏢 지점 정보 데이터 반환 함수
+            function getOfficeInfo(officeKey) {
+                const officeInfoData = {
+                    seoul: {
+                        name: '서울 본사',
+                        address: '서울특별시 서초구 반포대로 98 일신빌딩 4층',
+                        phone: '02-587-7787 / 02-591-4111',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '3호선 고속터미널역 도보 8분',
+                        bus: '반포대로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    gangnam: {
+                        name: '서울 강남 분사무소',
+                        address: '서울특별시 강남구 테헤란로37길 7 12층',
+                        phone: '02-587-7787',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '2호선 역삼역 도보 5분',
+                        bus: '강남역, 역삼역 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    ulsan: {
+                        name: '울산 지점',
+                        address: '울산광역시 남구 문수로 312 2-3층',
+                        phone: '052-221-7100',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '울산 시내버스 이용',
+                        bus: '문수로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    daegu: {
+                        name: '대구 지점',
+                        address: '대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호',
+                        phone: '053-756-9072',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '2호선 수성구청역 도보 10분',
+                        bus: '달구벌대로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    cheongju: {
+                        name: '청주 지점',
+                        address: '충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호',
+                        phone: '043-298-0201',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '청주 시내버스 이용',
+                        bus: '산남로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    daejeon: {
+                        name: '대전 지점',
+                        address: '대전 서구 둔산로123번길 21 엠시티타워 701호',
+                        phone: '0507-1444-8003 / 042-489-1970',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '1호선 정부청사역 도보 5분',
+                        bus: '둔산로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    },
+                    gwangju: {
+                        name: '광주 지점',
+                        address: '광주광역시 서구 화개중앙로 59 5층',
+                        phone: '0507-1329-4973',
+                        hours: '평일 09:00 - 18:00',
+                        subway: '광주 시내버스 이용',
+                        bus: '화개중앙로 주요 노선',
+                        parking: '건물 내 주차장 이용 가능'
+                    }
+                };
+
+                return officeInfoData[officeKey] || null;
+            }
+
+            // 🔄 기존 showOffice 함수는 selectOffice로 리다이렉트
+            function showOffice(office) {
+                selectOffice(office);
+            }
+
+            // 지점 정보 표시 업데이트 함수
+            function updateOfficeDisplay(office) {
+                const officeInfoContainer = document.getElementById('office-info');
+
+                officeInfoContainer.innerHTML = `
+                <div class="grid md:grid-cols-2 gap-8">
+                    <!-- 왼쪽 - 기본 정보 -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-gray-900 mb-6">${office.name}</h3>
+
+                        <dl class="space-y-4 text-gray-600">
+                            <div>
+                                <dt class="font-medium text-gray-900 mb-1">주소</dt>
+                                <dd>${office.address}</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-900 mb-1">전화</dt>
+                                <dd>${office.phone}</dd>
+                            </div>
+                            <div>
+                                <dt class="font-medium text-gray-900 mb-1">운영시간</dt>
+                                <dd>${office.hours}</dd>
+                            </div>
+                        </dl>
+
+                        <a href="https://map.naver.com/v5/search/${encodeURIComponent(office.address)}" target="_blank"
+                            class="inline-block mt-6 text-blue-600 font-medium hover:underline">
+                            네이버 지도에서 보기 →
+                        </a>
+                    </div>
+
+                    <!-- 오른쪽 - 교통편 -->
+                    <div>
+                        <h4 class="text-lg font-bold text-gray-900 mb-4">교통편</h4>
+                        <ul class="space-y-2 text-gray-600">
+                            <li>• 지하철: ${office.subway}</li>
+                            <li>• 버스: ${office.bus}</li>
+                            <li>• 주차: ${office.parking}</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+            }
+
+            // ===================================
+            // 4. 성공사례 섹션 관련 기능
+            // ===================================
+
+            // 성공사례 데이터 로드 및 표시 함수
+            async function loadSuccessCases() {
+                try {
+                    console.log('성공사례 데이터 로딩 시작...');
+
+                    // JSON 파일에서 성공사례 데이터 로드
+                    const response = await fetch('./cases/data/cases.json');
+                    if (!response.ok) {
+                        throw new Error('성공사례 데이터를 불러올 수 없습니다.');
+                    }
+
+                    const casesData = await response.json();
+                    console.log('성공사례 데이터 로드 완료:', casesData.length + '개');
+
+                    // 홈페이지에는 최신 6개 사례만 표시
+                    const featuredCases = casesData.slice(0, 6);
+
+                    displaySuccessCases(featuredCases);
+
+                } catch (error) {
+                    console.error('성공사례 로딩 실패:', error);
+                    showCasesError();
+                }
+            }
+
+            // 성공사례 카드 표시 함수
+            function displaySuccessCases(cases) {
+                const container = document.getElementById('cases-container');
+                const loading = document.getElementById('cases-loading');
+
+                if (!container || !loading) {
+                    console.error('성공사례 컨테이너를 찾을 수 없습니다.');
+                    return;
+                }
+
+                // 카드 HTML 생성
+                const cardsHTML = cases.map(caseItem => `
+                <div class="group bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100">
+                    <!-- 카테고리 및 날짜 -->
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">
+                            ${caseItem.category}
+                        </span>
+                        <span class="text-gray-500 text-sm">
+                            ${formatDate(caseItem.date)}
+                        </span>
+                    </div>
+                    
+                    <!-- 제목 -->
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors line-clamp-2">
+                        ${caseItem.title}
+                    </h3>
+                    
+                    <!-- 요약 -->
+                    <p class="text-gray-600 mb-4 line-clamp-3 leading-relaxed">
+                        ${caseItem.summary}
+                    </p>
+                    
+                    <!-- 결과 -->
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-green-700 font-medium text-sm">
+                                ${caseItem.result}
+                            </span>
+                        </div>
+                        <a href="/cases/detail.html?id=${caseItem.id}" 
+                           class="text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                            자세히 보기
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            `).join('');
+
+                // 컨테이너에 추가
+                container.innerHTML = cardsHTML;
+
+                // 로딩 숨기고 컨테이너 표시
+                loading.style.display = 'none';
+                container.classList.remove('hidden');
+
+                console.log('성공사례 카드 표시 완료');
+            }
+
+            // 날짜 포맷팅 함수 
+            function formatDate(dateString) {
+                const date = new Date(dateString);
+                const year = date.getFullYear();
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                return `${year}.${month}`;
+            }
+
+            // 성공사례 로딩 에러 표시 함수
+            function showCasesError() {
+                const loading = document.getElementById('cases-loading');
+                if (loading) {
+                    loading.innerHTML = `
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                                </path>
+                            </svg>
+                        </div>
+                        <p class="text-gray-600 text-lg font-medium">성공사례를 불러올 수 없습니다</p>
+                        <p class="text-gray-500 text-sm mt-2">잠시 후 다시 시도해주세요</p>
+                    </div>
+                `;
+                }
+            }
+
+            // ===================================
+            // 5. 페이지 초기화 및 공통 이벤트
+            // ===================================
+
+            // 페이지 로드 시 초기화
+            document.addEventListener('DOMContentLoaded', function () {
+                console.log('DOM 로드 완료');
+
+                // 메가메뉴 설정
+                setupMegaMenu();
+
+                // 모바일 메뉴 버튼 이벤트 리스너 추가
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+                }
+
+                // 모바일 메뉴 오버레이 클릭 시 닫기 (메뉴 영역 외부 클릭)
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (mobileMenu) {
+                    mobileMenu.addEventListener('click', function (e) {
+                        if (e.target === mobileMenu) {
+                            closeMobileMenu();
+                        }
+                    });
+                }
+
+                // ESC 키로 모바일 메뉴 닫기
+                document.addEventListener('keydown', function (e) {
+                    if (e.key === 'Escape') {
+                        const isMenuOpen = !document.getElementById('mobile-menu').classList.contains('translate-x-full');
+                        if (isMenuOpen) {
+                            closeMobileMenu();
+                        }
+                    }
+                });
+
+
+                // 네이버 맵이 아직 로드되지 않았으면 대기
+                if (!mapInitialized && typeof naver !== 'undefined' && naver.maps) {
+                    console.log('지연된 지도 초기화 시도...');
+                    initMap();
+                }
+
+                // 성공사례 데이터 로드
+                loadSuccessCases();
+            });
+
+            // 네이버 맵 API 로드 실패 시 대체 처리
+            window.addEventListener('load', function () {
+                setTimeout(() => {
+                    if (!mapInitialized) {
+                        console.log('지도 초기화 실패, 대체 컨텐츠 표시');
+                        showMapError('네이버 맵 API 로드 타임아웃');
+                    }
+                }, 5000); // 5초 후에도 로드되지 않으면 에러 표시
+            });
+        </script>
+</body>
+
+</html>
