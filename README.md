@@ -1,52 +1,69 @@
-# 법무법인 홈페이지 프로젝트
+# Yalebupjo Website
 
-## 프로젝트 개요
-백화점식 법무법인 홈페이지 구조 - 전국 9개 지사 네트워크를 보유한 중견 법무법인을 위한 웹사이트
+## 프로젝트 구조
 
-## 디렉토리 구조
 ```
-law-firm-website/
-├── index.html          # 메인 페이지
-├── about/             # 회사소개
+Yalebupjo_website/
+├── about/
 │   └── index.html
-├── criminal/          # 형사법률센터
+├── assets/
+│   ├── js/
+│   ├── keep/
+│   ├── lawyers/          # 변호사 프로필 이미지 (28개)
+│   ├── logo/             # 로고 이미지들
+│   └── video/            # 비디오 파일들 (4개)
+├── cases/
+│   ├── data/
+│   │   └── cases.json
+│   ├── detail.html
 │   └── index.html
-├── civil/             # 민사분쟁센터
+├── civil/
 │   └── index.html
-├── family/            # 가족법률센터
+├── corporate/
 │   └── index.html
-├── realestate/        # 부동산법률센터
+├── criminal/
 │   └── index.html
-├── corporate/         # 기업법무센터
+├── family/
 │   └── index.html
-└── traffic/           # 교통사고센터
-    └── index.html
+├── index.html            # 메인 페이지
+├── lawyers/
+│   └── index.html
+├── location/
+│   ├── gangnam.html
+│   ├── index.html
+│   └── seoul.html
+├── realestate/
+│   └── index.html
+├── traffic/
+│   └── index.html
+└── backup.html
 ```
 
-## 핵심 컨셉
-- **백화점식 구조**: 모든 법률 서비스를 한 곳에서 제공
-- **6대 전문센터**: 형사, 민사, 가사, 부동산, 기업, 교통사고
-- **전화 상담 중심**: 복잡한 폼 없이 전화 문의로 단순화
-- **모바일 퍼스트**: 간결한 구조로 모바일 사용성 최적화
+## 작업 진행 상황
 
-## 주요 특징
-1. **극단적 단순화**: 총 8페이지로 구성
-2. **원페이지 스크롤**: 각 페이지는 한 화면에서 모든 정보 제공
-3. **전화 CTA 중심**: 모든 페이지에 전화 상담 유도
-4. **플로팅 전화 버튼**: 어느 페이지에서든 즉시 연락 가능
+### 완료된 페이지
+- [x] 메인 페이지 (index.html)
+- [x] 소개 페이지 (about/index.html)
+- [x] 변호사 소개 페이지 (lawyers/index.html)
+- [x] 사례 페이지 (cases/index.html, cases/detail.html)
+- [x] 위치 정보 페이지 (location/index.html, location/seoul.html, location/gangnam.html)
 
-## 개발 시 고려사항
-- 메가메뉴 구현으로 전체 서비스 한눈에 파악
-- 반응형 디자인 필수 (특히 모바일)
-- SEO 최적화 (각 전문분야별 키워드)
-- 빠른 로딩 속도 유지
-- 24시간 긴급상담 강조 (특히 교통사고/형사)
+### 전문 분야 페이지
+- [x] 민사 (civil/index.html)
+- [x] 기업법무 (corporate/index.html)
+- [x] 형사 (criminal/index.html)
+- [x] 가족법 (family/index.html)
+- [x] 부동산 (realestate/index.html)
+- [x] 교통사고 (traffic/index.html)
 
-## 향후 확장 가능성
-- 각 센터별 상세 페이지 추가
-- 성공사례/뉴스 섹션
-- 변호사 프로필 페이지
-- 온라인 상담 예약 시스템
+### 자산 파일 
+- [x] 변호사 프로필 이미지 (28개)
+- [x] 로고 이미지들
+- [x] 비디오 파일들 (4개)
+- [x] 사례 데이터 (cases.json)
 
----
-*이 프로젝트는 중견 법무법인의 "크게 보이기" 전략과 실질적인 전화 상담 유도를 목표로 설계되었습니다.*
+### 백업 파일
+- [x] backup.html
+
+## 프로젝트 상태
+✅ **완료**: 모든 주요 페이지와 자산 파일이 구현되었습니다.
