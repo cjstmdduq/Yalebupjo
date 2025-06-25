@@ -1,16 +1,537 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>법무법인 - 교통사고</title>
-    <!-- Navigation and Footer Modules -->
-    <script src="../assets/js/nav.js"></script>
-    <script src="../assets/js/footer.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>교통사고 전문 - 법무법인(유한) 예일법조</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    body {font-family:'Pretendard',sans-serif;}
+    /* 이하 스타일은 원본 유지 */
+    .mega-menu{position:absolute;left:0;right:0;top:100%;background:white;box-shadow:0 10px 40px rgba(0,0,0,0.15);transform:translateY(-10px);opacity:0;visibility:hidden;transition:all .3s ease;border-top:1px solid #e5e7eb;}
+    .mega-menu.active{transform:translateY(0);opacity:1;visibility:visible;}
+    @media (max-width: 768px){.mega-menu{display:none;}}
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-1;}
+    .header-transparent{background:transparent;border-bottom:none;}
+    .header-scrolled{background:#fff;border-bottom:1px solid #f3f4f6;transition:all .3s ease;}
+    .header-transparent.mega-menu-open{background:white;border-bottom:1px solid #f3f4f6;}
+    .header-transparent.mega-menu-open a{color:#111827!important;}
+    .mobile-accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease;}
+    .mobile-accordion-content.active{max-height:300px;overflow-y:auto;}
+    .mobile-accordion-arrow{transition:transform .3s ease;}
+    .mobile-accordion-arrow.rotate{transform:rotate(180deg);}
+    .floating-buttons{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,0.95);backdrop-filter:blur(10px);border-top:1px solid rgba(0,0,0,0.1);transform:translateY(100%);transition:transform .3s ease-in-out;z-index:1000;padding:12px 0;}
+    .floating-buttons.show{transform:translateY(0);}
+    .mermaid-overlay{position:absolute;top:0;left:0;width:100%;height:100%;z-index:20;text-align:center;font-size:1.1rem;font-weight:400;color:#fff;background:rgba(0,0,0,.5);display:none;align-items:center;justify-content:center;padding:0 10px;border-radius:8px;pointer-events:auto;transition:opacity .5s;opacity:1;}
+    .mermaid-overlay.hide{opacity:0;transition:opacity .5s;}
+    @media (max-width: 768px){.mermaid-overlay{display:flex;}}
+  </style>
+
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/footer.js"></script>
 </head>
-<body>
-    <!-- Navigation will be inserted here by nav.js -->
-    <!-- 교통사고 페이지 -->
-    <!-- Footer will be inserted here by footer.js -->
+
+<body class="bg-white text-black">
+  <!-- HERO -->
+  <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
+    <div class="absolute inset-0 z-0">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover scale-125 object-[50%_30%]">
+        <source src="../assets/video/2.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+            법무법인(유한) 예일법조 교통사고전담팀
+          </p>
+          <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+            정당한 보상을<br>받으셨습니까?
+          </h1>
+          <p class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+            보험사와의 불공정한 싸움, 더 이상 혼자 하지 마십시오.<br>
+            교통사고 보험보상 전문팀이 함께합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float"></div>
+    <div class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse"></div>
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"></div>
+    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"></div>
+    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent"></div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="text-center mb-20">
+        <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">Traffic Accident</span>
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+          수치로 증명합니다
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          보험보상 증액 및 분쟁 해결 성과를 확인하십시오.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="287">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Settlement Rate</p>
+            <p class="text-xl text-white font-medium">보험금 증액률</p>
+            <p class="text-gray-400 mt-2">최초 제시 대비 평균 증액</p>
+          </div>
+        </div>
+
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="89">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">License Relief</p>
+            <p class="text-xl text-white font-medium">분쟁 승소율</p>
+            <p class="text-gray-400 mt-2">보험사 대상 소송 승소</p>
+          </div>
+        </div>
+
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="523">0</span>건
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Cases</p>
+            <p class="text-xl text-white font-medium">보험 분쟁 해결</p>
+            <p class="text-gray-400 mt-2">2024년 보상 처리 건수</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 lg:py-32 bg-white" x-data="{ activeTab: 'economic-crimes' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          사고 유형별 법률 서비스
+        </h2>
+        <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+          보험사 대응부터 소송까지, 정당한 보상을 위한 전문 서비스입니다.
+        </p>
+      </div>
+
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-16">
+        <button @click="activeTab = 'economic-crimes'"
+          :class="activeTab === 'economic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          보험금 부지급
+        </button>
+        <button @click="activeTab = 'sex-crimes'"
+          :class="activeTab === 'sex-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          과소산정 분쟁
+        </button>
+        <button @click="activeTab = 'violence-crimes'"
+          :class="activeTab === 'violence-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          과실비율 논란
+        </button>
+        <button @click="activeTab = 'traffic-crimes'"
+          :class="activeTab === 'traffic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          상해등급 이의
+        </button>
+        <button @click="activeTab = 'drug-crimes'"
+          :class="activeTab === 'drug-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          특수보험 처리
+        </button>
+        <button @click="activeTab = 'other-crimes'"
+          :class="activeTab === 'other-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'" class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          소송 대리
+        </button>
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div class="space-y-12">
+        <!-- 보험금 부지급 -->
+        <div x-show="activeTab === 'economic-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">보험금 부지급 분쟁</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 쟁점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 치료비 인정 범위 불합치</li>
+                <li>• 휴업손해 증빙 부족 판단</li>
+                <li>• 기왕증 인과관계 부인</li>
+                <li>• 합의금 지급 거부 통보</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>분쟁 대응:</strong> 의료 자문서 확보, 금융감독원 분쟁조정 신청, 지급 명령 촉구.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>소송 제기:</strong> 부지급 결정 취소 소송, 손해배상 청구, 가처분 신청.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 부지급 변경 147건, 평균 증액 4,250만원
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 과소산정 분쟁 -->
+        <div x-show="activeTab === 'sex-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">보험금 과소산정 분쟁</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">핵심 쟁점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 후유증 인정 범위 축소</li>
+                <li>• 향후치료비 가능성 부인</li>
+                <li>• 개호비 필요성 감정 거부</li>
+                <li>• 일실소득 산정 기준 논란</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>산정 이의:</strong> 전문의 소견서 발급, 유사 판례 조사, 산정 기준 재검토.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>분쟁 해결:</strong> 보험업법 위반 지적, 법원 산정 신청, 강제 집행.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 과소산정 시정 93건, 평균 증액률 238%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 과실비율 논란 -->
+        <div x-show="activeTab === 'violence-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">과실비율 논란 해결</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 쟁점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 보험사 일방적 과실 판정</li>
+                <li>• 블랙박스 영상 무시</li>
+                <li>• 경찰 과실 판단 의존</li>
+                <li>• 보험금 삭감 압박</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>과실 재평가:</strong> 사고 재현, CCTV 분석, 전문감정 의뢰, 판례 반박.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>분쟁 해결:</strong> 보험업법 위반 신고, 분쟁조정 신청, 민사소송 제기.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 과실비율 변경 112건, 평균 15%p 감소
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 상해등급 이의 -->
+        <div x-show="activeTab === 'traffic-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">상해등급 이의 제기</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 쟁점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 맥브라이드 기준 하향 적용</li>
+                <li>• 후유장해 과소평가</li>
+                <li>• 의학적 소견 무시</li>
+                <li>• 보상금 억제 의도</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>등급 재심사:</strong> 의료기록 재감정, 상해등급위원회 신청, 소송 대비.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>보상 증액:</strong> 상향 조정 근거 확보, 후유증 입증, 추가 치료비 청구.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 등급 상향 87건, 보상금 평균 67% 증액
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 특수보험 처리 -->
+        <div x-show="activeTab === 'drug-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">특수보험 사고 처리</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 논점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 자동차보험 미가입 사고</li>
+                <li>• 대물배상책임보험 한도 초과</li>
+                <li>• 운전자보험 보상 범위</li>
+                <li>• 타보험 연계 처리</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>특수 처리:</strong> 무보험차 상대 사고, 정부보장사업 연계, 타보험 구상.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>복합 처리:</strong> 산재·근재 연계, 범죄피해보상, 법원 구조금 신청.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 특수사고 156건, 보상 확보율 91%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 소송 대리 -->
+        <div x-show="activeTab === 'other-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">보험소송 대리</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">핵심 쟁점</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 보험사 상대 손해배상 소송</li>
+                <li>• 지급거절 처분 취소소송</li>
+                <li>• 보험금 가압류·가처분</li>
+                <li>• 판결 강제집행</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>소송 전략:</strong> 증거 수집, 전문감정 신청, 판례 분석, 합의 유도.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>강제집행:</strong> 판결 확정 즉시 압류·추심, 보험사 자산 파악, 신속 회수.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 보험소송 189건, 승소율 84%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          교통사고 보험보상 프로세스
+        </h2>
+        <p class="text-lg text-w max-w-2xl mx-auto">
+          사고 발생부터 보험금 수령까지 전 과정을 한눈에 확인하십시오.
+        </p>
+      </div>
+
+      <div class="mx-auto relative" style="padding:0;background:transparent;box-shadow:none;border:none;border-radius:0;">
+        <div id="mermaidOverlay" class="mermaid-overlay">
+          보험보상 프로세스를<br>미리 확인하십시오.<br>(터치로 확대·이동 가능)
+        </div>
+
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600" style="background:transparent;border:none;border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
+            </svg>
+          </button>
+          <button onclick="zoomDiagram(-0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600" style="background:transparent;border:none;border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+            </svg>
+          </button>
+          <button onclick="resetZoom()" class="w-10 h-10 flex items-center justify-center text-gray-600" style="background:transparent;border:none;border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+            </svg>
+          </button>
+        </div>
+
+        <div id="mermaidContainer" class="overflow-auto" style="height:60vh;cursor:grab;background:white;border:1px solid #e0e0e0;border-radius:8px;">
+          <div id="mermaidDiagram" class="mermaid transition-transform duration-300" style="transform:scale(1);transform-origin:center center;">
+flowchart TB
+    Accident([사고 발생]) --> Emergency[119/경찰 신고<br>응급치료]
+    Emergency --> Consult[전문가 상담<br>보상 전략 수립]
+    
+    Consult --> Evidence[증거 수집<br>·블랙박스<br>·CCTV/진단서]
+    Evidence --> InsClaim[보험사 접수<br>사고 통보]
+    
+    InsClaim --> FaultRatio{과실비율 판정}
+    
+    FaultRatio -->|동의| Treatment[치료 진행<br>보험사 지급]
+    FaultRatio -->|불만| FaultDispute[과실비율 이의<br>·재현·감정]
+    
+    Treatment --> MedReview[의료비 심사<br>보험사 검토]
+    FaultDispute --> Treatment
+    
+    MedReview --> PayDecision{지급 결정}
+    
+    PayDecision -->|지급| Calculate[보험금 산정<br>·치료비<br>·휴업손해<br>·위자료]
+    PayDecision -->|거절/삭감| Dispute[부지급 대응<br>·자문서<br>·분쟁조정]
+    
+    Calculate --> GradeCheck{상해등급 적정?}
+    
+    GradeCheck -->|동의| Payment[보험금 수령<br>합의서 작성]
+    GradeCheck -->|불만| GradeAppeal[등급 재심사<br>후유장해 감정]
+    
+    Dispute --> LegalAction[법적 대응<br>·분쟁조정<br>·민사소송]
+    GradeAppeal --> Recalculate[보험금 재산정<br>증액 지급]
+    
+    LegalAction --> CourtDecision[법원/위원회<br>판결/결정]
+    Recalculate --> Payment
+    CourtDecision --> FinalPayment[최종 보상<br>강제집행]
+    
+    Payment --> End([보상 완료])
+    FinalPayment --> End
+    
+    %% 스타일 지정
+    classDef process fill:#4dabf7,stroke:#1971c2,color:#fff
+    classDef decision fill:#ffd43b,stroke:#fab005,color:#000
+    classDef dispute fill:#ff6b6b,stroke:#c92a2a,color:#fff
+    classDef final fill:#51cf66,stroke:#2f9e44,color:#fff
+    
+    class Emergency,Consult,Evidence,InsClaim,Treatment,MedReview,Calculate,Payment process
+    class FaultRatio,PayDecision,GradeCheck decision
+    class FaultDispute,Dispute,GradeAppeal,LegalAction,CourtDecision,FinalPayment,Recalculate dispute
+    class End final
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 lg:py-32 bg-white scroll-mt-24">
+    <div class="text-center mb-16 sm:mb-20">
+      <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">FAQ</span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+        교통사고 자주 묻는 질문
+      </h2>
+      <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+        상담 전 꼭 확인하십시오.
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200 px-4">
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 피해자와 합의하면 형사처벌을 받지 않나요?</span><span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          대체로 합의가 양형에 큰 영향을 미치지만, 음주운전이나 뺑소니 등 가중사유가 있다면 실형 가능성도 있습니다. 사건별 전략이 필요합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 보험사에서 과실비율을 높게 잡은 이유는 무엇인가요?</span><span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          경찰의 1차 판단과 보험사 기준이 다를 수 있습니다. 블랙박스 영상, 현장 도면, CCTV 등을 재분석하여 이의제기가 가능합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 보험사가 치료비를 지급하지 않는데 방법이 있나요?</span><span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          금융감독원 분쟁조정신청, 민사소송 등을 병행하여 압박하면 대부분 조정됩니다. 의료자문서가 핵심 증거입니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 보험금이 터무니없이 적게 나왔는데 어떻게 해야 하나요?</span><span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          전문가 자문을 받아 보험금 산정의 적정성을 검토하고, 필요시 분쟁조정이나 소송으로 정당한 보상을 받으실 수 있습니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 상해등급이 낮게 나왔는데 이의제기가 가능한가요?</span><span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          의료기록을 자세히 검토하여 상해등급 재심사를 신청할 수 있으며, 후유장해가 인정되면 등급이 상향되어 보상금이 크게 증액됩니다.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 기존 스크립트(애니메이션·줌 등) 그대로 유지 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({startOnLoad:true,theme:'neutral',flowchart:{htmlLabels:true,curve:'basis',nodeSpacing:50,rankSpacing:50}});
+    const container=document.getElementById('mermaidContainer');
+    const diagram=document.getElementById('mermaidDiagram');
+    let isDragging=false,startX,startY,scrollLeft,scrollTop;
+    container.addEventListener('mousedown',e=>{isDragging=true;container.style.cursor='grabbing';startX=e.pageX-container.offsetLeft;startY=e.pageY-container.offsetTop;scrollLeft=container.scrollLeft;scrollTop=container.scrollTop;});
+    container.addEventListener('mouseleave',()=>{isDragging=false;container.style.cursor='grab';});
+    container.addEventListener('mouseup',()=>{isDragging=false;container.style.cursor='grab';});
+    container.addEventListener('mousemove',e=>{if(!isDragging)return;e.preventDefault();const x=e.pageX-container.offsetLeft;const y=e.pageY-container.offsetTop;const walkX=(x-startX)*1.5;const walkY=(y-startY)*1.5;container.scrollLeft=scrollLeft-walkX;container.scrollTop=scrollTop-walkY;});
+    let touchStartX,touchStartY;
+    container.addEventListener('touchstart',e=>{touchStartX=e.touches[0].pageX-container.offsetLeft;touchStartY=e.touches[0].pageY-container.offsetTop;scrollLeft=container.scrollLeft;scrollTop=container.scrollTop;});
+    container.addEventListener('touchmove',e=>{e.preventDefault();const x=e.touches[0].pageX-container.offsetLeft;const y=e.touches[0].pageY-container.offsetTop;const walkX=(x-touchStartX)*1.5;const walkY=(y-touchStartY)*1.5;container.scrollLeft=scrollLeft-walkX;container.scrollTop=scrollTop-walkY;});
+    let currentZoom=window.innerWidth<=768?1:1.2;
+    function zoomDiagram(delta){currentZoom=Math.max(0.5,Math.min(2,currentZoom+delta));diagram.style.transform=`scale(${currentZoom})`;diagram.style.transformOrigin='top left';diagram.style.width=`${100*currentZoom}%`;diagram.style.height=`${100*currentZoom}%`;}
+    function resetZoom(){currentZoom=1.2;diagram.style.transform=`scale(${currentZoom})`;diagram.style.transformOrigin='top left';diagram.style.width=`${100*currentZoom}%`;diagram.style.height=`${100*currentZoom}%`;}
+  </script>
 </body>
 </html>

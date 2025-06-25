@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" class="scroll-smooth">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -9,17 +10,14 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css"
-    rel="stylesheet"
-  />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
-  <!-- 네비게이션 관련 CSS 스타일 -->
   <style>
     body {
       font-family: 'Pretendard', sans-serif;
     }
-    
+
     /* 메가메뉴 스타일 */
     .mega-menu {
       position: absolute;
@@ -48,14 +46,22 @@
       }
     }
 
-    /* 네비게이션 바 스타일 추가 */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
     .header-transparent {
       background: transparent;
       border-bottom: none;
     }
 
     .header-scrolled {
-      background: white;
+      background: #fff;
       border-bottom: 1px solid #f3f4f6;
       transition: all 0.3s ease;
     }
@@ -90,101 +96,770 @@
       transform: rotate(180deg);
     }
 
-    /* 플로팅 버튼 영역 스타일 */
     .floating-buttons {
       position: fixed;
       bottom: 0;
       left: 0;
       right: 0;
-      background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
-      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
       transform: translateY(100%);
       transition: transform 0.3s ease-in-out;
       z-index: 1000;
-      padding: 0;
+      padding: 12px 0;
     }
 
     .floating-buttons.show {
       transform: translateY(0);
     }
     
-    /* 페이지 컨텐츠 스타일 */
-    .hero-video {
+    /* 머메이드 모바일 오버레이 */
+    .mermaid-overlay {
       position: absolute;
-      inset: 0;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      z-index: -1;
+      z-index: 20;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 8px;
+      pointer-events: auto;
+      transition: opacity 0.5s;
+      opacity: 1;
+    }
+    .mermaid-overlay.hide {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    @media (max-width: 768px) {
+      .mermaid-overlay {
+        display: flex;
+      }
     }
   </style>
-    <!-- Navigation and Footer Modules -->
+    
+    <!-- Navigation and Footer Modules (Assuming these files exist) -->
     <script src="../assets/js/nav.js"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
 
+
 <body class="bg-white text-black">
-  <!-- NAVIGATION START -->
-    <!-- Navigation will be inserted here by nav.js -->  <!-- NAVIGATION END -->
-
-  <!-- HERO SECTION -->
-  <section class="relative h-screen flex items-center justify-center bg-gray-900 text-white">
-    <div class="absolute inset-0 bg-black/50 z-0"></div>
-    <div class="container mx-auto px-6 relative z-10 text-center">
-      <h1 class="text-5xl md:text-6xl font-bold mb-6">민사 전문 법률 서비스</h1>
-      <p class="text-xl md:text-2xl max-w-3xl mx-auto mb-10">
-        법무법인(유한) 예일법조는 다양한 민사 분쟁에서 최상의 법률 서비스를 제공합니다.
-      </p>
-      <a href="tel:02-587-7787" class="bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all inline-block">
-        무료 상담 문의하기
-      </a>
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
+    <!-- 배경 비디오 -->
+    <div class="absolute inset-0 z-0">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="../assets/video/1.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-black/50"></div>
     </div>
-  </section>
 
-  <!-- 페이지 내용 - 민사 관련 내용을 여기에 추가 -->
-  <section class="py-16 bg-white">
-    <div class="container mx-auto px-6">
-      <h2 class="text-3xl font-bold text-center mb-12">민사 법률 서비스</h2>
-      <!-- 여기에 민사 관련 컨텐츠를 추가하세요 -->
-      <p class="text-center text-gray-600">이 페이지는 공사 중입니다.</p>
-    </div>
-  </section>
-
-  <!-- 푸터 -->
-    <!-- Footer will be inserted here by footer.js -->
-  <!-- FLOATING BUTTON -->
-  <div id="floating-buttons" class="floating-buttons">
-    <div class="container mx-auto px-4">
-      <div class="flex justify-center items-center">
-        <a
-          href="tel:02-587-7787"
-          class="group flex items-center justify-center gap-3 bg-gray-900 text-white px-6 py-3 rounded-full text-base font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg"
-        >
-          <span class="text-gray-400">상담문의</span>
-          <span class="text-gray-400">|</span>
-          <span class="font-bold">02-587-7787</span>
-          <svg
-            class="w-5 h-5 ml-1"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
-            />
-          </svg>
-        </a>
+    <!-- 콘텐츠 영역 -->
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+            법무법인(유한) 예일법조 민사전담팀
+          </p>
+          <h1
+            class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+            정당한 권리,<br>되찾아 드립니다.
+          </h1>
+          <p
+            class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+            부동산·손해배상·계약분쟁 등 전 분야 전문 대응.<br>
+            민사전담팀과 최적의 전략을 세워보세요.
+          </p>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- JS START -->
+    <!-- 아래 스크롤 화살표 -->
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- 로펌 소개 (스탯형) -->
+  <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
+    <!-- 배경 효과 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float"></div>
+    <div class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse"></div>
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"></div>
+    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"></div>
+    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent"></div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="text-center mb-20">
+        <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">Civil Litigation</span>
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+          결과로 입증합니다
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          변호사의 역량은 결과로 증명됩니다.<br>
+          의뢰인의 재산을 지키고 정당한 권리를 되찾아온 통계입니다.
+        </p>
+      </div>
+
+      <!-- 메인 스탯 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
+
+        <!-- 재산권 분쟁 승소율 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="82">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">WINNING RATE</p>
+            <p class="text-xl text-white font-medium">재산권 분쟁 승소율</p>
+            <p class="text-gray-400 mt-2">소송 및 조정을 통한 권리 확보</p>
+          </div>
+        </div>
+
+        <!-- 누적 손해배상 인용액 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="320">0</span>억+
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">DAMAGES RECOVERED</p>
+            <p class="text-xl text-white font-medium">누적 손해배상 인용액</p>
+            <p class="text-gray-400 mt-2">교통사고·의료소송 등 전문 분야</p>
+          </div>
+        </div>
+
+        <!-- 주요 민사소송 수행 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="850">0</span>+
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">MAJOR LAWSUITS</p>
+            <p class="text-xl text-white font-medium">주요 민사소송 수행</p>
+            <p class="text-gray-400 mt-2">부동산·건설·M&A 등 실적 중심</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 lg:py-32 bg-white" x-data="{ activeTab: 'real-estate' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          분야별 법률 서비스
+        </h2>
+        <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+          민사 전문 변호사는 의뢰인의 상황을 가장 유리한 방향으로 이끌어갈 전략을 제시합니다.
+        </p>
+      </div>
+
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-16">
+        <button @click="activeTab = 'real-estate'"
+          :class="activeTab === 'real-estate' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          부동산/건설
+        </button>
+        <button @click="activeTab = 'damages'"
+          :class="activeTab === 'damages' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          손해배상/보험
+        </button>
+        <button @click="activeTab = 'contracts'"
+          :class="activeTab === 'contracts' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          계약/상거래
+        </button>
+        <button @click="activeTab = 'family-law'"
+          :class="activeTab === 'family-law' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          가사/상속
+        </button>
+        <button @click="activeTab = 'ip'"
+          :class="activeTab === 'ip' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          지식재산권
+        </button>
+        <button @click="activeTab = 'admin-tax'"
+          :class="activeTab === 'admin-tax' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          행정/조세
+        </button>
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div class="space-y-12">
+        <!-- 부동산/건설 -->
+        <div x-show="activeTab === 'real-estate'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">부동산/건설</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 명도소송, 건물인도, 퇴거청구</li>
+                <li>• 임대차보증금 반환, 권리금 분쟁</li>
+                <li>• 공사대금, 하자보수, 추가공사비</li>
+                <li>• 소유권이전등기, 등기말소</li>
+                <li>• 재개발·재건축, 지역주택조합 분쟁</li>
+                <li>• 사해행위취소, 공유물분할</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>자산 보호:</strong> 소송 전 가압류·가처분 등 보전처분을 통해 상대방의 재산 처분을 막고 승소 후의 실익을 확보합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>분쟁 해결:</strong> 복잡한 권리관계를 명확히 분석하고, 감정 절차 및 증거 확보를 통해 의뢰인의 재산권을 지켜냅니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 부동산 분쟁 412건, 보전처분 인용률 93%, 명도소송 평균 처리기간 4.5개월
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 손해배상/보험 -->
+        <div x-show="activeTab === 'damages'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">손해배상/보험</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 교통사고 손해배상 (위자료, 휴업손해)</li>
+                <li>• 의료사고 (의료과실 입증, 손해액 산정)</li>
+                <li>• 산업재해 손해배상, 근재보험</li>
+                <li>• 보험금 청구, 보험사 상대 소송</li>
+                <li>• 학교폭력, 명예훼손 등 불법행위</li>
+                <li>• 제조물책임, 시설물하자</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>손해액 극대화:</strong> 신체감정, 사실조회 등 전문적인 입증 절차를 통해 정당한 손해배상액을 모두 인정받도록 조력합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>과실 다툼:</strong> 보험사의 부당한 과실상계 주장에 대응하고, 블랙박스 영상 분석, 사고 재구성 등을 통해 과실비율을 바로잡습니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 손해배상 288건, 보험사 제시액 대비 평균 2.8배 증액, 의료소송 승소율 41%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 계약/상거래 -->
+        <div x-show="activeTab === 'contracts'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">계약/상거래</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 대여금, 물품대금, 용역대금 청구</li>
+                <li>• 계약해제·해지, 계약불이행</li>
+                <li>• 투자금 반환, 약정금 청구</li>
+                <li>• 프랜차이즈, 대리점 계약 분쟁</li>
+                <li>• M&A, 기업 법률 자문</li>
+                <li>• 전자상거래, IT 관련 분쟁</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>채권 회수:</strong> 지급명령, 소액사건심판 등 신속한 절차를 활용하고, 채무자 재산조사를 통해 강제집행의 실효성을 높입니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>위험 관리:</strong> 계약서 검토 및 법률 자문을 통해 잠재적 분쟁 요소를 사전에 차단하고 안정적인 사업 운영을 지원합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 상사채권 670건, 채권 회수 성공률 88%, 계약서 검토 1,200건 이상
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 가사/상속 -->
+        <div x-show="activeTab === 'family-law'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">가사/상속</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 재판상 이혼, 재산분할, 위자료</li>
+                <li>• 양육권, 양육비, 면접교섭권</li>
+                <li>• 상속재산분할, 유류분 반환 청구</li>
+                <li>• 상속포기, 한정승인, 기여분</li>
+                <li>• 성년후견, 친생자관계 확인</li>
+                <li>• 유언장 작성 및 효력 검증</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>재산분할 전략:</strong> 숨겨진 재산을 찾아내고, 기여도를 적극 입증하여 의뢰인의 재산권을 최대한 보장합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>상속 분쟁 조정:</strong> 상속인 간의 감정적 대립을 중재하고, 법리적 분석을 통해 공평하고 원만한 재산 분배를 이끌어냅니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 이혼/상속 195건, 재산분할 1심 결과 불복률 15% 미만, 유류분 청구 평균 인용액 1.8억원
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 지식재산권 -->
+        <div x-show="activeTab === 'ip'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">지식재산권</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 저작권 침해 금지 및 손해배상</li>
+                <li>• 특허, 상표, 디자인권 침해 소송</li>
+                <li>• 직무발명보상금 청구</li>
+                <li>• 영업비밀 침해, 부정경쟁행위</li>
+                <li>• 퍼블리시티권, 초상권 침해</li>
+                <li>• IT/기술 라이선스 계약 자문</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>권리 보호:</strong> 침해 경고장 발송, 가처분 신청 등 신속한 조치로 추가적인 피해 확산을 막고 권리를 보호합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>가치 평가:</strong> 기술 및 콘텐츠의 가치를 정확히 평가하여 손해배상액을 산정하고, 기술이전 및 라이선스 협상을 유리하게 이끕니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 IP 분쟁 98건, 침해금지 가처분 인용률 85%, 손해배상액 평균 인정률 75%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 행정/조세 -->
+        <div x-show="activeTab === 'admin-tax'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">행정/조세</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 영업정지·취소 처분 취소소송</li>
+                <li>• 과징금, 이행강제금 부과처분 취소</li>
+                <li>• 정보공개거부처분 취소소송</li>
+                <li>• 각종 인허가 거부처분 취소</li>
+                <li>• 양도소득세, 상속세, 증여세 불복</li>
+                <li>• 법인세, 부가가치세 등 조세심판</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>처분 대응:</strong> 행정청의 재량권 남용, 절차상 하자 등 위법성을 주장하여 부당한 행정처분을 취소시킵니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>조세 불복:</strong> 과세전적부심사, 이의신청, 조세심판, 행정소송까지 단계별 최적의 전략으로 부당한 세금을 바로잡습니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 행정처분 취소율 62%, 조세불복 인용액 150억원, 집행정지 인용률 91%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 섹션 헤더 -->
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          민사소송 프로세스
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          복잡한 소송 절차를 한눈에 살펴보세요.
+        </p>
+      </div>
+
+      <!-- Mermaid 다이어그램 -->
+      <div class="mx-auto relative" style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlay" class="mermaid-overlay">
+           민사소송 진행 절차를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom()" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
+
+        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagram" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            graph TD
+                Start([민사 분쟁 발생]) --> Consult[변호사 상담<br>- 사실관계 파악<br>- 증거자료 검토]
+
+                Consult --> ClientType{의뢰인 유형}
+                ClientType --> |원고 (소송 제기)| PlaintiffTrack
+                ClientType --> |피고 (소송 당함)| DefendantTrack
+
+                %% 원고 트랙
+                PlaintiffTrack --> Strategy[소송 전략 수립<br>- 청구원인/취지 특정<br>- 입증계획 수립]
+                Strategy --> Preserve[증거보전/보전처분<br>- 가압류/가처분 신청]
+                Preserve --> FileSuit[소장 작성 및 제출]
+                FileSuit --> Serve[법원의 소장 심사 및<br>피고에게 부본 송달]
+                Serve --> DefendantTrack
+
+                %% 피고 트랙
+                DefendantTrack --> Receive[소장 부본 수령]
+                Receive --> DefendStrategy[변호사 상담<br>- 답변서 제출 기한 확인<br>- 대응 전략 수립]
+                DefendStrategy --> Answer[답변서 작성 및 제출]
+                Answer --> Pleadings
+
+                %% 공통 절차
+                Pleadings[준비서면 공방<br>- 원고/피고 주장 및<br>증거 제출] --> HearingPrep[변론기일 준비<br>- 증인/감정 신청<br>- 사실조회 신청]
+                HearingPrep --> Hearings{변론기일 진행}
+                Hearings -- 변론 종결 --> Judgment[판결 선고]
+                Hearings -- 추가 심리 필요 --> Pleadings
+
+                Judgment --> Analysis[판결문 분석<br>- 승/패소 결과 확인<br>- 항소 여부 결정]
+                Analysis --> AppealChoice{항소 결정}
+                
+                AppealChoice --> |항소 포기| Finalize[판결 확정]
+                AppealChoice --> |항소 제기| Appeal[항소장 제출<br>(2주 이내)]
+                
+                Finalize --> Enforcement[강제집행/권리실현<br>- 압류, 추심, 경매 등]
+                Enforcement --> End([사건 종결])
+
+                Appeal --> AppealCourt[항소심 진행<br>- 항소이유서 제출<br>- 2심 변론 및 판결]
+                AppealCourt --> SupremeChoice{상고 검토}
+                
+                SupremeChoice --> |상고 포기| Finalize
+                SupremeChoice --> |상고 제기| SupremeCourt[상고심 진행<br>(대법원)]
+                
+                SupremeCourt --> FinalVerdict[최종 판결]
+                FinalVerdict --> Finalize
+
+                %% 조정/화해
+                Pleadings --> Mediation[조정/화해권고<br>- 법원의 직권 회부<br>- 당사자 신청]
+                Mediation --> MediationResult{조정/화해 결과}
+                MediationResult --> |성립| Finalize
+                MediationResult --> |불성립| Hearings
+
+                classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+                classDef clientAction fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+                classDef courtProcess fill:#e9ecef,stroke:#adb5bd,color:#000,stroke-width:2px
+                classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+                classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+
+                class Consult,Strategy,Preserve,DefendStrategy,Answer,Pleadings,HearingPrep,Analysis lawyerAction
+                class PlaintiffTrack,DefendantTrack,FileSuit,Receive,Appeal,Enforcement,SupremeCourt clientAction
+                class Serve,Hearings,Judgment,AppealCourt,FinalVerdict,Mediation courtProcess
+                class ClientType,AppealChoice,SupremeChoice,MediationResult decision
+                class End,Finalize endNode
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 lg:py-32 bg-white scroll-mt-24">
+    <div class="text-center mb-16 sm:mb-20">
+      <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">FAQ</span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+        자주 묻는 질문
+      </h2>
+      <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+        민사소송 의뢰 전 꼭 확인하세요.
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200 px-4">
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 변호사 선임 없이 '나홀로 소송'도 가능할까요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          네, 가능합니다. 하지만 소송 절차는 매우 복잡하고 법리적 쟁점을 정확히 주장하고 입증해야 하므로, 전문가의 도움 없이 진행하면 불리한 결과를 얻을 수 있습니다. 특히 소송가액이 크거나 사실관계가 복잡하다면 변호사 선임을 적극 권장합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 변호사 선임 비용은 어떻게 되나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          비용은 크게 착수금과 성공보수로 나뉩니다. 착수금은 소송의 난이도, 소송가액 등을 고려하여 책정되며, 성공보수는 승소 시 받게 되는 경제적 이익의 일정 비율로 약정합니다. 상담 시 투명하게 비용 내역을 안내해 드립니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 법원으로부터 소장을 받았는데 어떻게 해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          소장을 받은 날로부터 30일 이내에 답변서를 제출해야 합니다. 이 기간 내에 답변서를 제출하지 않으면 상대방의 주장을 모두 인정하는 것으로 간주되어 불리한 판결을 받을 수 있습니다. 즉시 변호사와 상담하여 대응 전략을 수립해야 합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 소송 전에 상대방 재산을 묶어둘 수 있나요? (가압류/가처분)</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          네, 가능합니다. 이를 '보전처분'이라고 합니다. 승소하더라도 상대방이 재산을 빼돌리면 강제집행이 불가능하므로, 소송 전에 미리 상대방의 부동산, 예금, 자동차 등을 가압류하거나 처분하지 못하도록 가처분 신청을 하는 것이 매우 중요합니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 소송 기간은 보통 얼마나 걸리나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          사건의 복잡성, 쟁점의 수, 증거 신청(감정, 사실조회 등) 여부에 따라 크게 달라집니다. 비교적 간단한 사건은 6개월 내외로 종결되기도 하지만, 1심 판결까지 1년 이상 소요되는 경우도 많습니다. 항소나 상고를 하면 기간은 더 길어집니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 반드시 재판에 출석해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          변호사를 선임하면 의뢰인이 직접 법정에 출석하지 않아도 됩니다. 변호사가 대리인으로서 모든 재판 절차를 진행합니다. 다만, 당사자 신문이 필요한 경우에는 출석해야 할 수 있습니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 승소하면 변호사 비용을 상대방에게 받을 수 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          네, 승소하면 '소송비용확정신청'을 통해 상대방에게 변호사 보수를 포함한 소송 비용의 일부를 청구할 수 있습니다. 다만, 실제 지출한 변호사 비용 전액이 아닌, 대법원 규칙에서 정한 기준에 따라 산정된 금액만 받을 수 있습니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 증거가 부족한데 소송을 할 수 있을까요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          민사소송에서는 주장을 하는 쪽에서 증거를 통해 입증해야 합니다. 증거가 부족하면 불리할 수 있지만, 법원을 통한 사실조회, 문서제출명령, 감정신청 등 다양한 증거 수집 방법이 있습니다. 변호사와 상담하여 입증 가능성을 먼저 진단받는 것이 중요합니다.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- JS -->
   <script>
-    // 네비게이션 및 스크롤 관련 기능들은 nav.js에서 처리됩니다
+    // 네비게이션 및 스크롤 관련 기능 (가정: nav.js에서 처리)
+    // ...
+
+    // 스탯 섹션 카운터 애니메이션
+    function animateCounter(element) {
+      if (element.isAnimating) return;
+      element.isAnimating = true;
+
+      const target = parseInt(element.getAttribute('data-target'));
+      const duration = 2500;
+      let start = 0;
+      let current = start;
+      let startTime = null;
+
+      function animate(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 4);
+        current = Math.floor(target * easeProgress);
+
+        element.textContent = current.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          element.textContent = target.toLocaleString();
+          element.isAnimating = false;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.counter');
+          counters.forEach((counter, index) => {
+            if (!counter.classList.contains('animated')) {
+              counter.classList.add('animated');
+              setTimeout(() => {
+                animateCounter(counter);
+              }, index * 200);
+            }
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Mermaid 다이어그램 관련
+    const container = document.getElementById('mermaidContainer');
+    const diagram = document.getElementById('mermaidDiagram');
+    let isDragging = false;
+    let startX, startY, scrollLeft, scrollTop;
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      startY = e.pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
+
+    container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
+    container.addEventListener('mouseup', () => { isDragging = false; container.style.cursor = 'grab'; });
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const y = e.pageY - container.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    });
+
+    // 터치 이벤트
+    container.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - container.offsetLeft;
+        startY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => { isDragging = false; });
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const y = e.touches[0].pageY - container.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    }, { passive: false });
+
+    let currentZoom = window.innerWidth <= 768 ? 1: 1.2;
+
+    function zoomDiagram(delta) {
+      currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+    }
+
+    function resetZoom() {
+      currentZoom = window.innerWidth <= 768 ? 1: 1.2;
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        observer.observe(statsSection);
+      }
+      
+      const initialDiagram = document.getElementById('mermaidDiagram');
+      if (initialDiagram) {
+        initialDiagram.style.transform = `scale(${currentZoom})`;
+        initialDiagram.style.transformOrigin = 'top left';
+      }
+      
+      const overlay = document.getElementById('mermaidOverlay');
+      if (overlay) {
+        const hideOverlay = () => {
+          overlay.classList.add('hide');
+          setTimeout(() => { overlay.style.display = 'none'; }, 500);
+        };
+        overlay.addEventListener('touchstart', hideOverlay, { once: true });
+        overlay.addEventListener('click', hideOverlay, { once: true });
+        overlay.addEventListener('wheel', hideOverlay, { once: true });
+        const mermaidContainer = document.getElementById('mermaidContainer');
+        if (mermaidContainer) {
+          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+        }
+      }
+    });
   </script>
-  <!-- JS END -->
+
+  <!-- Mermaid.js 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+        startOnLoad: true,
+        theme: 'neutral',
+        flowchart: {
+            htmlLabels: true,
+            curve: 'basis'
+        }
+    });
+  </script>
 </body>
+
 </html>

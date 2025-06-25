@@ -1,0 +1,1860 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>형사 전문 분야 - 법무법인(유한) 예일법조</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+
+  <!-- AlpineJS -->
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    /* 메가메뉴 스타일 */
+    .mega-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      background: white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      transform: translateY(-10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .mega-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 모바일에서 메가메뉴 숨기기 */
+    @media (max-width: 768px) {
+      .mega-menu {
+        display: none;
+      }
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .header-transparent {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .header-scrolled {
+      background: #fff;
+      border-bottom: 1px solid #f3f4f6;
+      transition: all 0.3s ease;
+    }
+
+    /* 메가메뉴 열렸을 때 헤더 스타일 */
+    .header-transparent.mega-menu-open {
+      background: white;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .header-transparent.mega-menu-open a {
+      color: #111827 !important;
+    }
+
+    /* 모바일 메뉴 아코디언 스타일 */
+    .mobile-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-accordion-content.active {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .mobile-accordion-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-accordion-arrow.rotate {
+      transform: rotate(180deg);
+    }
+
+    .floating-buttons {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      padding: 12px 0;
+    }
+
+    .floating-buttons.show {
+      transform: translateY(0);
+    }
+
+    /* 머메이드 모바일 오버레이 */
+    .mermaid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 8px;
+      pointer-events: auto;
+      transition: opacity 0.5s;
+      opacity: 1;
+    }
+    .mermaid-overlay.hide {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    @media (max-width: 768px) {
+      .mermaid-overlay {
+        display: flex;
+      }
+    }
+  </style>
+    
+    <!-- Navigation and Footer Modules -->
+    <script src="/assets/js/nav.js"></script>
+    <script src="/assets/js/footer.js"></script>
+</head>
+
+<body class="bg-white text-black">
+  <!-- HEADER -->
+  <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
+    <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
+      <!-- 로고 -->
+      <div class="flex items-center z-10">
+        <a href="../index.html">
+          <img id="logo-white" src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고" class="h-8 md:h-10">
+          <img id="logo-black" src="../assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고"
+            class="h-8 md:h-10 hidden">
+        </a>
+      </div>
+
+      <!-- 데스크톱 메뉴 -->
+      <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
+        <a href="#" class="text-white hover:text-gray-300 transition nav-link">로펌소개</a>
+        <a href="#" class="text-white hover:text-gray-300 transition nav-link">전문분야</a>
+        <a href="#" class="text-white hover:text-gray-300 transition nav-link">성공사례</a>
+        <a href="#" class="text-white hover:text-gray-300 transition nav-link">전국사무소</a>
+      </div>
+
+      <!-- 우측 컨트롤 -->
+      <div class="flex items-center z-10">
+        <!-- 데스크톱 전화번호 -->
+        <a href="tel:02-587-7787" class="hidden md:block text-white hover:text-gray-300 transition-colors">
+          <div class="text-right">
+            <div class="text-sm opacity-80 font-medium">상담문의</div>
+            <div class="text-xl font-bold">02-587-7787</div>
+          </div>
+        </a>
+
+        <!-- 모바일 전화번호 버튼 -->
+        <a href="tel:02-587-7787" class="md:hidden mr-4 text-white hover:text-gray-300 transition">
+          <div class="text-right">
+            <div class="text-xs opacity-80">상담문의</div>
+            <div class="text-lg font-bold">02-587-7787</div>
+          </div>
+        </a>
+
+        <!-- 모바일 햄버거 메뉴 버튼 -->
+        <button id="mobile-menu-btn"
+          class="md:hidden text-white ml-2 p-2 hover:bg-white/10 rounded-lg transition-colors">
+          <svg id="hamburger-icon" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg id="close-icon" class="w-6 h-6 hidden transition-transform duration-300" fill="none"
+            stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- 통합 메가메뉴 -->
+    <div id="mega-menu" class="mega-menu">
+      <div class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-4 gap-8">
+          <!-- 로펌소개 -->
+          <div>
+            <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
+            <ul class="space-y-2">
+              <li><a href="../about/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a>
+              </li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대표변호사 인사말</a></li>
+              <li><a href="../lawyers/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">구성원
+                  소개</a></li>
+            </ul>
+          </div>
+
+          <!-- 전문분야 -->
+          <div>
+            <h3 class="font-bold text-gray-900 mb-4 text-lg">전문분야</h3>
+            <ul class="space-y-2">
+              <li><a href="../criminal/index.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">형사</a></li>
+              <li><a href="../civil/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">민사</a>
+              </li>
+              <li><a href="../realestate/index.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">부동산</a></li>
+              <li><a href="../traffic/index.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고</a></li>
+              <li><a href="../corporate/index.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">기업</a></li>
+              <li><a href="../family/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">가사</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 성공사례 -->
+          <div>
+            <h3 class="font-bold text-gray-900 mb-4 text-lg">성공사례</h3>
+            <ul class="space-y-2">
+              <li><a href="#criminal-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">형사 사례</a>
+              </li>
+              <li><a href="#civil-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">민사 사례</a></li>
+              <li><a href="#realestate-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">부동산 사례</a>
+              </li>
+              <li><a href="#traffic-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고 사례</a>
+              </li>
+              <li><a href="#corporate-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">기업 사례</a>
+              </li>
+              <li><a href="#family-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">가사 사례</a></li>
+            </ul>
+          </div>
+
+          <!-- 전국사무소 -->
+          <div>
+            <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
+            <ul class="space-y-2">
+              <li><a href="../location/seoul.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">서울본사</a></li>
+              <li><a href="../location/gangnam.html"
+                  class="text-gray-600 hover:text-blue-600 transition block py-1">서울강남</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">울산</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대구</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">청주</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대전</a></li>
+              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">광주</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- 하단 상담 안내 -->
+        <div class="mt-8 pt-6 border-t border-gray-200 text-center">
+          <p class="text-gray-600">빠른 상담이 필요하신가요? <span class="font-bold text-gray-900">02-587-7787</span> 로 연락주세요.
+            <span class="text-sm text-gray-500">(평일 09:00-18:00)</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 모바일 메뉴 오버레이 -->
+    <div id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40">
+      <div class="flex flex-col h-full max-h-screen">
+        <!-- 메뉴 헤더 -->
+        <div class="flex items-center justify-between p-6 border-b border-white/10">
+          <img src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8">
+
+          <!-- 닫기 버튼 -->
+          <button onclick="closeMobileMenu()"
+            class="text-white hover:text-gray-300 p-2 hover:bg-white/10 rounded-lg transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- 메뉴 내용 -->
+        <div class="flex-1 flex flex-col p-6 min-h-0">
+          <!-- 메뉴 리스트 -->
+          <nav class="flex-1 space-y-4 overflow-y-auto min-h-0">
+            <!-- 로펌소개 아코디언 -->
+            <div class="border-b border-white/10 pb-4">
+              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                onclick="toggleMobileAccordion('about')">
+                <span>로펌소개</span>
+                <svg class="w-5 h-5 mobile-accordion-arrow" id="about-arrow" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="mobile-accordion-content" id="about-content">
+                <div class="pl-4 space-y-2 mt-2">
+                  <a href="../about/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">법인소개</a>
+                  <a href="#" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">대표변호사 인사말</a>
+                  <a href="../lawyers/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">구성원소개</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 전문분야 아코디언 -->
+            <div class="border-b border-white/10 pb-4">
+              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                onclick="toggleMobileAccordion('expertise')">
+                <span>전문분야</span>
+                <svg class="w-5 h-5 mobile-accordion-arrow" id="expertise-arrow" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="mobile-accordion-content" id="expertise-content">
+                <div class="pl-4 space-y-2 mt-2">
+                  <a href="../criminal/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">형사</a>
+                  <a href="../civil/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">민사</a>
+                  <a href="../realestate/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">부동산</a>
+                  <a href="../traffic/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">교통사고</a>
+                  <a href="../corporate/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">기업</a>
+                  <a href="../family/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">가사</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 오시는길 아코디언 -->
+            <div class="border-b border-white/10 pb-4">
+              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                onclick="toggleMobileAccordion('location')">
+                <span>오시는길</span>
+                <svg class="w-5 h-5 mobile-accordion-arrow" id="location-arrow" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="mobile-accordion-content" id="location-content">
+                <div class="pl-4 space-y-2 mt-2">
+                  <a href="../location/seoul.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">서울본사</a>
+                  <a href="../location/gangnam.html" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">서울강남</a>
+                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">울산</a>
+                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">대구</a>
+                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">청주</a>
+                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">대전</a>
+                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">광주</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 성공사례 아코디언 -->
+            <div class="border-b border-white/10 pb-4">
+              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
+                onclick="toggleMobileAccordion('cases')">
+                <span>성공사례</span>
+                <svg class="w-5 h-5 mobile-accordion-arrow" id="cases-arrow" fill="none" stroke="currentColor"
+                  viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+              <div class="mobile-accordion-content" id="cases-content">
+                <div class="pl-4 space-y-2 mt-2">
+                  <a href="#criminal-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">형사 사례</a>
+                  <a href="#civil-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">민사 사례</a>
+                  <a href="#realestate-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">부동산 사례</a>
+                  <a href="#traffic-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">교통사고 사례</a>
+                  <a href="#corporate-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">기업 사례</a>
+                  <a href="#family-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
+                    onclick="closeMobileMenu()">가사 사례</a>
+                </div>
+              </div>
+            </div>
+
+            <!-- 단일 메뉴들 -->
+            <a href="#"
+              class="block text-xl font-medium text-white hover:text-gray-300 transition-colors py-3 border-b border-white/10"
+              onclick="closeMobileMenu()">
+              상담예약
+            </a>
+          </nav>
+
+          <!-- 하단 연락처 정보 -->
+          <div class="mt-6 pt-6 border-t border-white/10 space-y-6 flex-shrink-0">
+            <!-- 대표 전화번호 -->
+            <a href="tel:02-587-7787"
+              class="block bg-white text-black rounded-2xl p-6 hover:bg-gray-100 transition-colors">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-gray-600 mb-1">대표 상담 전화</div>
+                  <div class="text-2xl font-bold">02-587-7787</div>
+                </div>
+                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                  </path>
+                </svg>
+              </div>
+            </a>
+
+            <!-- 운영시간 -->
+            <div class="text-center text-white/70">
+              <div class="text-sm">평일 09:00 - 18:00</div>
+              <div class="text-xs mt-1">24시간 상담 접수 가능</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
+    <!-- 배경 비디오 -->
+    <div class="absolute inset-0 z-0">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover scale-125 object-[50%_30%]">
+        <source src="../assets/video/2.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <!-- 콘텐츠 영역 -->
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+            법무법인(유한) 예일법조 형사전담팀
+          </p>
+          <h1
+            class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+            첫 48시간이<br>결과를 바꿉니다.
+          </h1>
+          <p
+            class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+            경제·성·교통 범죄 전 분야 긴급 대응.<br>
+            형사전담팀과 전략을 세워보세요.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아래 스크롤 화살표 -->
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- 로펌 소개 (스탯형) -->
+  <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
+    <!-- 배경 그라디언트 효과 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
+
+    <!-- 메인 그라디언트 원형들 -->
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse">
+    </div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse">
+    </div>
+
+    <!-- 추가 그라디언트 효과들 -->
+    <div
+      class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float">
+    </div>
+    <div
+      class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed">
+    </div>
+    <div
+      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse">
+    </div>
+
+    <!-- 기하학적 그라디언트 라인들 -->
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent">
+    </div>
+    <div
+      class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent">
+    </div>
+
+    <!-- 대각선 그라디언트 -->
+    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent">
+    </div>
+    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent">
+    </div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="text-center mb-20">
+        <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">Criminal Defense</span>
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+          수치로 입증합니다
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          변호사의 실력은 숫자로 증명됩니다.<br>
+          억울한 구속을 막고, 실형을 줄이며, 삶을 지켜낸 통계입니다.
+        </p>
+      </div>
+
+      <!-- 메인 스탯 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
+
+
+        <!-- 누적 사건 해결 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl">
+          </div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div
+              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="91">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Detention Defense</p>
+            <p class="text-xl text-white font-medium">구속 방어 성공률</p>
+            <p class="text-gray-400 mt-2">체포·영장 단계에서 불구속 확보</p>
+          </div>
+        </div>
+
+        <!-- 승소율 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl">
+          </div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div
+              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="78">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Sentence Reduction</p>
+            <p class="text-xl text-white font-medium">실형 감경 성공률</p>
+            <p class="text-gray-400 mt-2">초범·참작사유 중심 감형 유도</p>
+          </div>
+        </div>
+
+        <!-- 전문 변호사 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl">
+          </div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div
+              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="42">0</span>건
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Major Cases</p>
+            <p class="text-xl text-white font-medium">중대 형사사건 수행</p>
+            <p class="text-gray-400 mt-2">강력·성범죄·경제범죄 등 실적 중심</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 lg:py-32 bg-white" x-data="{ activeTab: 'economic-crimes' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          분야별 법률 서비스
+        </h2>
+        <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+          형사 전문 변호사는 의뢰인의 상황을 가장 유리한 방향으로 이끌어갈 전략을 제시합니다.
+        </p>
+      </div>
+
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-16">
+        <button @click="activeTab = 'economic-crimes'"
+          :class="activeTab === 'economic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          경제범죄
+        </button>
+        <button @click="activeTab = 'sex-crimes'"
+          :class="activeTab === 'sex-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          성범죄
+        </button>
+        <button @click="activeTab = 'violence-crimes'"
+          :class="activeTab === 'violence-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          폭력범죄
+        </button>
+        <button @click="activeTab = 'traffic-crimes'"
+          :class="activeTab === 'traffic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          교통범죄
+        </button>
+        <button @click="activeTab = 'drug-crimes'"
+          :class="activeTab === 'drug-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          마약범죄
+        </button>
+        <button @click="activeTab = 'other-crimes'"
+          :class="activeTab === 'other-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          기타범죄
+        </button>
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div class="space-y-12">
+        <!-- 경제범죄 -->
+        <div x-show="activeTab === 'economic-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">경제범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 사기, 컴퓨터등사용사기</li>
+                <li>• 횡령, 업무상횡령, 배임</li>
+                <li>• 특정경제범죄가중처벌법 위반</li>
+                <li>• 유사수신행위, 다단계판매</li>
+                <li>• 보이스피싱, 전자금융거래법 위반</li>
+                <li>• 세무범죄, 조세포탈</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>피해자 대리:</strong> 재산추적, 가압류 등 보전처분, 강제집행을 통한 피해금 회수에 최선을 다합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>피의자 변호:</strong> 사기와 민사 구분, 피해회복 노력, 특경법 배제 등을 통해 선처받을 수 있도록 합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 경제범죄 309건, 피해회수율 73%, 특경법 적용 배제율 67%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 성범죄 -->
+        <div x-show="activeTab === 'sex-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">성범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 성폭력 (강간, 강제추행, 준강간 등)</li>
+                <li>• 카메라 등 이용 촬영 (불법촬영, 몰카)</li>
+                <li>• 통신매체 이용 음란 (사이버 성범죄)</li>
+                <li>• 스토킹, 데이트 폭력</li>
+                <li>• 직장 내 성희롱, 성폭력</li>
+                <li>• 아동·청소년 성보호법 위반</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>피해자 대리:</strong> 2차 피해 방지, 증거보전, 손해배상청구, 신변보호 등 피해자 권익보호에 최선을 다합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>피의자 변호:</strong> 무죄추정 원칙 하에 철저한 사실조사와 증거분석을 통해 최선의 변호전략을 수립합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 성범죄 사건 처리 147건, 피해자 만족도 96%, 피의자 불기소율 32%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 폭력범죄 -->
+        <div x-show="activeTab === 'violence-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">폭력범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 폭행, 상해, 중상해</li>
+                <li>• 특수폭행, 특수상해</li>
+                <li>• 폭력행위 등 처벌에 관한 법률 위반</li>
+                <li>• 협박, 공갈, 강요</li>
+                <li>• 가정폭력, 아동학대</li>
+                <li>• 집단폭행, 조직폭력</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>피해자 대리:</strong> 신속한 치료지원, 손해배상 극대화, 가해자 엄벌을 위한 적극적 대응을 제공합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>피의자 변호:</strong> 정당방위, 쌍방폭행, 우발적 범행 등 유리한 정황을 최대한 활용하여 변호합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 폭력범죄 변호 312건, 불기소율 46%, 평균 합의금 370만원
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 교통범죄 -->
+        <div x-show="activeTab === 'traffic-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">교통범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 교통사고 (일반, 사망, 중상해)</li>
+                <li>• 음주운전, 무면허운전</li>
+                <li>• 뺑소니 (도주차량, 유기치상)</li>
+                <li>• 교통사고처리특례법 위반</li>
+                <li>• 특정범죄가중처벌법 (12대 중과실)</li>
+                <li>• 면허정지·취소 행정소송</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>피해자 대리:</strong> 과실비율 다툼, 손해배상 극대화, 보험회사 협상 등을 통한 완전한 피해회복을 지원합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>가해자 변호:</strong> 음주측정 절차하자, 중과실 부인, 신속한 합의 등을 통해 최선의 결과를 도출합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 교통사고 523건 처리, 피해자 평균 배상액 3,400만원, 음주초범 벌금형 달성률 87%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 마약범죄 -->
+        <div x-show="activeTab === 'drug-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">마약범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 마약 (필로폰, 코카인, 아편 등)</li>
+                <li>• 향정신성의약품 (대마, 엑스터시 등)</li>
+                <li>• 마약류 단순사용, 소지, 매매</li>
+                <li>• 마약류제조, 운반, 수출입</li>
+                <li>• 마약자금세탁, 마약관련 범죄수익</li>
+                <li>• 온라인 마약거래</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>치료 중심 접근:</strong> 처벌보다는 치료와 재활을 통한 근본적 해결을 추구하며, 치료명령·수강명령을 적극 활용합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>방어 전략:</strong> 압수수색 절차하자, 증거능력 다툼, 초범 특례 등을 통해 최대한 관대한 처분을 받도록 합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 마약범죄 161건, 치료프로그램 연계 94%, 초범 기소유예율 67%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 기타범죄 -->
+        <div x-show="activeTab === 'other-crimes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">기타범죄</h3>
+          <div class="grid md:grid-cols-2 gap-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 취급 분야</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 절도, 강도, 손괴</li>
+                <li>• 명예훼손, 모독, 사생활침해</li>
+                <li>• 업무방해, 컴퓨터업무방해</li>
+                <li>• 공무집행방해, 공무원모독</li>
+                <li>• 위조, 변조, 허위공문서작성</li>
+                <li>• 주거침입, 퇴거불응</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">전문 서비스</h4>
+              <p class="text-[#22304a] mb-4">
+                <strong>종합적 대응:</strong> 각 범죄의 특성에 맞는 맞춤형 변호전략을 수립하여 의뢰인의 권익보호에 최선을 다합니다.
+              </p>
+              <p class="text-[#22304a]">
+                <strong>신속한 처리:</strong> 초기 대응부터 사건 종결까지 체계적이고 전문적인 법률서비스를 제공합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>성과:</strong> 2024년 기타범죄 278건, 불기소율 41%, 평균 처리기간 2.3개월
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 섹션 헤더 -->
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          형사사건 프로세스
+        </h2>
+        <p class="text-lg text-w max-w-2xl mx-auto">
+          디테일한 절차를 한눈에 살펴보세요. 
+        </p>
+      </div>
+
+      <!-- Mermaid 다이어그램 -->
+      <div class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlay" class="mermaid-overlay">
+           형사사건 변호/고소 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1)"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+          </button>
+          <button onclick="zoomDiagram(-0.1)"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+          </button>
+          <button onclick="resetZoom()"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <div id="mermaidDiagram" class="mermaid transition-transform duration-300"
+          style="transform: scale(1); transform-origin: center center;">
+
+            flowchart TB
+            Start([형사 문제 발생]) --> ClientType{의뢰인 유형}
+
+            ClientType -->|피의자/피고인| DefenseTrack[피의자 방어 트랙]
+            ClientType -->|고소인/피해자| AccuserTrack[고소인 지원 트랙]
+
+            %% 피의자 방어 트랙
+            DefenseTrack --> InitConsult[변호사 초기 상담<br>- 사건 파악<br>- 긴급성 판단]
+
+            InitConsult -->|긴급체포| Emergency[긴급대응<br>- 체포/구속 상황]
+            InitConsult -->|일반상담| Regular[일반 상담<br>- 수사 대응 전략]
+
+            %% 고소인 지원 트랙
+            AccuserTrack --> AccuserConsult[고소인 상담<br>- 사건 경위 파악<br>- 증거 수집 조언]
+
+            AccuserConsult --> ComplaintStrategy[고소 전략 수립<br>- 고소 가능성 검토<br>- 필요 증거 목록화<br>- 예상 결과 설명]
+
+            ComplaintStrategy --> ComplaintType{고소 방법}
+            ComplaintType -->|직접고소| DirectComplaint[직접 고소장 작성<br>- 변호사 고소장 작성<br>- 증거자료 정리<br>- 경찰서 동행]
+            ComplaintType -->|고소대리| ProxyComplaint[고소대리<br>- 변호사 명의 고소<br>- 전문적 법리 구성]
+
+            DirectComplaint --> PoliceAccept{경찰 접수}
+            ProxyComplaint --> PoliceAccept
+
+            PoliceAccept -->|접수| AccuserPolice[고소인 조사<br>- 변호사 동행<br>- 진술 조력<br>- 추가 증거 제출]
+            PoliceAccept -->|불수리| AccuserAppeal[이의제기<br>- 검찰 직접 고소<br>- 불수리 사유 대응]
+
+            AccuserPolice --> AccuserWait[수사 진행 모니터링<br>- 수사 진행 확인<br>- 피의자 소환 확인<br>- 추가 조치 대응]
+            AccuserAppeal --> AccuserPolice
+
+            AccuserWait --> AccuserPros[검찰 단계<br>- 고소인 조사 대응<br>- 의견서 제출<br>- 처분 결과 확인]
+
+            AccuserPros --> AccuserDecision{검찰 처분}
+            AccuserDecision -->|기소| AccuserTrial[재판 참여<br>- 증인 출석<br>- 피해 진술<br>- 합의 여부 결정]
+            AccuserDecision -->|불기소| AccuserReview{불기소 검토}
+
+            AccuserReview -->|수용| AccuserEnd1([고소 종결])
+            AccuserReview -->|불복| AccuserAppealPros[항고/재정신청<br>- 검찰 항고<br>- 법원 재정신청]
+
+            AccuserAppealPros --> AccuserCourt{재정신청 결과}
+            AccuserCourt -->|인용| AccuserTrial
+            AccuserCourt -->|기각| AccuserEnd2([최종 종결])
+
+            AccuserTrial --> AccuserVerdict[판결 확인<br>- 피해 회복<br>- 민사소송 연계]
+            AccuserVerdict --> AccuserEnd3([사건 종결])
+
+            Emergency --> LawyerVisit[변호사 긴급 조치<br>- 24시간 내 접견<br>- 진술거부권 행사 조언<br>- 가족 연락]
+            LawyerVisit --> WarrantReview[영장실질심사]
+
+            WarrantReview --> LawyerWarrant[변호사 영장심사 대응<br>- 의견서 작성/제출<br>- 불구속 사유 주장<br>- 증거인멸 우려 반박]
+
+            LawyerWarrant --> WarrantResult{구속영장<br>결정}
+            WarrantResult -->|기각| Released[불구속 상태<br>수사 진행]
+            WarrantResult -->|발부| Detained[구속 상태<br>수사 진행]
+
+            Regular --> InvestStrategy[변호사 수사전략 수립<br>- 혐의 분석<br>- 증거 검토<br>- 방어 전략 구상]
+            Released --> InvestStrategy
+            Detained --> DetainedSupport[구속 의뢰인 지원<br>- 정기 접견<br>- 보석/구속취소 신청<br>- 심리적 지원]
+
+            DetainedSupport --> PoliceInvest
+            InvestStrategy --> PoliceInvest[경찰 수사 단계]
+
+            PoliceInvest --> LawyerPolice[변호사 경찰단계 활동<br>- 조사 동행/참여<br>- 진술 조언<br>- 유리한 증거 제출<br>- 참고인 진술 확보]
+
+            LawyerPolice --> ProsecutionSend[검찰 송치]
+
+            ProsecutionSend --> ProsInvest[검찰 수사]
+
+            ProsInvest --> LawyerPros[변호사 검찰단계 활동<br>- 검사 면담 신청<br>- 의견서 제출<br>- 합의 중재<br>- 처분 예측/대응]
+
+            LawyerPros --> ProsDecision{검찰 처분}
+
+            ProsDecision -->|불기소| NonPros[변호사 불기소 확인<br>- 불기소 이유 확인<br>- 의뢰인 설명]
+            ProsDecision -->|약식기소| Summary[약식명령]
+            ProsDecision -->|정식기소| Indictment[공소제기]
+
+            NonPros --> End1([사건 종결])
+
+            Summary --> LawyerSummary[변호사 약식 대응<br>- 벌금액 검토<br>- 정식재판 청구 조언]
+
+            LawyerSummary --> SummaryChoice{정식재판<br>청구?}
+            SummaryChoice -->|아니오| PayFine[벌금 납부]
+            SummaryChoice -->|예| TrialPrep
+
+            PayFine --> End2([사건 종결])
+
+            Indictment --> TrialPrep[변호사 공판 준비<br>- 공소장 분석<br>- 증거목록 검토<br>- 변호 전략 확정]
+
+            TrialPrep --> FirstTrial[1심 공판]
+
+            FirstTrial --> LawyerTrial[변호사 재판 활동<br>- 공소사실 인부<br>- 증거 동의/부동의<br>- 증인 신문<br>- 피고인 신문 대응<br>-
+            최종 변론]
+
+            LawyerTrial --> Verdict{1심 판결}
+
+            Verdict -->|무죄| Acquittal[무죄 판결<br>변호사 사후조치]
+            Verdict -->|유죄| Guilty[유죄 판결]
+
+            Acquittal --> End3([무죄 확정])
+
+            Guilty --> LawyerAppeal[변호사 판결 분석<br>- 양형 적정성 검토<br>- 항소 이유 검토<br>- 의뢰인 상담]
+
+            LawyerAppeal --> AppealDecision{항소 결정}
+
+            AppealDecision -->|포기| AcceptVerdict[판결 수용]
+            AppealDecision -->|항소| Appeal[항소장 제출]
+
+            AcceptVerdict --> Execution[형 집행]
+
+            Appeal --> LawyerAppealCourt[변호사 항소심 대응<br>- 항소이유서 작성<br>- 새로운 증거 제출<br>- 양형 부당 주장]
+
+            LawyerAppealCourt --> AppealVerdict{항소심<br>판결}
+
+            AppealVerdict -->|원심파기| FirstTrial
+            AppealVerdict -->|항소기각| SupremeDecision{상고 검토}
+
+            SupremeDecision -->|포기| Execution
+            SupremeDecision -->|상고| Supreme[대법원]
+
+            Supreme --> LawyerSupreme[변호사 상고심 대응<br>- 상고이유서 작성<br>- 법리 오류 주장]
+
+            LawyerSupreme --> FinalVerdict{최종 판결}
+
+            FinalVerdict -->|파기환송| Appeal
+            FinalVerdict -->|상고기각| Execution
+
+            Execution --> LawyerPost[변호사 사후 관리<br>- 가석방 신청<br>- 사면/복권 신청<br>- 전과 관리 조언]
+
+            LawyerPost --> End4([종결])
+
+            classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+            classDef clientStatus fill:#ff6b6b,stroke:#c92a2a,color:#fff,stroke-width:2px
+            classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+            classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+            classDef accuserAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+            classDef accuserStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
+            classDef accuserDecision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+            
+            class InitConsult,LawyerVisit,LawyerWarrant,InvestStrategy,DetainedSupport,LawyerPolice,LawyerPros,NonPros,LawyerSummary,TrialPrep,LawyerTrial,LawyerAppeal,LawyerAppealCourt,LawyerSupreme,LawyerPost lawyerAction
+            class Emergency,Detained,Released,PoliceInvest,ProsInvest,Summary,Indictment,FirstTrial,Guilty,Appeal,Supreme,Execution clientStatus
+            class WarrantReview,ProsecutionSend,AcceptVerdict courtProcess
+            class WarrantResult,ProsDecision,SummaryChoice,Verdict,AppealDecision,AppealVerdict,SupremeDecision,FinalVerdict decision
+            class End1,End2,End3,End4,Acquittal endNode
+            class AccuserConsult,ComplaintStrategy,DirectComplaint,ProxyComplaint,AccuserPolice,AccuserAppeal,AccuserWait,AccuserPros,AccuserAppealPros,AccuserTrial,AccuserVerdict accuserAction
+            class AccuserTrack accuserStatus
+            class ComplaintType,PoliceAccept,AccuserDecision,AccuserReview,AccuserCourt accuserDecision
+            class AccuserEnd1,AccuserEnd2,AccuserEnd3 endNode
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+  classDef clientStatus fill:#ff6b6b,stroke:#c92a2a,color:#fff,stroke-width:2px
+  classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+  classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+  classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+  classDef accuserAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+  classDef accuserStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
+  classDef accuserDecision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+  
+  class InitConsult,LawyerVisit,LawyerWarrant,InvestStrategy,DetainedSupport,LawyerPolice,LawyerPros,NonPros,LawyerSummary,TrialPrep,LawyerTrial,LawyerAppeal,LawyerAppealCourt,LawyerSupreme,LawyerPost lawyerAction
+  class Emergency,Detained,Released,PoliceInvest,ProsInvest,Summary,Indictment,FirstTrial,Guilty,Appeal,Supreme,Execution clientStatus
+  class WarrantReview,ProsecutionSend,AcceptVerdict courtProcess
+  class WarrantResult,ProsDecision,SummaryChoice,Verdict,AppealDecision,AppealVerdict,SupremeDecision,FinalVerdict decision
+  class End1,End2,End3,End4,Acquittal endNode
+  class AccuserConsult,ComplaintStrategy,DirectComplaint,ProxyComplaint,AccuserPolice,AccuserAppeal,AccuserWait,AccuserPros,AccuserAppealPros,AccuserTrial,AccuserVerdict accuserAction
+  class AccuserTrack accuserStatus
+  class ComplaintType,PoliceAccept,AccuserDecision,AccuserReview,AccuserCourt accuserDecision
+  class AccuserEnd1,AccuserEnd2,AccuserEnd3 endNode -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    // Mermaid 초기화
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: 'neutral',
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 50
+      }
+    });
+
+    // 드래그 기능 구현
+    const container = document.getElementById('mermaidContainer');
+    const diagram = document.getElementById('mermaidDiagram');
+    let isDragging = false;
+    let startX, startY, scrollLeft, scrollTop;
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      startY = e.pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
+
+    container.addEventListener('mouseleave', () => {
+      isDragging = false;
+      container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mouseup', () => {
+      isDragging = false;
+      container.style.cursor = 'grab';
+    });
+
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const y = e.pageY - container.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    });
+
+    // 터치 이벤트 지원
+    let touchStartX, touchStartY;
+
+    container.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX - container.offsetLeft;
+      touchStartY = e.touches[0].pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
+
+    container.addEventListener('touchmove', (e) => {
+      e.preventDefault();
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const y = e.touches[0].pageY - container.offsetTop;
+      const walkX = (x - touchStartX) * 1.5;
+      const walkY = (y - touchStartY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    });
+
+    let currentZoom = window.innerWidth <= 768 ? 1: 1.2; // 모바일/PC 분기 확대 비율
+
+    // 줌 기능
+    function zoomDiagram(delta) {
+      currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+      // 확대 비율에 맞게 실제 크기도 조정
+      diagram.style.width = `${100 * currentZoom}%`;
+      diagram.style.height = `${100 * currentZoom}%`;
+    }
+
+    function resetZoom() {
+      currentZoom = 1.2;
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+      diagram.style.width = `${100 * currentZoom}%`;
+      diagram.style.height = `${100 * currentZoom}%`;
+    }
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 lg:py-32 bg-white scroll-mt-24">
+    <!-- 섹션 헤더 -->
+    <div class="text-center mb-16 sm:mb-20">
+      <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">FAQ</span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+        자주 묻는 질문
+      </h2>
+      <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+        형사사건 의뢰 전 꼭 확인하세요.
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200 px-4">
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 무료 상담만 받아도 되나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          네, 사건 개요 파악을 위한 무료 상담을 제공하며 이후 정식
+          의뢰 여부를 결정하시면 됩니다. 무료 상담 후에도 의뢰 강요는 절대 하지 않으니 부담 없이 상담받으세요.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 사건 진행 비용은 어떻게 책정되나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          죄명·사안 중대성·필요 인력 등을 종합 산정해 맞춤 견적을
+          제시합니다. 수임 전 상세한 비용 내역을 투명하게 안내드리며, 성공보수제도 가능합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 경찰 조사를 받게 되었는데 어떻게 해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          출석 전 반드시 변호사와 상담하세요. 진술 내용이 향후 재판에 결정적 영향을 미칩니다.
+          변호인 동행 조사를 통해 불리한 진술을 방지하고 방어권을 보장받을 수 있습니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 구속될 가능성이 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          구속 여부는 증거인멸 우려, 도주 우려, 재범 위험성 등을 종합 판단합니다.
+          초기 대응이 중요하며, 구속적부심사나 보석 신청 등 불구속 방어가 가능합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 전과가 있으면 불리한가요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          전과는 양형에 영향을 미치지만, 동종전과가 아니거나 오래된 전과는 영향이 적습니다.
+          반성문, 피해자 합의, 재범방지 대책 등으로 충분히 선처받을 수 있습니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 피해자와 합의는 꼭 해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          합의는 양형에 매우 중요한 요소입니다. 특히 폭행, 사기, 횡령 등은 합의 여부가
+          실형과 집행유예를 가르는 경우가 많습니다. 전문가의 합의 중재로 원만한 해결이 가능합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 음주운전으로 면허가 취소됐는데 구제 방법이 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          혈중알코올농도, 운전 경위, 단속 과정의 하자 등을 검토해 무죄나 감경을 다툴 수 있습니다.
+          행정심판이나 행정소송으로 면허 구제도 가능하니 포기하지 마세요.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 성범죄 혐의를 받고 있는데 어떻게 대응해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          성범죄는 초기 대응이 매우 중요합니다. 무고 주장, 증거 수집, 참고인 확보 등
+          체계적 방어가 필요하며, 2차 피해 방지를 위한 신중한 접근이 필요합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 사건 진행 상황은 어떻게 확인하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          담당 변호사가 수사·재판 진행 상황을 실시간으로 보고드립니다.
+          중요 일정은 사전 안내드리며, 24시간 핫라인으로 궁금한 점을 즉시 확인하실 수 있습니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary
+          class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 무죄를 받을 가능성은 어느 정도인가요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          구체적인 증거와 정황을 분석해야 판단 가능합니다. 무죄 추정 원칙에 따라
+          검사가 유죄를 입증해야 하므로, 합리적 의심을 제기할 수 있다면 무죄 가능성이 있습니다.
+        </p>
+      </details>
+    </div>
+  </section>
+
+
+
+
+
+
+
+
+  <!-- CONTACT CTA -->
+  <section id="contact" class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
+    <div class="relative z-10 text-center py-24 px-8 lg:py-32 lg:px-16">
+      <div class="container mx-auto">
+        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">
+          형사사건, 초기 대응이 가장 중요합니다.
+        </h2>
+        <p class="text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
+          지금 바로 전문가와 상담해 최선의 전략을 세우세요.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a href="tel:02-587-7787"
+            class="inline-flex items-center justify-center bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all hover:scale-105">
+            전화 상담 바로 연결
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 푸터 -->
+  <footer class="bg-black text-white pt-12 pb-24">
+    <div class="container mx-auto px-4">
+      <!-- 메뉴 섹션 -->
+      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
+        <!-- 로고 -->
+        <div>
+          <img src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8 mb-6">
+          <p class="text-sm text-gray-400">
+            믿을 수 있는 법률 파트너<br>
+            예일법조가 함께합니다
+          </p>
+        </div>
+
+        <!-- 전문분야 -->
+        <div>
+          <h4 class="text-white font-bold mb-4">전문분야</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../criminal/index.html" class="text-gray-400 hover:text-white transition">형사</a></li>
+            <li><a href="../civil/index.html" class="text-gray-400 hover:text-white transition">민사</a></li>
+            <li><a href="../traffic/index.html" class="text-gray-400 hover:text-white transition">교통사고</a></li>
+            <li><a href="../realestate/index.html" class="text-gray-400 hover:text-white transition">부동산</a>
+            </li>
+            <li><a href="../corporate/index.html" class="text-gray-400 hover:text-white transition">기업법무</a>
+            </li>
+            <li><a href="../family/index.html" class="text-gray-400 hover:text-white transition">가사</a></li>
+          </ul>
+        </div>
+
+        <!-- 예일법조 서비스 -->
+        <div>
+          <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">24시간 대응</a></li>
+          </ul>
+        </div>
+
+        <!-- 전국지사 -->
+        <div>
+          <h4 class="text-white font-bold mb-4">전국지사</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="../location/seoul.html" class="text-gray-400 hover:text-white transition">서울본사</a></li>
+            <li><a href="../location/gangnam.html" class="text-gray-400 hover:text-white transition">서울강남</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">청주</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">대전</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">광주</a></li>
+          </ul>
+        </div>
+
+        <!-- 고객센터 -->
+        <div>
+          <h4 class="text-white font-bold mb-4">고객센터</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#" class="text-gray-400 hover:text-white transition">공지사항</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">자주묻는질문</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white transition">1:1 문의</a></li>
+            <li class="pt-2">
+              <p class="text-white font-bold text-lg">02-587-7787</p>
+              <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- 구분선 -->
+      <hr class="border-gray-800 mb-6">
+
+      <!-- 회사 정보 -->
+      <div class="flex flex-col space-y-4">
+        <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
+          <span class="text-gray-400">법무법인(유한) 예일법조</span>
+          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+          <span class="text-gray-400">사업자등록번호 : 000-00-00000</span>
+          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+          <span class="text-gray-400">대표변호사 : 김예일</span>
+          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+          <span class="text-gray-400">광고책임변호사 : 박법조</span>
+        </div>
+
+        <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
+          <span class="text-gray-400">서울특별시 서초구 반포대로 98 일신빌딩 4층</span>
+          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+          <span class="text-gray-400">대표전화 : 02-587-7787</span>
+          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
+          <span class="text-gray-400">팩스 : 02-587-7788</span>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-4 mt-4">
+          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이용약관</a>
+          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">개인정보처리방침</a>
+          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이메일무단수집거부</a>
+        </div>
+
+        <p class="text-gray-500 text-xs mt-4">
+          COPYRIGHT©2025 법무법인(유한) 예일법조. ALL RIGHTS RESERVED
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING BUTTON -->
+  <div id="floating-buttons" class="floating-buttons">
+    <div class="container mx-auto px-4">
+      <div class="flex justify-center items-center">
+        <a href="tel:02-587-7787"
+          class="group flex items-center justify-center gap-3 bg-gray-900 text-white px-6 py-3 rounded-full text-base font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg">
+          <span class="text-gray-400">상담문의</span>
+          <span class="text-gray-400">|</span>
+          <span class="font-bold">02-587-7787</span>
+          <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+          </svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script>
+    // 모바일 메뉴 토글 기능
+    function toggleMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const hamburgerIcon = document.getElementById('hamburger-icon');
+      const closeIcon = document.getElementById('close-icon');
+      const body = document.body;
+
+      const isOpen = !mobileMenu.classList.contains('translate-x-full');
+
+      if (isOpen) {
+        // 메뉴 닫기
+        mobileMenu.classList.add('translate-x-full');
+        hamburgerIcon.classList.remove('hidden');
+        closeIcon.classList.add('hidden');
+        body.style.overflow = '';
+      } else {
+        // 메뉴 열기
+        mobileMenu.classList.remove('translate-x-full');
+        hamburgerIcon.classList.add('hidden');
+        closeIcon.classList.remove('hidden');
+        body.style.overflow = 'hidden';
+      }
+    }
+
+    // 모바일 메뉴 닫기 함수
+    function closeMobileMenu() {
+      const mobileMenu = document.getElementById('mobile-menu');
+      const hamburgerIcon = document.getElementById('hamburger-icon');
+      const closeIcon = document.getElementById('close-icon');
+      const body = document.body;
+
+      mobileMenu.classList.add('translate-x-full');
+      hamburgerIcon.classList.remove('hidden');
+      closeIcon.classList.add('hidden');
+      body.style.overflow = '';
+    }
+
+    // 헤더 스크롤 효과 및 플로팅 버튼 제어
+    window.addEventListener('scroll', function () {
+      const header = document.getElementById('header');
+      const logoWhite = document.getElementById('logo-white');
+      const logoBlack = document.getElementById('logo-black');
+      const floatingButtons = document.getElementById('floating-buttons');
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+      // 히어로 섹션 높이 (대략적으로 뷰포트 높이)
+      const heroHeight = window.innerHeight;
+
+      if (window.scrollY > 50) {
+        // 네비게이션 바 변경
+        header.classList.remove('header-transparent');
+        header.classList.add('header-scrolled');
+
+        // 로고 전환
+        logoWhite.classList.add('hidden');
+        logoBlack.classList.remove('hidden');
+
+        // 데스크톱 메뉴 색상 변경
+        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+        desktopLinks.forEach(el => {
+          el.classList.remove('text-white', 'hover:text-gray-300');
+          el.classList.add('text-black', 'hover:text-gray-600');
+        });
+
+        // 데스크톱 전화번호 색상 변경
+        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+        if (desktopPhoneBtn) {
+          desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+          desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+        }
+
+        // 모바일 전화번호와 햄버거 버튼 색상 변경
+        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+        if (mobilePhoneBtn) {
+          mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+          mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+        }
+
+        if (mobileMenuBtn) {
+          mobileMenuBtn.classList.remove('text-white');
+          mobileMenuBtn.classList.add('text-black');
+        }
+      } else {
+        // 네비게이션 바 원상복구
+        header.classList.remove('header-scrolled');
+        header.classList.add('header-transparent');
+
+        // 로고 전환
+        logoBlack.classList.add('hidden');
+        logoWhite.classList.remove('hidden');
+
+        // 데스크톱 메뉴 색상 원상복구
+        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+        desktopLinks.forEach(el => {
+          el.classList.remove('text-black', 'hover:text-gray-600');
+          el.classList.add('text-white', 'hover:text-gray-300');
+        });
+
+        // 데스크톱 전화번호 색상 원상복구
+        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+        if (desktopPhoneBtn) {
+          desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+          desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+        }
+
+        // 모바일 전화번호와 햄버거 버튼 색상 원상복구
+        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+        if (mobilePhoneBtn) {
+          mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+          mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+        }
+
+        if (mobileMenuBtn) {
+          mobileMenuBtn.classList.remove('text-black');
+          mobileMenuBtn.classList.add('text-white');
+        }
+      }
+
+      // 플로팅 버튼 제어 - 히어로 섹션을 벗어나면 표시
+      if (window.scrollY > heroHeight * 0.8) {
+        floatingButtons.classList.add('show');
+      } else {
+        floatingButtons.classList.remove('show');
+      }
+    });
+
+    // ===================================
+    // 스탯 섹션 관련 기능 (카운터 애니메이션)
+    // ===================================
+
+    // 숫자 카운트업 애니메이션 (개선된 버전)
+    function animateCounter(element) {
+      // 이미 애니메이션이 실행 중이면 중복 실행 방지
+      if (element.isAnimating) {
+        return;
+      }
+      element.isAnimating = true;
+
+      const target = parseInt(element.getAttribute('data-target'));
+      const duration = 3000; // 3초로 조금 더 길게
+      const start = 0;
+      let current = start;
+      let startTime = null;
+
+      // requestAnimationFrame을 사용하여 더 부드러운 애니메이션
+      function animate(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+
+        // easeOutQuart 이징 함수 적용
+        const easeProgress = 1 - Math.pow(1 - progress, 4);
+        current = Math.floor(target * easeProgress);
+
+        element.textContent = current.toLocaleString();
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          element.textContent = target.toLocaleString();
+          element.isAnimating = false;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    // 옵저버 설정 (모바일 최적화)
+    const observerOptions = {
+      threshold: [0, 0.1, 0.2], // 여러 임계점 설정으로 더 정확한 감지
+      rootMargin: '-20px 0px -20px 0px' // 상하 20px 여유 (모바일 친화적)
+    };
+
+    // Intersection Observer로 스크롤 시 애니메이션 트리거 (개선된 버전)
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          console.log('스탯 섹션이 화면에 나타남'); // 디버깅용
+
+          const counters = entry.target.querySelectorAll('.counter');
+          console.log('찾은 카운터 개수:', counters.length); // 디버깅용
+
+          counters.forEach((counter, index) => {
+            if (!counter.classList.contains('animated')) {
+              counter.classList.add('animated');
+
+              // 각 카운터를 순차적으로 애니메이션 (0.2초 간격)
+              setTimeout(() => {
+                animateCounter(counter);
+              }, index * 200);
+            }
+          });
+
+          // 애니메이션이 시작되면 옵저버 해제 (중복 실행 방지)
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // 페이지 로드 시 초기화
+    document.addEventListener('DOMContentLoaded', function () {
+      // 메가메뉴 설정
+      setupMegaMenu();
+
+      // 모바일 메뉴 버튼 이벤트 리스너 추가
+      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+      if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+      }
+
+      // 모바일 메뉴 오버레이 클릭 시 닫기 (메뉴 영역 외부 클릭)
+      const mobileMenu = document.getElementById('mobile-menu');
+      if (mobileMenu) {
+        mobileMenu.addEventListener('click', function (e) {
+          if (e.target === mobileMenu) {
+            closeMobileMenu();
+          }
+        });
+      }
+
+      // ESC 키로 모바일 메뉴 닫기
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') {
+          const isMenuOpen = !document.getElementById('mobile-menu').classList.contains('translate-x-full');
+          if (isMenuOpen) {
+            closeMobileMenu();
+          }
+        }
+      });
+
+      // 스탯 섹션 관찰 시작
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        observer.observe(statsSection);
+
+        // 모바일에서 Intersection Observer가 작동하지 않을 때를 대비한 fallback
+        // 5초 후에 스탯 섹션이 여전히 애니메이션되지 않았다면 강제 실행
+        setTimeout(() => {
+          const counters = statsSection.querySelectorAll('.counter:not(.animated)');
+          if (counters.length > 0) {
+            console.log('Fallback: 스탯 애니메이션을 강제 실행합니다');
+            counters.forEach((counter, index) => {
+              counter.classList.add('animated');
+              setTimeout(() => {
+                animateCounter(counter);
+              }, index * 200);
+            });
+          }
+        }, 5000);
+      }
+
+      // 다이어그램은 이미 HTML에 포함되어 있으므로 별도 렌더링 불필요
+      // 머메이드 다이어그램 초기 확대 적용
+      const diagram = document.getElementById('mermaidDiagram');
+      if (diagram) {
+        diagram.style.transform = `scale(${currentZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * currentZoom}%`;
+        diagram.style.height = `${100 * currentZoom}%`;
+      }
+
+      // 오버레이 터치/클릭/스크롤 시 사라지게
+      const overlay = document.getElementById('mermaidOverlay');
+      if (overlay) {
+        const hideOverlay = () => {
+          overlay.classList.add('hide');
+          setTimeout(() => { overlay.style.display = 'none'; }, 500);
+        };
+        // 터치, 클릭, 스크롤 모두 감지
+        overlay.addEventListener('touchstart', hideOverlay, { once: true });
+        overlay.addEventListener('click', hideOverlay, { once: true });
+        overlay.addEventListener('wheel', hideOverlay, { once: true });
+        // 다이어그램 컨테이너 스크롤도 감지
+        const mermaidContainer = document.getElementById('mermaidContainer');
+        if (mermaidContainer) {
+          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+        }
+      }
+    });
+
+    // ===================================
+    // 스탯 섹션 관련 기능 (카운터 애니메이션)
+    // ===================================
+
+    // 메가메뉴 제어 함수
+    function setupMegaMenu() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const megaMenu = document.getElementById('mega-menu');
+      const header = document.getElementById('header');
+      let isMenuOpen = false;
+
+      // 각 네비게이션 링크에 마우스 이벤트 추가
+      navLinks.forEach(link => {
+        link.addEventListener('mouseenter', function () {
+          megaMenu.classList.add('active');
+          isMenuOpen = true;
+
+          // 헤더가 투명한 경우 흰색 배경으로 변경
+          if (header.classList.contains('header-transparent')) {
+            header.classList.add('mega-menu-open');
+
+            // 로고 전환
+            document.getElementById('logo-white').classList.add('hidden');
+            document.getElementById('logo-black').classList.remove('hidden');
+
+            // 메뉴 색상 변경
+            const navLinks = header.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+              link.classList.remove('text-white', 'hover:text-gray-300');
+              link.classList.add('text-black', 'hover:text-gray-600');
+            });
+
+            // 전화번호 색상 변경
+            const phoneLink = header.querySelector('.hidden.md\\:block');
+            if (phoneLink) {
+              phoneLink.classList.remove('text-white', 'hover:text-gray-300');
+              phoneLink.classList.add('text-black', 'hover:text-gray-600');
+            }
+          }
+        });
+      });
+
+      // 헤더에서 마우스가 벗어날 때 메가메뉴 닫기
+      header.addEventListener('mouseleave', function () {
+        closeMegaMenu();
+      });
+
+      // 메가메뉴에서 마우스가 벗어날 때 닫기
+      megaMenu.addEventListener('mouseleave', function () {
+        closeMegaMenu();
+      });
+
+      // 메가메뉴 닫기 함수
+      function closeMegaMenu() {
+        megaMenu.classList.remove('active');
+        isMenuOpen = false;
+
+        // 스크롤이 상단이면 헤더를 다시 투명하게
+        if (window.scrollY <= 50) {
+          header.classList.remove('mega-menu-open');
+
+          // 로고 전환
+          document.getElementById('logo-black').classList.add('hidden');
+          document.getElementById('logo-white').classList.remove('hidden');
+
+          // 메뉴 색상 원상복구
+          const navLinks = header.querySelectorAll('.nav-link');
+          navLinks.forEach(link => {
+            link.classList.remove('text-black', 'hover:text-gray-600');
+            link.classList.add('text-white', 'hover:text-gray-300');
+          });
+
+          // 전화번호 색상 원상복구
+          const phoneLink = header.querySelector('.hidden.md\\:block');
+          if (phoneLink) {
+            phoneLink.classList.remove('text-black', 'hover:text-gray-600');
+            phoneLink.classList.add('text-white', 'hover:text-gray-300');
+          }
+        }
+      }
+
+      // 페이지 클릭 시 메뉴 닫기
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.nav-link') && !e.target.closest('.mega-menu')) {
+          closeMegaMenu();
+        }
+      });
+    }
+
+    // 모바일 아코디언 토글 기능
+    function toggleMobileAccordion(id) {
+      const content = document.getElementById(`${id}-content`);
+      const arrow = document.getElementById(`${id}-arrow`);
+
+      if (content.classList.contains('active')) {
+        content.classList.remove('active');
+        arrow.classList.remove('rotate');
+      } else {
+        // 다른 열려있는 아코디언 닫기
+        document.querySelectorAll('.mobile-accordion-content.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelectorAll('.mobile-accordion-arrow.rotate').forEach(item => {
+          item.classList.remove('rotate');
+        });
+
+        content.classList.add('active');
+        arrow.classList.add('rotate');
+      }
+    }
+  </script>
+
+  <!-- Mermaid.js 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+</body>
+
+</html>

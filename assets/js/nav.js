@@ -39,6 +39,128 @@ const Navigation = {
             .mobile-accordion-arrow.rotate-180 {
                 transform: rotate(180deg);
             }
+            
+            /* 플로팅 버튼 영역 스타일 */
+            .floating-buttons {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 100%);
+                box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+                transform: translateY(100%);
+                transition: transform 0.3s ease-in-out;
+                z-index: 1000;
+                padding: 0;
+            }
+
+            .floating-buttons.show {
+                transform: translateY(0);
+            }
+
+            .floating-content {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 20px;
+                padding: 15px 0;
+            }
+
+            /* 좌측 정보 영역 */
+            .floating-info {
+                display: flex;
+                gap: 30px;
+                align-items: center;
+            }
+
+            .floating-item {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .floating-icon {
+                width: 40px;
+                height: 40px;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            }
+
+            .floating-text {
+                display: flex;
+                flex-direction: column;
+                color: white;
+            }
+
+            .floating-label {
+                font-size: 12px;
+                opacity: 0.8;
+            }
+
+            .floating-value {
+                font-size: 14px;
+                font-weight: 600;
+            }
+
+            /* CTA 버튼 */
+            .floating-cta {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                background: white;
+                color: #1e3a8a;
+                padding: 12px 24px;
+                border-radius: 50px;
+                font-weight: 700;
+                font-size: 18px;
+                transition: all 0.3s ease;
+                text-decoration: none;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            }
+
+            .floating-cta:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+            }
+
+            /* 모바일 반응형 */
+            @media (max-width: 1024px) {
+                .floating-content {
+                    padding: 12px 0;
+                }
+
+                .floating-info {
+                    gap: 20px;
+                }
+
+                .floating-item:nth-child(2),
+                .floating-item:nth-child(3) {
+                    display: none;
+                }
+
+                .floating-cta {
+                    padding: 10px 20px;
+                    font-size: 16px;
+                }
+            }
+
+            @media (max-width: 640px) {
+                .floating-content {
+                    justify-content: center;
+                }
+
+                .floating-info {
+                    display: none;
+                }
+
+                .floating-cta {
+                    padding: 12px 24px;
+                }
+            }
         `;
         document.head.appendChild(style);
     },
@@ -372,7 +494,66 @@ const Navigation = {
                 </div>
             </div>
         </div>
-    </nav>`;
+    </nav>
+    
+    <!-- 플로팅 버튼 영역 -->
+    <div id="floating-buttons" class="floating-buttons">
+        <div class="container mx-auto px-4">
+            <div class="floating-content">
+                <!-- 좌측 정보 영역 -->
+                <div class="floating-info">
+                    <!-- 상담시간 -->
+                    <div class="floating-item">
+                        <div class="floating-icon">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="floating-text">
+                            <span class="floating-label">상담시간</span>
+                            <span class="floating-value">평일 09:00-18:00</span>
+                        </div>
+                    </div>
+                    <!-- 빠른상담 -->
+                    <div class="floating-item">
+                        <div class="floating-icon">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                        </div>
+                        <div class="floating-text">
+                            <span class="floating-label">빠른상담</span>
+                            <span class="floating-value">30분 내 연락</span>
+                        </div>
+                    </div>
+                    <!-- 24시간 접수 -->
+                    <div class="floating-item">
+                        <div class="floating-icon">
+                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                            </svg>
+                        </div>
+                        <div class="floating-text">
+                            <span class="floating-label">온라인</span>
+                            <span class="floating-value">24시간 접수</span>
+                        </div>
+                    </div>
+                </div>
+                <!-- 우측 CTA 버튼 -->
+                <a href="tel:02-587-7787" class="floating-cta">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                        </path>
+                    </svg>
+                    <span>02-587-7787</span>
+                </a>
+            </div>
+        </div>
+    </div>`;
 
         // 기존 nav 태그를 찾아서 교체
         const existingNav = document.querySelector('nav#header');
@@ -400,22 +581,26 @@ const Navigation = {
                     link.addEventListener('mouseenter', () => {
                         megaMenu.classList.add('active');
                         header.classList.add('mega-menu-open');
+                        this.updateLogoForMegaMenu(true);
                     });
                 });
 
                 megaMenu.addEventListener('mouseenter', () => {
                     megaMenu.classList.add('active');
                     header.classList.add('mega-menu-open');
+                    this.updateLogoForMegaMenu(true);
                 });
 
                 megaMenu.addEventListener('mouseleave', () => {
                     megaMenu.classList.remove('active');
                     header.classList.remove('mega-menu-open');
+                    this.updateLogoForMegaMenu(false);
                 });
 
                 header.addEventListener('mouseleave', () => {
                     megaMenu.classList.remove('active');
                     header.classList.remove('mega-menu-open');
+                    this.updateLogoForMegaMenu(false);
                 });
             }
 
@@ -604,6 +789,71 @@ const Navigation = {
                 
                 content.classList.add('show');
                 arrow.classList.add('rotate-180');
+            }
+        }
+    },
+
+    updateLogoForMegaMenu(isOpen) {
+        const logoWhite = document.getElementById('logo-white');
+        const logoBlack = document.getElementById('logo-black');
+        const header = document.getElementById('header');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        
+        // 스크롤이 맨 위에 있고 메가메뉴가 열린 경우
+        if (window.scrollY <= 50 && isOpen) {
+            // 검은색 로고로 전환
+            logoWhite.classList.add('hidden');
+            logoBlack.classList.remove('hidden');
+            
+            // 메뉴 색상을 검은색으로 변경
+            const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+            desktopLinks.forEach(el => {
+                el.classList.remove('text-white', 'hover:text-gray-300');
+                el.classList.add('text-black', 'hover:text-gray-600');
+            });
+            
+            if (desktopPhoneBtn) {
+                desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+            }
+            
+            if (mobilePhoneBtn) {
+                mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+            }
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.classList.remove('text-white');
+                mobileMenuBtn.classList.add('text-black');
+            }
+        } else if (window.scrollY <= 50 && !isOpen) {
+            // 메가메뉴가 닫히고 스크롤이 맨 위에 있으면 흰색 로고로 복구
+            logoBlack.classList.add('hidden');
+            logoWhite.classList.remove('hidden');
+            
+            // 메뉴 색상을 흰색으로 복구
+            const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+            desktopLinks.forEach(el => {
+                el.classList.remove('text-black', 'hover:text-gray-600');
+                el.classList.add('text-white', 'hover:text-gray-300');
+            });
+            
+            if (desktopPhoneBtn) {
+                desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+            }
+            
+            if (mobilePhoneBtn) {
+                mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+            }
+            
+            if (mobileMenuBtn) {
+                mobileMenuBtn.classList.remove('text-black');
+                mobileMenuBtn.classList.add('text-white');
             }
         }
     }

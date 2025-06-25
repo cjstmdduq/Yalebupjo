@@ -1,16 +1,835 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" class="scroll-smooth">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>법무법인 - 부동산</title>
-    <!-- Navigation and Footer Modules -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>부동산 분쟁 전문 - 법무법인(유한) 예일법조</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
+  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+
+  <style>
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    /* 메가메뉴 스타일 */
+    .mega-menu {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      background: white;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+      transform: translateY(-10px);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      border-top: 1px solid #e5e7eb;
+    }
+
+    .mega-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* 모바일에서 메가메뉴 숨기기 */
+    @media (max-width: 768px) {
+      .mega-menu {
+        display: none;
+      }
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .header-transparent {
+      background: transparent;
+      border-bottom: none;
+    }
+
+    .header-scrolled {
+      background: #fff;
+      border-bottom: 1px solid #f3f4f6;
+      transition: all 0.3s ease;
+    }
+
+    /* 메가메뉴 열렸을 때 헤더 스타일 */
+    .header-transparent.mega-menu-open {
+      background: white;
+      border-bottom: 1px solid #f3f4f6;
+    }
+
+    .header-transparent.mega-menu-open a {
+      color: #111827 !important;
+    }
+
+    /* 모바일 메뉴 아코디언 스타일 */
+    .mobile-accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .mobile-accordion-content.active {
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .mobile-accordion-arrow {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-accordion-arrow.rotate {
+      transform: rotate(180deg);
+    }
+
+    .floating-buttons {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+      transform: translateY(100%);
+      transition: transform 0.3s ease-in-out;
+      z-index: 1000;
+      padding: 12px 0;
+    }
+
+    .floating-buttons.show {
+      transform: translateY(0);
+    }
+    
+    /* 머메이드 모바일 오버레이 */
+    .mermaid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #fff;
+      background: rgba(0,0,0,0.5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 8px;
+      pointer-events: auto;
+      transition: opacity 0.5s;
+      opacity: 1;
+    }
+    .mermaid-overlay.hide {
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+    @media (max-width: 768px) {
+      .mermaid-overlay {
+        display: flex;
+      }
+    }
+  </style>
+    
+    <!-- Navigation and Footer Modules (Assuming these files exist) -->
     <script src="../assets/js/nav.js"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
-<body>
-    <!-- Navigation will be inserted here by nav.js -->
-    <!-- 부동산 페이지 -->
-    <!-- Footer will be inserted here by footer.js -->
+
+
+<body class="bg-white text-black">
+  <!-- Hero Section -->
+  <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
+    <!-- 배경 비디오 -->
+    <div class="absolute inset-0 z-0">
+      <video autoplay muted loop playsinline class="w-full h-full object-cover">
+        <source src="../assets/video/4.mp4" type="video/mp4">
+      </video>
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+
+    <!-- 콘텐츠 영역 -->
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="flex items-center justify-center min-h-screen">
+        <div class="text-center">
+          <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
+            법무법인(유한) 예일법조 부동산분쟁센터
+          </p>
+          <h1
+            class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
+            흔들림 없는 당신의 재산권,<br>저희가 지켜냅니다.
+          </h1>
+          <p
+            class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
+            명도소송, 임대차 분쟁, 재개발·재건축부터 기획부동산 사기까지.<br>
+            가장 복잡한 부동산 문제, 가장 확실한 해결책을 제시합니다.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 아래 스크롤 화살표 -->
+    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+      <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </section>
+
+  <!-- 로펌 소개 (스탯형) -->
+  <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
+    <!-- 배경 효과 -->
+    <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
+    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse"></div>
+    <div class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float"></div>
+    <div class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed"></div>
+    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse"></div>
+    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent"></div>
+    <div class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent"></div>
+    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent"></div>
+    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent"></div>
+
+    <div class="container mx-auto px-6 md:px-12 relative z-10">
+      <div class="text-center mb-20">
+        <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">Real Estate Law Center</span>
+        <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+          결과로 증명된 실력
+        </h2>
+        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          부동산의 가치는 법적 안정성에서 시작됩니다.<br>
+          의뢰인의 소중한 자산을 지켜온 예일법조의 압도적인 통계입니다.
+        </p>
+      </div>
+
+      <!-- 메인 스탯 그리드 -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
+
+        <!-- 명도소송 승소율 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="97">0</span>%
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">EVICTION LAWSUIT WIN RATE</p>
+            <p class="text-xl text-white font-medium">명도소송 승소율</p>
+            <p class="text-gray-400 mt-2">신속한 강제집행을 통한 권리 실현</p>
+          </div>
+        </div>
+
+        <!-- 부동산 자산 방어액 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="1">0</span>.2조+
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">ASSETS DEFENDED</p>
+            <p class="text-xl text-white font-medium">부동산 자산 방어액</p>
+            <p class="text-gray-400 mt-2">소유권 분쟁 및 사해행위취소 방어</p>
+          </div>
+        </div>
+
+        <!-- 주요 건설/시행사 자문 -->
+        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl"></div>
+          <div class="relative z-10">
+            <div class="border-t border-white/20 pt-6 mb-4"></div>
+            <div class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
+              <span class="counter" data-target="80">0</span>+
+            </div>
+            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">MAJOR CLIENTS</p>
+            <p class="text-xl text-white font-medium">주요 건설/시행사 자문</p>
+            <p class="text-gray-400 mt-2">프로젝트파이낸싱(PF) 리스크 관리</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- SERVICES -->
+  <section id="services" class="py-24 lg:py-32 bg-white" x-data="{ activeTab: 'lease-disputes' }">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          부동산 분쟁 해결 전문 서비스
+        </h2>
+        <p class="text-lg text-[#22304a] max-w-3xl mx-auto">
+          복잡하게 얽힌 이해관계를 명쾌하게 분석하고, 의뢰인의 재산권을 지키기 위한 최적의 법률 전략을 실행합니다.<br>어떤 어려운 상황에서도 가장 확실한 해결책을 찾아냅니다.
+        </p>
+      </div>
+
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-2 md:gap-4 mb-16">
+        <button @click="activeTab = 'lease-disputes'" :class="activeTab === 'lease-disputes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">임대차 분쟁</button>
+        <button @click="activeTab = 'eviction-lawsuits'" :class="activeTab === 'eviction-lawsuits' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">명도/인도 소송</button>
+        <button @click="activeTab = 'redevelopment'" :class="activeTab === 'redevelopment' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">재개발/재건축</button>
+        <button @click="activeTab = 'sales-disputes'" :class="activeTab === 'sales-disputes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">매매/소유권 분쟁</button>
+        <button @click="activeTab = 'construction-disputes'" :class="activeTab === 'construction-disputes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">건설/하자 소송</button>
+        <button @click="activeTab = 'investment-fraud'" :class="activeTab === 'investment-fraud' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'" class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">기획부동산/사기</button>
+      </div>
+
+      <!-- 탭 콘텐츠 -->
+      <div class="space-y-12">
+        <!-- 임대차 분쟁 -->
+        <div x-show="activeTab === 'lease-disputes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">임대차 분쟁 (주택/상가)</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 임대차보증금 반환 청구 소송</li>
+                <li>• 상가 권리금 회수 방해로 인한 손해배상 청구</li>
+                <li>• 계약갱신요구권, 묵시적 갱신 관련 분쟁</li>
+                <li>• 월세 연체, 무단 전대 등을 이유로 한 계약 해지</li>
+                <li>• 원상회복 의무 범위 및 비용 관련 분쟁</li>
+                <li>• 임차권등기명령 신청 및 해결</li>
+                <li>• 전세사기 피해자 법률 대리 및 재산 보전</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">임대인과 임차인 모두를 위한 최적의 솔루션</h4>
+              <p class="text-[#22304a] mb-4">
+                임대차 분쟁은 감정적 대립으로 번지기 쉽습니다. 저희는 법리적 분석을 통해 의뢰인의 권리를 명확히 하고, 내용증명 발송부터 소송, 강제집행까지 원스톱 법률 서비스를 제공합니다. 특히, 임차인의 보증금 반환 문제와 임대인의 월세 연체 문제에 대해 신속한 재산 보전 조치(가압류 등)를 병행하여 실질적인 피해 회복을 돕습니다.
+              </p>
+              <p class="text-[#22304a]">
+                복잡한 상가임대차보호법상의 권리금 규정, 주택임대차보호법상의 계약갱신요구권 등 최신 판례와 법령을 완벽하게 분석하여 의뢰인이 불이익을 받지 않도록 최전선에서 방어합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 보증금반환청구소송 전액 인용 150여건, 권리금 손해배상 청구 평균 인용률 85%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 명도/인도 소송 -->
+        <div x-show="activeTab === 'eviction-lawsuits'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">명도/인도 소송</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 임대차 계약 종료 후 불법 점유자에 대한 명도소송</li>
+                <li>• 부동산 경매 낙찰 후 인도명령 및 명도소송</li>
+                <li>• 점유이전금지가처분 신청 및 집행</li>
+                <li>• 부당이득 반환 청구 (점유 기간 동안의 임료 상당액)</li>
+                <li>• 명도 단행 가처분 신청</li>
+                <li>• 명도소송 승소 후 강제집행(퇴거) 절차 대행</li>
+                <li>• 유치권 부존재 확인 소송 병행</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">신속하고 확실한 부동산 점유 회복</h4>
+              <p class="text-[#22304a] mb-4">
+                재산권 행사의 가장 기본적인 전제는 부동산에 대한 온전한 점유를 회복하는 것입니다. 명도소송의 핵심은 '신속성'과 '정확성'입니다. 저희는 소송 전, 현재의 점유자가 제3자에게 점유를 넘기지 못하도록 하는 '점유이전금지가처분'을 가장 먼저 신청하여 승소 판결의 실효성을 확보합니다.
+              </p>
+              <p class="text-[#22304a]">
+                경매 낙찰, 계약 종료 등 다양한 원인에 따른 명도/인도 분쟁에서 최단 기간 내에 판결을 받고, 이후 복잡한 강제집행 절차까지 책임지고 대행함으로써 의뢰인이 하루빨리 자신의 재산권을 완전히 행사할 수 있도록 돕습니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 점유이전금지가처분 인용률 99%, 명도소송 평균 처리기간 5.1개월
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 재개발/재건축 -->
+        <div x-show="activeTab === 'redevelopment'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">재개발/재건축</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 재개발·재건축 조합 설립 및 운영 관련 법률 자문</li>
+                <li>• 조합총회 결의 무효·취소 소송</li>
+                <li>• 관리처분계획 취소 소송, 분양 자격 관련 분쟁</li>
+                <li>• 현금청산자 보상금 증액 소송 (수용재결, 이의재결, 행정소송)</li>
+                <li>• 매도청구소송 대응 (조합 측/현금청산자 측 대리)</li>
+                <li>• 영업손실보상, 주거이전비, 이사비 관련 분쟁</li>
+                <li>• 지역주택조합 관련 분쟁 (탈퇴, 분담금 반환 등)</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">조합과 조합원의 권익을 모두 아우르는 전문성</h4>
+              <p class="text-[#22304a] mb-4">
+                재개발·재건축 사업은 수많은 이해관계가 충돌하는 복잡한 과정입니다. 저희는 조합 측에 안정적인 사업 추진을 위한 법률 리스크 관리 및 인허가 자문을 제공하는 동시에, 조합원의 정당한 재산권이 침해받지 않도록 적극적으로 대응합니다.
+              </p>
+              <p class="text-[#22304a]">
+                특히 감정평가액에 불복하는 현금청산자들을 대리하여, 감정평가서의 위법·부당함을 다투고 정당한 보상금을 받을 수 있도록 보상금 증액 소송을 수행합니다. 관리처분계획의 하자를 다투거나, 부당하게 조합원 지위를 박탈당한 경우 등 각종 행정소송에서 최고의 전문성을 발휘합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 관리처분계획 취소소송 일부 승소 12건, 현금청산 보상금 평균 22% 증액
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 매매/소유권 분쟁 -->
+        <div x-show="activeTab === 'sales-disputes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">매매/소유권 분쟁</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 부동산 매매계약 해제, 계약금 반환 및 위약금 청구</li>
+                <li>• 소유권이전등기 청구 소송</li>
+                <li>• 진정명의회복을 위한 소유권이전등기 소송</li>
+                <li>• 사해행위취소 소송 (채무자의 재산 빼돌리기 방어)</li>
+                <li>• 점유취득시효 완성을 원인으로 한 소유권이전등기</li>
+                <li>• 공유물분할 청구 소송</li>
+                <li>• 등기 추정력 관련 분쟁 및 등기말소 청구 소송</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">부동산 권리의 핵심, 소유권 분쟁 해결사</h4>
+              <p class="text-[#22304a] mb-4">
+                부동산의 최종적인 권리는 등기부상의 '소유권'으로 귀결됩니다. 저희는 계약금만 지급된 상태에서의 계약 파기, 중도금 지급 이후의 이행 불능 등 부동산 매매 과정에서 발생하는 모든 분쟁에 대한 명확한 해결책을 제시합니다.
+              </p>
+              <p class="text-[#22304a]">
+                특히, 이중매매, 명의신탁, 상속 등 복잡한 원인으로 소유권 관계가 불분명해진 경우, 등기부와 사실관계를 철저히 분석하여 의뢰인의 진정한 소유권을 되찾아 드립니다. 채무자가 재산을 빼돌리기 위해 허위로 부동산을 매각한 경우, 사해행위취소 소송을 통해 이를 원상회복시키는 데 독보적인 전문성을 보유하고 있습니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 사해행위취소 소송 승소 28건, 소유권이전등기 청구 인용 50여건
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- 건설/하자 소송 -->
+        <div x-show="activeTab === 'construction-disputes'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">건설/하자 소송</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 공사대금 청구 소송 (미지급 공사비, 추가 공사비)</li>
+                <li>• 아파트, 오피스텔 등 집합건물 하자보수 손해배상 청구</li>
+                <li>• 하자 감정 신청 및 감정 결과 분석</li>
+                <li>• 공사 지연(지체상금) 및 이행보증 관련 분쟁</li>
+                <li>• 유치권 행사 및 유치권 부존재 확인 소송</li>
+                <li>• 설계, 감리 관련 손해배상 청구</li>
+                <li>• 산업안전보건법 및 건설산업기본법 관련 자문</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">건설 분쟁의 기술적, 법률적 완전 분석</h4>
+              <p class="text-[#22304a] mb-4">
+                건설 분쟁은 법률뿐만 아니라 건축, 토목에 대한 기술적 이해가 필수적입니다. 저희는 건축 전문가와 협업하여 설계도서와 현장 상황을 면밀히 분석하고, 소송 과정에서 필수적인 하자 감정 절차를 주도적으로 이끌어갑니다. 이를 통해 하자의 존부, 범위, 보수 비용을 정확하게 산정하여 손해배상액을 극대화합니다.
+              </p>
+              <p class="text-[#22304a]">
+                공사대금을 받지 못한 건설사를 위해서는 신속한 채권 가압류 및 유치권 신고를 통해 채권을 확보하고, 불합리한 공사비 감액 주장에 효과적으로 대응합니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 하자 소송 평균 인용액 3.5억원, 공사대금 청구 소송 회수율 90%
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 기획부동산/사기 -->
+        <div x-show="activeTab === 'investment-fraud'" x-transition class="border-t-4 border-[#22304a] pt-8">
+          <h3 class="text-3xl font-bold text-[#111827] mb-8">기획부동산/부동산 사기</h3>
+          <div class="grid md:grid-cols-2 gap-x-12 gap-y-8">
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">주요 서비스 포트폴리오</h4>
+              <ul class="space-y-2 text-[#22304a]">
+                <li>• 기획부동산 사기 관련 민·형사상 법적 대응</li>
+                <li>• 개발 불능 토지 매매계약 취소 및 대금 반환 청구</li>
+                <li>• 분양형 호텔, 지식산업센터 등 수익형 부동산 관련 사기</li>
+                <li>• 깡통전세, 이중계약 등 전세사기 피해 구제</li>
+                <li>• 사기, 배임, 유사수신행위 등 혐의로 형사 고소 대리</li>
+                <li>• 범죄수익환수를 위한 가압류 및 추징보전명령 신청</li>
+                <li>• 다수 피해자 집단소송 수행</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold mb-4 text-[#22304a]">피해자의 눈물을 닦아주는 강력한 법적 대응</h4>
+              <p class="text-[#22304a] mb-4">
+                기획부동산 및 각종 부동산 사기는 서민의 평생 모은 재산을 앗아가는 악질적인 범죄입니다. 피해 회복의 핵심은 '시간'입니다. 저희는 사기 가해자들의 재산을 신속하게 동결시키는 가압류, 가처분 등 보전조치를 최우선으로 진행합니다.
+              </p>
+              <p class="text-[#22304a]">
+                이후 계약 취소 및 대금 반환을 구하는 민사소송과 가해자들을 처벌하기 위한 형사고소를 동시에 진행하여 모든 법적 수단을 총동원합니다. 다수의 피해자가 발생한 사건의 경우, 집단소송을 통해 보다 효율적이고 강력하게 피해 구제를 이끌어냅니다.
+              </p>
+              <div class="mt-4 p-4 bg-[#f3f4f6] rounded-lg">
+                <p class="text-sm text-[#22304a]">
+                  <strong>대표 성과:</strong> 2024년 기획부동산 사기 집단소송 5건, 피해 회복액 200억원 이상
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- PROCESS -->
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- 섹션 헤더 -->
+      <div class="text-center mb-16 sm:mb-20">
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+          부동산 명도소송 프로세스
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          내 부동산의 점유를 되찾기 위한 법적 절차를 한눈에 살펴보세요.
+        </p>
+      </div>
+
+      <!-- Mermaid 다이어그램 -->
+      <div class="mx-auto relative" style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlay" class="mermaid-overlay">
+           명도소송 진행 절차를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom()" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
+
+        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagram" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            graph TD
+                subgraph "1. 소송 준비 단계"
+                    A1[분쟁 발생 및 상담<br>- 월세 연체, 계약 종료 등] --> A2[내용증명 발송<br>- 계약 해지 통보 및<br>자진 퇴거 요청]
+                    A2 --> A3[점유이전금지가처분<br>신청 및 결정]
+                end
+
+                subgraph "2. 소송 제기 및 진행"
+                    B1[명도소송 소장 제출] --> B2[법원의 소장 부본 송달]
+                    B2 --> B3[피고(임차인) 답변서 제출]
+                    B3 --> B4[변론기일 진행<br>- 원고/피고 주장 및 증거 제출]
+                end
+
+                subgraph "3. 판결 및 집행 단계"
+                    C1{판결 선고} --> C2[판결문 송달 및 확정]
+                    C2 --> C3{피고 자진 인도?}
+                    C3 -- Yes --> C5([분쟁 종결])
+                    C3 -- No --> C4[강제집행 신청<br>- 집행관 사무소]
+                end
+                
+                subgraph "4. 강제집행 절차"
+                    D1[집행 계고<br>- 자진 퇴거 최종 통보] --> D2{자진 퇴거?}
+                    D2 -- Yes --> C5
+                    D2 -- No --> D3[강제개문 및 명도 집행<br>- 증인 참여 하에<br>강제 퇴거 실시]
+                    D3 --> D4[부동산 인도 및<br>물품 보관/매각]
+                    D4 --> C5
+                end
+
+                A3 --> B1
+                B4 --> C1
+                
+                classDef prep fill:#e3f2fd,stroke:#1e88e5,color:#000
+                classDef lawsuit fill:#e8f5e9,stroke:#43a047,color:#000
+                classDef judgment fill:#fff3e0,stroke:#fb8c00,color:#000
+                classDef execution fill:#fce4ec,stroke:#d81b60,color:#000
+                classDef finalEnd fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+
+                class A1,A2,A3 prep
+                class B1,B2,B3,B4 lawsuit
+                class C1,C2,C3,C4 judgment
+                class D1,D2,D3,D4 execution
+                class C5 finalEnd
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-24 lg:py-32 bg-white scroll-mt-24">
+    <div class="text-center mb-16 sm:mb-20">
+      <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">FAQ</span>
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
+        부동산 분쟁 관련 자주 묻는 질문
+      </h2>
+      <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
+        소중한 내 재산을 지키기 위해 반드시 알아야 할 법률 상식입니다.
+      </p>
+    </div>
+
+    <div class="max-w-4xl mx-auto divide-y divide-gray-200 px-4">
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 내용증명은 꼭 보내야 하나요? 법적 효력이 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          내용증명 자체에 법적 강제력은 없습니다. 하지만 '언제, 누가, 어떤 내용의 의사표시를 했는지'를 우체국이 증명해주므로, 향후 소송에서 계약 해지 사실 등을 입증하는 중요한 증거가 됩니다. 또한, 상대방에게 심리적 압박을 주어 소송 전 분쟁을 해결하는 효과도 있으므로, 명도소송 전에는 반드시 보내는 것이 유리합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 명도소송 기간과 비용은 보통 얼마나 드나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          기간은 상대방의 대응 방식에 따라 다르지만, 보통 6개월 내외가 소요됩니다. 상대방이 송달을 피하거나 답변서를 제출하지 않으면 더 빨라질 수 있고, 치열하게 다투면 더 길어질 수 있습니다. 비용은 변호사 보수와 법원에 납부하는 인지대, 송달료 등이 있으며, 소송가액(부동산 가액)에 따라 달라집니다. 승소 시 변호사 비용의 일부를 상대방에게 청구할 수 있습니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 월세를 안 내는 세입자가 연락도 안 받고 잠적했습니다.</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          절대 임의로 문을 열고 들어가거나 짐을 빼면 안 됩니다. 주거침입죄 등 형사처벌을 받을 수 있습니다. 이런 경우, 법원에 '공시송달'을 통해 소송을 진행할 수 있습니다. 상대방이 고의로 연락을 피하더라도 법적 절차에 따라 판결을 받고, 합법적인 강제집행을 통해 부동산을 인도받아야 합니다.
+        </p>
+      </details>
+
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 상가 권리금을 보호받고 싶습니다. 어떻게 해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          상가임대차보호법에 따라 임대인은 임대차 기간이 끝나기 6개월 전부터 임대차 종료 시까지 임차인이 주선한 신규임차인으로부터 권리금을 지급받는 것을 방해해서는 안 됩니다. 만약 임대인이 정당한 사유 없이 신규 계약을 거절하는 등 방해 행위를 한다면, 임대인을 상대로 손해배상을 청구할 수 있습니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 전세사기를 당한 것 같습니다. 가장 먼저 해야 할 일은 무엇인가요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          피해 사실을 인지한 즉시, **1) 임대차계약서, 등기부등본, 이체 내역 등 모든 증거자료 확보, 2) 임대인 및 관련자(부동산 등)에 대한 재산 가압류 등 보전조치 신청, 3) 사기 혐의로 경찰서에 형사 고소**를 진행해야 합니다. 보증금을 지키기 위한 시간 싸움이므로, 망설이지 말고 신속하게 변호사의 도움을 받아 법적 절차에 착수해야 합니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 부동산 매매계약을 해제하고 싶은데, 계약금을 돌려받을 수 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          일반적으로 매수인은 지급한 계약금을 포기하고, 매도인은 받은 계약금의 배액을 상환함으로써 계약을 해제할 수 있습니다. 단, 이는 상대방이 계약 이행에 착수하기 전(통상 중도금 지급 전)까지만 가능합니다. 만약 상대방의 채무불이행(예: 잔금 미지급)을 이유로 계약을 해제하는 경우에는 계약금을 돌려받고 추가로 손해배상을 청구할 수도 있습니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 공사대금을 받지 못하고 있습니다. 어떻게 해야 하나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          가장 먼저 해당 건물에 대해 '유치권'을 행사할 수 있는지 검토해야 합니다. 유치권은 공사대금을 받을 때까지 건물의 인도를 거부할 수 있는 강력한 권리입니다. 이와 동시에, 발주자의 다른 재산에 대한 가압류를 신청하고, 공사대금 청구 소송을 제기하여 채권을 확보해야 합니다.
+        </p>
+      </details>
+      
+      <details class="py-4 group">
+        <summary class="font-medium cursor-pointer flex justify-between items-center hover:text-blue-600 transition-colors">
+          <span>Q. 재개발 조합의 관리처분계획에 불만이 있습니다. 다툴 수 있나요?</span>
+          <span class="text-gray-500 group-open:rotate-180 transition-transform">▼</span>
+        </summary>
+        <p class="mt-4 text-gray-700 leading-relaxed">
+          네, 다툴 수 있습니다. 조합원 분양 자격, 부담금의 규모, 감정평가액 등 관리처분계획의 내용에 위법하거나 부당한 점이 있다면, 관할 행정법원에 '관리처분계획 취소 소송'을 제기할 수 있습니다. 단, 소송을 제기할 수 있는 기간이 정해져 있으므로(계획 인가 고시일로부터 90일 이내), 신속하게 변호사와 상담하여 대응해야 합니다.
+        </p>
+      </details>
+    </div>
+  </section>
+
+  <!-- JS -->
+  <script>
+    // 네비게이션 및 스크롤 관련 기능 (가정: nav.js에서 처리)
+    // ...
+
+    // 스탯 섹션 카운터 애니메이션
+    function animateCounter(element) {
+      if (element.isAnimating) return;
+      element.isAnimating = true;
+
+      const target = parseFloat(element.getAttribute('data-target'));
+      const duration = 2500;
+      let start = 0;
+      let current = start;
+      let startTime = null;
+
+      function animate(currentTime) {
+        if (startTime === null) startTime = currentTime;
+        const progress = Math.min((currentTime - startTime) / duration, 1);
+        const easeProgress = 1 - Math.pow(1 - progress, 4);
+        current = target * easeProgress;
+
+        if (target % 1 !== 0) {
+            element.textContent = current.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+        } else {
+            element.textContent = Math.floor(current).toLocaleString();
+        }
+
+        if (progress < 1) {
+          requestAnimationFrame(animate);
+        } else {
+          if (target % 1 !== 0) {
+            element.textContent = target.toLocaleString(undefined, {minimumFractionDigits: 1, maximumFractionDigits: 1});
+          } else {
+            element.textContent = target.toLocaleString();
+          }
+          element.isAnimating = false;
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const counters = entry.target.querySelectorAll('.counter');
+          counters.forEach((counter, index) => {
+            if (!counter.classList.contains('animated')) {
+              counter.classList.add('animated');
+              setTimeout(() => {
+                animateCounter(counter);
+              }, index * 200);
+            }
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Mermaid 다이어그램 관련
+    const container = document.getElementById('mermaidContainer');
+    const diagram = document.getElementById('mermaidDiagram');
+    let isDragging = false;
+    let startX, startY, scrollLeft, scrollTop;
+
+    container.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      container.style.cursor = 'grabbing';
+      startX = e.pageX - container.offsetLeft;
+      startY = e.pageY - container.offsetTop;
+      scrollLeft = container.scrollLeft;
+      scrollTop = container.scrollTop;
+    });
+
+    container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
+    container.addEventListener('mouseup', () => { isDragging = false; container.style.cursor = 'grab'; });
+    container.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.pageX - container.offsetLeft;
+      const y = e.pageY - container.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    });
+
+    // 터치 이벤트
+    container.addEventListener('touchstart', (e) => {
+        isDragging = true;
+        startX = e.touches[0].pageX - container.offsetLeft;
+        startY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+    }, { passive: false });
+
+    container.addEventListener('touchend', () => { isDragging = false; });
+    container.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      e.preventDefault();
+      const x = e.touches[0].pageX - container.offsetLeft;
+      const y = e.touches[0].pageY - container.offsetTop;
+      const walkX = (x - startX) * 1.5;
+      const walkY = (y - startY) * 1.5;
+      container.scrollLeft = scrollLeft - walkX;
+      container.scrollTop = scrollTop - walkY;
+    }, { passive: false });
+
+    let currentZoom = window.innerWidth <= 768 ? 0.8 : 1;
+
+    function zoomDiagram(delta) {
+      currentZoom = Math.max(0.3, Math.min(2, currentZoom + delta));
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+    }
+
+    function resetZoom() {
+      currentZoom = window.innerWidth <= 768 ? 0.8 : 1;
+      const diagram = document.getElementById('mermaidDiagram');
+      diagram.style.transform = `scale(${currentZoom})`;
+      diagram.style.transformOrigin = 'top left';
+    }
+    
+    document.addEventListener('DOMContentLoaded', function () {
+      const statsSection = document.getElementById('stats');
+      if (statsSection) {
+        observer.observe(statsSection);
+      }
+      
+      const initialDiagram = document.getElementById('mermaidDiagram');
+      if (initialDiagram) {
+        initialDiagram.style.transform = `scale(${currentZoom})`;
+        initialDiagram.style.transformOrigin = 'top left';
+      }
+      
+      const overlay = document.getElementById('mermaidOverlay');
+      if (overlay) {
+        const hideOverlay = () => {
+          overlay.classList.add('hide');
+          setTimeout(() => { overlay.style.display = 'none'; }, 500);
+        };
+        overlay.addEventListener('touchstart', hideOverlay, { once: true });
+        overlay.addEventListener('click', hideOverlay, { once: true });
+        overlay.addEventListener('wheel', hideOverlay, { once: true });
+        const mermaidContainer = document.getElementById('mermaidContainer');
+        if (mermaidContainer) {
+          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+        }
+      }
+    });
+  </script>
+
+  <!-- Mermaid.js 라이브러리 추가 -->
+  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+  <script>
+    mermaid.initialize({ 
+        startOnLoad: true,
+        theme: 'neutral',
+        flowchart: {
+            htmlLabels: true,
+            curve: 'basis'
+        }
+    });
+  </script>
 </body>
+
 </html>
