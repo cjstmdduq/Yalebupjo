@@ -6,6 +6,17 @@ const Navigation = {
         this.bindEvents();
     },
 
+    getBasePath() {
+        // GitHub Pages 환경인지 확인
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        
+        if (isGitHubPages && pathSegments.length > 0 && pathSegments[0] === 'Yalebupjo') {
+            return '/Yalebupjo';
+        }
+        return '';
+    },
+
     addStyles() {
         // 모바일 아코디언 스타일 추가
         const style = document.createElement('style');
@@ -33,15 +44,16 @@ const Navigation = {
     },
 
     render() {
+        const basePath = this.getBasePath();
         const navHTML = `
     <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
             <!-- 로고 -->
             <div class="flex items-center z-10">
-                <a href="/index.html">
-                    <img id="logo-white" src="/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고"
+                <a href="${basePath}/index.html">
+                    <img id="logo-white" src="${basePath}/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고"
                         class="h-8 md:h-10">
-                    <img id="logo-black" src="/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고"
+                    <img id="logo-black" src="${basePath}/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고"
                         class="h-8 md:h-10 hidden">
                 </a>
             </div>
@@ -97,11 +109,11 @@ const Navigation = {
                     <div>
                         <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
                         <ul class="space-y-2">
-                            <li><a href="/about/index.html"
+                            <li><a href="${basePath}/about/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a></li>
                             <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대표변호사
                                     인사말</a></li>
-                            <li><a href="/lawyers/index.html"
+                            <li><a href="${basePath}/lawyers/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">구성원 소개</a></li>
                         </ul>
                     </div>
@@ -110,17 +122,17 @@ const Navigation = {
                     <div>
                         <h3 class="font-bold text-gray-900 mb-4 text-lg">전문분야</h3>
                         <ul class="space-y-2">
-                            <li><a href="/criminal/index.html"
+                            <li><a href="${basePath}/criminal/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">형사</a></li>
-                            <li><a href="/civil/index.html"
+                            <li><a href="${basePath}/civil/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">민사</a></li>
-                            <li><a href="/realestate/index.html"
+                            <li><a href="${basePath}/realestate/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">부동산</a></li>
-                            <li><a href="/traffic/index.html"
+                            <li><a href="${basePath}/traffic/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고</a></li>
-                            <li><a href="/corporate/index.html"
+                            <li><a href="${basePath}/corporate/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">기업</a></li>
-                            <li><a href="/family/index.html"
+                            <li><a href="${basePath}/family/index.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">가사</a></li>
                         </ul>
                     </div>
@@ -148,9 +160,9 @@ const Navigation = {
                     <div>
                         <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
                         <ul class="space-y-2">
-                            <li><a href="/location/seoul.html"
+                            <li><a href="${basePath}/location/seoul.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">서울본사</a></li>
-                            <li><a href="/location/gangnam.html"
+                            <li><a href="${basePath}/location/gangnam.html"
                                     class="text-gray-600 hover:text-blue-600 transition block py-1">서울강남</a></li>
                             <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">울산</a></li>
                             <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대구</a></li>
@@ -175,7 +187,7 @@ const Navigation = {
             <div class="flex flex-col h-full max-h-screen">
                 <!-- 메뉴 헤더 -->
                 <div class="flex items-center justify-between p-6 border-b border-white/10">
-                    <img src="/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8">
+                    <img src="${basePath}/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8">
 
                     <!-- 닫기 버튼 -->
                     <button onclick="Navigation.closeMobileMenu()"
@@ -204,12 +216,12 @@ const Navigation = {
                             </button>
                             <div class="mobile-accordion-content" id="about-content">
                                 <div class="pl-4 space-y-2 mt-2">
-                                    <a href="/about/index.html"
+                                    <a href="${basePath}/about/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">법인소개</a>
                                     <a href="#" class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">대표변호사 인사말</a>
-                                    <a href="/lawyers/index.html"
+                                    <a href="${basePath}/lawyers/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">구성원소개</a>
                                 </div>
@@ -229,22 +241,22 @@ const Navigation = {
                             </button>
                             <div class="mobile-accordion-content" id="expertise-content">
                                 <div class="pl-4 space-y-2 mt-2">
-                                    <a href="/criminal/index.html"
+                                    <a href="${basePath}/criminal/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">형사</a>
-                                    <a href="/civil/index.html"
+                                    <a href="${basePath}/civil/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">민사</a>
-                                    <a href="/realestate/index.html"
+                                    <a href="${basePath}/realestate/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">부동산</a>
-                                    <a href="/traffic/index.html"
+                                    <a href="${basePath}/traffic/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">교통사고</a>
-                                    <a href="/corporate/index.html"
+                                    <a href="${basePath}/corporate/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">기업</a>
-                                    <a href="/family/index.html"
+                                    <a href="${basePath}/family/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">가사</a>
                                 </div>
@@ -264,10 +276,10 @@ const Navigation = {
                             </button>
                             <div class="mobile-accordion-content" id="location-content">
                                 <div class="pl-4 space-y-2 mt-2">
-                                    <a href="/location/seoul.html"
+                                    <a href="${basePath}/location/seoul.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">서울본사</a>
-                                    <a href="/location/gangnam.html"
+                                    <a href="${basePath}/location/gangnam.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
                                         onclick="Navigation.closeMobileMenu()">서울강남</a>
                                     <a href="#offices"

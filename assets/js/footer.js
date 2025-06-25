@@ -4,7 +4,19 @@ const Footer = {
         this.render();
     },
 
+    getBasePath() {
+        // GitHub Pages 환경인지 확인
+        const isGitHubPages = window.location.hostname.includes('github.io');
+        const pathSegments = window.location.pathname.split('/').filter(Boolean);
+        
+        if (isGitHubPages && pathSegments.length > 0 && pathSegments[0] === 'Yalebupjo') {
+            return '/Yalebupjo';
+        }
+        return '';
+    },
+
     render() {
+        const basePath = this.getBasePath();
         const footerHTML = `
     <footer class="bg-black text-white pt-12 pb-24">
         <div class="container mx-auto px-4">
@@ -12,7 +24,7 @@ const Footer = {
             <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
                 <!-- 로고 -->
                 <div>
-                    <img src="/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8 mb-6">
+                    <img src="${basePath}/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8 mb-6">
                     <p class="text-sm text-gray-400">
                         믿을 수 있는 법률 파트너<br>
                         예일법조가 함께합니다
@@ -23,16 +35,16 @@ const Footer = {
                 <div>
                     <h4 class="text-white font-bold mb-4">전문분야</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="/criminal/index.html" class="text-gray-400 hover:text-white transition">형사</a>
+                        <li><a href="${basePath}/criminal/index.html" class="text-gray-400 hover:text-white transition">형사</a>
                         </li>
-                        <li><a href="/civil/index.html" class="text-gray-400 hover:text-white transition">민사</a></li>
-                        <li><a href="/traffic/index.html" class="text-gray-400 hover:text-white transition">교통사고</a>
+                        <li><a href="${basePath}/civil/index.html" class="text-gray-400 hover:text-white transition">민사</a></li>
+                        <li><a href="${basePath}/traffic/index.html" class="text-gray-400 hover:text-white transition">교통사고</a>
                         </li>
-                        <li><a href="/realestate/index.html" class="text-gray-400 hover:text-white transition">부동산</a>
+                        <li><a href="${basePath}/realestate/index.html" class="text-gray-400 hover:text-white transition">부동산</a>
                         </li>
-                        <li><a href="/corporate/index.html" class="text-gray-400 hover:text-white transition">기업법무</a>
+                        <li><a href="${basePath}/corporate/index.html" class="text-gray-400 hover:text-white transition">기업법무</a>
                         </li>
-                        <li><a href="/family/index.html" class="text-gray-400 hover:text-white transition">가사</a>
+                        <li><a href="${basePath}/family/index.html" class="text-gray-400 hover:text-white transition">가사</a>
                         </li>
                     </ul>
                 </div>
