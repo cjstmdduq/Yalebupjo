@@ -234,42 +234,15 @@
             }
         }
     </style>
+    <!-- Navigation and Footer Modules -->
+    <script src="/assets/js/nav.js"></script>
+    <script src="/assets/js/footer.js"></script>
 </head>
 
 <body class="bg-white text-black">
 
     <!-- 네비게이션 -->
-    <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
-            <div class="flex items-center z-10">
-                <a href="../index.html">
-                    <img id="logo-white" src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고" class="h-8 md:h-10">
-                    <img id="logo-black" src="../assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고" class="h-8 md:h-10 hidden">
-                </a>
-            </div>
-            <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
-                <a href="../index.html#expertise" class="text-white hover:text-gray-300 transition">전문분야</a>
-                <a href="../about/" class="text-white hover:text-gray-300 transition">로펌소개</a>
-                <a href="../lawyers/" class="text-gray-300 font-bold transition">변호사소개</a>
-                <a href="../index.html#stats" class="text-white hover:text-gray-300 transition">성공사례</a>
-                <a href="../index.html#offices" class="text-white hover:text-gray-300 transition">전국지사</a>
-                <a href="#" class="text-white hover:text-gray-300 transition">블로그</a>
-            </div>
-            <div class="flex items-center z-10">
-                <a href="tel:02-587-7787"
-                    class="hidden md:block text-sm font-bold bg-gradient-to-br from-gray-700 via-gray-800 to-black rounded-full px-5 py-2.5 hover:scale-[1.05] transition-all duration-300 shadow-lg text-white">
-                    빠른 상담
-                </a>
-                <button class="md:hidden text-white ml-4">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </nav>
-
+    <!-- Navigation will be inserted here by nav.js -->
     <!-- 히어로 섹션 -->
     <section class="h-[60vh] flex items-center bg-white relative overflow-hidden">
         <!-- 배경 비디오 -->
@@ -1068,55 +1041,7 @@
     </section>
 
     <!-- 푸터 -->
-    <footer class="bg-black text-white pt-12 pb-6">
-        <div class="container mx-auto px-4">
-            <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-                <div>
-                    <img src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8 mb-6">
-                    <p class="text-sm text-gray-400">
-                        믿을 수 있는 법률 파트너<br>
-                        예일법조가 함께합니다
-                    </p>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">전문분야</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="../criminal/" class="text-gray-400 hover:text-white transition">형사</a></li>
-                        <li><a href="../civil/" class="text-gray-400 hover:text-white transition">민사</a></li>
-                        <li><a href="../traffic/" class="text-gray-400 hover:text-white transition">교통사고</a></li>
-                        <li><a href="../realestate/" class="text-gray-400 hover:text-white transition">부동산</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">전국지사</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울본사</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울강남</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-white font-bold mb-4">고객센터</h4>
-                    <p class="text-white font-bold text-lg">02-587-7787</p>
-                    <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
-                </div>
-            </div>
-            <hr class="border-gray-800 mb-6">
-            <p class="text-gray-500 text-xs text-center">
-                COPYRIGHT©2025 법무법인(유한) 예일법조. ALL RIGHTS RESERVED
-            </p>
-        </div>
-    </footer>
-
+    <!-- Footer will be inserted here by footer.js -->
     <!-- 변호사 상세 모달 -->
     <div id="lawyerModal" class="modal">
         <div class="modal-content">
@@ -1782,54 +1707,7 @@
             }
         });
 
-        // 헤더 스크롤 효과
-        window.addEventListener('scroll', function () {
-            const header = document.getElementById('header');
-            const logoWhite = document.getElementById('logo-white');
-            const logoBlack = document.getElementById('logo-black');
-
-            if (window.scrollY > 50) {
-                // 네비게이션 바 변경
-                header.classList.remove('header-transparent');
-                header.classList.add('header-scrolled');
-
-                // 로고 전환
-                logoWhite.classList.add('hidden');
-                logoBlack.classList.remove('hidden');
-
-                // 링크 색상 변경
-                header.querySelectorAll('a').forEach(el => {
-                    if (!el.classList.contains('bg-gradient-to-br')) {
-                        el.classList.remove('text-white', 'hover:text-gray-300', 'text-gray-300');
-                        el.classList.add('text-black', 'hover:text-gray-600');
-                    }
-                });
-                header.querySelector('button').classList.remove('text-white');
-                header.querySelector('button').classList.add('text-black');
-            } else {
-                // 네비게이션 바 원상복구
-                header.classList.remove('header-scrolled');
-                header.classList.add('header-transparent');
-
-                // 로고 전환
-                logoBlack.classList.add('hidden');
-                logoWhite.classList.remove('hidden');
-
-                // 링크 색상 복구
-                header.querySelectorAll('a').forEach(el => {
-                    if (!el.classList.contains('bg-gradient-to-br')) {
-                        el.classList.remove('text-black', 'hover:text-gray-600');
-                        if (el.href.includes('lawyers')) {
-                            el.classList.add('text-gray-300');
-                        } else {
-                            el.classList.add('text-white', 'hover:text-gray-300');
-                        }
-                    }
-                });
-                header.querySelector('button').classList.remove('text-black');
-                header.querySelector('button').classList.add('text-white');
-            }
-        });
+        // 네비게이션 및 스크롤 관련 기능들은 nav.js에서 처리됩니다
     </script>
 
 </body>

@@ -12,53 +12,13 @@
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
     </style>
 
+    <!-- Navigation and Footer Modules -->
+    <script src="/assets/js/nav.js"></script>
+    <script src="/assets/js/footer.js"></script>
 </head>
 <body class="bg-gray-50">
     <!-- 헤더 -->
-    <nav class="bg-white shadow-sm">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="../index.html"><img src="../assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조" class="h-8"></a>
-            <div class="flex items-center gap-6">
-                <a href="index.html" class="text-gray-600 hover:text-blue-600 transition">← 목록으로</a>
-                <a href="tel:02-587-7787" class="text-blue-600 font-bold">02-587-7787</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- 브레드크럼 -->
-    <nav class="bg-gray-50 border-b border-gray-100 py-3">
-        <div class="container mx-auto px-4">
-            <ol class="flex items-center space-x-2 text-sm">
-                <li><a href="../index.html" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">홈</a></li>
-                <li><span class="text-gray-300 mx-2">/</span></li>
-                <li><a href="index.html" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">성공사례</a></li>
-                <li><span class="text-gray-300 mx-2">/</span></li>
-                <li><span class="text-blue-600 font-medium">상세보기</span></li>
-            </ol>
-        </div>
-    </nav>
-
-    <!-- 메인 컨텐츠 -->
-    <main class="container mx-auto px-4 py-8">
-        <!-- 로딩 상태 -->
-        <div id="loading" class="text-center py-20">
-            <div class="animate-spin w-12 h-12 border-4 border-blue-200 border-t-blue-600 rounded-full mx-auto mb-4"></div>
-            <p class="text-gray-600">성공사례 정보를 불러오는 중...</p>
-        </div>
-
-        <!-- 사례 상세 컨텐츠 -->
-        <div id="case-detail" class="hidden">
-            <!-- 브레드크럼 -->
-            <nav class="mb-8">
-                <ol class="flex items-center space-x-2 text-sm text-gray-600">
-                    <li><a href="../index.html" class="hover:text-blue-600">홈</a></li>
-                    <li class="text-gray-400">/</li>
-                    <li><a href="index.html" class="hover:text-blue-600">성공사례</a></li>
-                    <li class="text-gray-400">/</li>
-                    <li id="breadcrumb-category" class="text-blue-600"></li>
-                </ol>
-            </nav>
-
+    <!-- Navigation will be inserted here by nav.js -->
             <!-- 메인 컨텐츠 그리드 -->
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- 메인 컨텐츠 -->
@@ -348,5 +308,5 @@
             document.getElementById('error-state').classList.remove('hidden');
         }
     </script>
-</body>
+    <!-- Footer will be inserted here by footer.js --></body>
 </html> 
