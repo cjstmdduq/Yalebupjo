@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
-  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <style>
     body {
@@ -830,67 +830,178 @@
       </div>
 
       <div class="max-w-6xl mx-auto">
-        <div class="relative">
-          <div class="mermaid-overlay" id="mermaid-overlay" onclick="this.classList.add('hide'); setTimeout(() => this.style.display = 'none', 500);">
-            모바일에서는 좌우로 스크롤하여 전체 다이어그램을 볼 수 있습니다.
+        <div x-data="processTab">
+          <!-- 탭 메뉴 -->
+          <div class="flex justify-center gap-4 mb-8">
+            <button @click="activeProcessTab = 'agreement'" 
+                    :class="activeProcessTab === 'agreement' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+                    class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+              협의이혼
+            </button>
+            <button @click="activeProcessTab = 'judicial'" 
+                    :class="activeProcessTab === 'judicial' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+                    class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+              재판이혼
+            </button>
           </div>
-          <div class="bg-gray-50 rounded-lg p-8 overflow-x-auto">
-            <div class="mermaid text-center" style="min-width: 800px;">
-              flowchart TB
-                Start([이혼 결심]) --> Consult[변호사 상담<br>- 이혼 사유 검토<br>- 재산 현황 파악<br>- 자녀 양육 계획]
-                
-                Consult --> Type{이혼 방식 선택}
-                
-                Type -->|합의 가능| Agree[협의이혼]
-                Type -->|합의 불가| Court[재판이혼]
-                
-                %% 협의이혼 경로
-                Agree --> AgreeDoc[이혼협의서 작성<br>- 재산분할<br>- 양육권/양육비<br>- 면접교섭권]
-                AgreeDoc --> Counsel[가정법원 상담<br>- 협의이혼 신청<br>- 안내 및 상담]
-                
-                Counsel --> Think[숙려기간<br>- 자녀 있음: 3개월<br>- 자녀 없음: 1개월]
-                Think --> Confirm[이혼의사 확인<br>- 판사 면전 출석<br>- 최종 의사 확인]
-                
-                Confirm --> Register[이혼신고<br>- 가족관계등록부 정리<br>- 3개월 이내 신고]
-                
-                %% 재판이혼 경로
-                Court --> Petition[이혼소장 작성·제출<br>- 이혼사유 명시<br>- 증거자료 첨부]
-                Petition --> Mediation{조정 회부}
-                
-                Mediation -->|조정 성립| MediationSuccess[조정조서 작성<br>- 판결과 동일 효력]
-                Mediation -->|조정 불성립| Trial[본안 소송 진행]
-                
-                Trial --> Evidence[변론기일<br>- 증거조사<br>- 증인신문<br>- 당사자 심문]
-                Evidence --> ChildInvest[미성년자녀 조사<br>- 가사조사관 조사<br>- 양육환경 파악]
-                ChildInvest --> Judgment[판결 선고<br>- 이혼 인용/기각<br>- 재산분할·양육권 결정]
-                
-                Judgment --> Appeal{항소 여부}
-                Appeal -->|항소| AppealCourt[항소심<br>- 2심 재판<br>- 새로운 증거 제출 가능]
-                Appeal -->|확정| Final[판결 확정]
-                
-                AppealCourt --> Supreme{상고 여부}
-                Supreme -->|상고| SupremeCourt[대법원<br>- 법률심만 진행]
-                Supreme -->|확정| Final
-                
-                SupremeCourt --> Final
-                MediationSuccess --> Register
-                Final --> Register
-                
-                Register --> End([이혼 완료<br>새로운 시작])
-                
-                %% 스타일 정의
-                classDef consult fill:#e3f2fd,stroke:#1e88e5,color:#000
-                classDef agree fill:#e8f5e9,stroke:#43a047,color:#000
-                classDef court fill:#fff3e0,stroke:#fb8c00,color:#000
-                classDef process fill:#fce4ec,stroke:#d81b60,color:#000
-                classDef decision fill:#fff9c4,stroke:#f9a825,color:#000
-                classDef final fill:#f1556c,stroke:#d9363e,color:#fff,stroke-width:2px
-                
-                class Consult consult
-                class Agree,AgreeDoc,Counsel,Think,Confirm agree
-                class Court,Petition,Trial,Evidence,ChildInvest,Judgment,AppealCourt,SupremeCourt court
-                class Type,Mediation,Appeal,Supreme decision
-                class Register,End final
+
+          <!-- 협의이혼 탭 -->
+          <div x-show="activeProcessTab === 'agreement'" x-transition class="mx-auto relative"
+               style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+            <div id="mermaidOverlayAgreement" class="mermaid-overlay">
+              협의이혼 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+            </div>
+            <!-- 줌 컨트롤 -->
+            <div class="absolute top-4 right-4 flex gap-2 z-10">
+              <button onclick="zoomDiagram(0.1, 'agreement')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </button>
+              <button onclick="zoomDiagram(-0.1, 'agreement')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                </svg>
+              </button>
+              <button onclick="resetZoom('agreement')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div id="mermaidContainerAgreement" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+              <div id="mermaidDiagramAgreement" class="mermaid transition-transform duration-300"
+                   style="transform: scale(1); transform-origin: center center;">
+                  flowchart TB
+                    Start([이혼 결심]) --> Consult[변호사 상담<br>- 합의 가능성 검토<br>- 재산 현황 파악<br>- 자녀 양육 계획]
+                    
+                    Consult --> Agree[협의이혼 결정<br>- 쌍방 합의<br>- 평화적 해결]
+                    
+                    Agree --> AgreeDoc[이혼협의서 작성<br>- 재산분할 합의<br>- 양육권/양육비 결정<br>- 면접교섭권 약정]
+                    
+                    AgreeDoc --> Prepare[서류 준비<br>- 신분증, 혼인관계증명서<br>- 가족관계증명서<br>- 주민등록등본]
+                    
+                    Prepare --> Apply[가정법원 방문<br>- 협의이혼 신청<br>- 안내 및 상담 진행]
+                    
+                    Apply --> Think[숙려기간<br>- 자녀 있음: 3개월<br>- 자녀 없음: 1개월<br>- 양육 안내 교육 이수]
+                    
+                    Think --> Confirm[이혼의사 확인<br>- 판사 면전 출석<br>- 최종 의사 확인<br>- 협의 내용 확정]
+                    
+                    Confirm --> Cert[이혼증명서 발급<br>- 확인서 수령<br>- 효력 발생]
+                    
+                    Cert --> Register[이혼신고<br>- 3개월 이내 신고<br>- 가족관계등록부 정리<br>- 신고 완료]
+                    
+                    Register --> End([협의이혼 완료<br>새로운 시작])
+                    
+                    %% 추가 사항 표시
+                    Agree -.->|합의 어려움| JudicialNote[재판이혼 검토]
+                    Think -.->|숙려기간 중<br>마음 변경| Cancel[절차 중단]
+                    
+                    %% 스타일 정의
+                    classDef consult fill:#e3f2fd,stroke:#1e88e5,color:#000
+                    classDef agree fill:#e8f5e9,stroke:#43a047,color:#000
+                    classDef process fill:#fce4ec,stroke:#d81b60,color:#000
+                    classDef final fill:#f1556c,stroke:#d9363e,color:#fff,stroke-width:2px
+                    classDef note fill:#fff9c4,stroke:#f9a825,color:#000,stroke-dasharray: 5 5
+                    
+                    class Consult consult
+                    class Agree,AgreeDoc,Prepare,Apply,Think,Confirm,Cert agree
+                    class Register,End final
+                    class JudicialNote,Cancel note
+              </div>
+            </div>
+          </div>
+
+          <!-- 재판이혼 탭 -->
+          <div x-show="activeProcessTab === 'judicial'" x-transition class="mx-auto relative"
+               style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+            <div id="mermaidOverlayJudicial" class="mermaid-overlay">
+              재판이혼 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+            </div>
+            <!-- 줌 컨트롤 -->
+            <div class="absolute top-4 right-4 flex gap-2 z-10">
+              <button onclick="zoomDiagram(0.1, 'judicial')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </button>
+              <button onclick="zoomDiagram(-0.1, 'judicial')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                </svg>
+              </button>
+              <button onclick="resetZoom('judicial')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div id="mermaidContainerJudicial" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+              <div id="mermaidDiagramJudicial" class="mermaid transition-transform duration-300"
+                   style="transform: scale(1); transform-origin: center center;">
+                  flowchart TB
+                    Start([이혼 결심]) --> Consult[변호사 상담<br>- 이혼 사유 검토<br>- 증거 수집 계획<br>- 소송 전략 수립]
+                    
+                    Consult --> Court[재판이혼 결정<br>- 합의 불가능<br>- 법적 해결 필요]
+                    
+                    Court --> Petition[이혼소장 작성·제출<br>- 이혼사유 명시<br>- 증거자료 첨부<br>- 청구취지 기재]
+                    
+                    Petition --> Mediation{조정 회부<br>- 조정전치주의<br>- 조정위원회 구성}
+                    
+                    Mediation -->|조정 성립| MediationSuccess[조정조서 작성<br>- 판결과 동일 효력<br>- 즉시 확정]
+                    Mediation -->|조정 불성립| Trial[본안 소송 진행<br>- 조정불성립 조서<br>- 소송 절차 개시]
+                    
+                    Trial --> Evidence[변론기일<br>- 증거조사<br>- 증인신문<br>- 당사자 심문]
+                    
+                    Evidence --> ChildInvest{미성년자녀 유무}
+                    ChildInvest -->|있음| FamilyInvest[가사조사<br>- 가사조사관 조사<br>- 양육환경 파악<br>- 자녀 의견 청취]
+                    ChildInvest -->|없음| Judgment
+                    
+                    FamilyInvest --> Judgment[판결 선고<br>- 이혼 인용/기각<br>- 재산분할 결정<br>- 양육권·양육비 결정<br>- 위자료 결정]
+                    
+                    Judgment --> Appeal{항소 여부<br>- 2주 이내 결정}
+                    Appeal -->|항소| AppealCourt[항소심<br>- 고등법원<br>- 새로운 증거 제출 가능<br>- 사실심 재판]
+                    Appeal -->|확정| Final[1심 판결 확정]
+                    
+                    AppealCourt --> AppealJudgment[항소심 판결]
+                    AppealJudgment --> Supreme{상고 여부<br>- 2주 이내 결정}
+                    Supreme -->|상고| SupremeCourt[대법원<br>- 법률심만 진행<br>- 법리 판단]
+                    Supreme -->|확정| Final[2심 판결 확정]
+                    
+                    SupremeCourt --> Final[최종 확정]
+                    MediationSuccess --> Register[이혼신고<br>- 조서/판결문 첨부<br>- 가족관계등록부 정리]
+                    Final --> Register
+                    
+                    Register --> End([재판이혼 완료<br>새로운 시작])
+                    
+                    %% 스타일 정의
+                    classDef consult fill:#e3f2fd,stroke:#1e88e5,color:#000
+                    classDef court fill:#fff3e0,stroke:#fb8c00,color:#000
+                    classDef process fill:#fce4ec,stroke:#d81b60,color:#000
+                    classDef decision fill:#fff9c4,stroke:#f9a825,color:#000
+                    classDef final fill:#f1556c,stroke:#d9363e,color:#fff,stroke-width:2px
+                    
+                    class Consult consult
+                    class Court,Petition,Trial,Evidence,FamilyInvest,Judgment,AppealCourt,AppealJudgment,SupremeCourt court
+                    class Mediation,ChildInvest,Appeal,Supreme decision
+                    class MediationSuccess,Register,End,Final final
+              </div>
             </div>
           </div>
         </div>
@@ -1054,8 +1165,9 @@
   <!-- Mermaid -->
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
   <script>
+    // Mermaid 초기화 (자동 시작 비활성화)
     mermaid.initialize({ 
-      startOnLoad: true,
+      startOnLoad: false,
       theme: 'default',
       themeVariables: {
         primaryColor: '#2563eb',
@@ -1065,6 +1177,263 @@
         secondaryColor: '#eff6ff',
         tertiaryColor: '#fff'
       }
+    });
+
+    // 다이어그램 텍스트 저장
+    const mermaidDiagramTexts = {
+      agreement: `flowchart TB
+                    Start([이혼 결심]) --> Consult[변호사 상담<br>- 합의 가능성 검토<br>- 재산 현황 파악<br>- 자녀 양육 계획]
+                    
+                    Consult --> Agree[협의이혼 결정<br>- 쌍방 합의<br>- 평화적 해결]
+                    
+                    Agree --> AgreeDoc[이혼협의서 작성<br>- 재산분할 합의<br>- 양육권/양육비 결정<br>- 면접교섭권 약정]
+                    
+                    AgreeDoc --> Prepare[서류 준비<br>- 신분증, 혼인관계증명서<br>- 가족관계증명서<br>- 주민등록등본]
+                    
+                    Prepare --> Apply[가정법원 방문<br>- 협의이혼 신청<br>- 안내 및 상담 진행]
+                    
+                    Apply --> Think[숙려기간<br>- 자녀 있음: 3개월<br>- 자녀 없음: 1개월<br>- 양육 안내 교육 이수]
+                    
+                    Think --> Confirm[이혼의사 확인<br>- 판사 면전 출석<br>- 최종 의사 확인<br>- 협의 내용 확정]
+                    
+                    Confirm --> Cert[이혼증명서 발급<br>- 확인서 수령<br>- 효력 발생]
+                    
+                    Cert --> Register[이혼신고<br>- 3개월 이내 신고<br>- 가족관계등록부 정리<br>- 신고 완료]
+                    
+                    Register --> End([협의이혼 완료<br>새로운 시작])
+                    
+                    %% 추가 사항 표시
+                    Agree -.->|합의 어려움| JudicialNote[재판이혼 검토]
+                    Think -.->|숙려기간 중<br>마음 변경| Cancel[절차 중단]
+                    
+                    %% 스타일 정의
+                    classDef consult fill:#e3f2fd,stroke:#1e88e5,color:#000
+                    classDef agree fill:#e8f5e9,stroke:#43a047,color:#000
+                    classDef process fill:#fce4ec,stroke:#d81b60,color:#000
+                    classDef final fill:#f1556c,stroke:#d9363e,color:#fff,stroke-width:2px
+                    classDef note fill:#fff9c4,stroke:#f9a825,color:#000,stroke-dasharray: 5 5
+                    
+                    class Consult consult
+                    class Agree,AgreeDoc,Prepare,Apply,Think,Confirm,Cert agree
+                    class Register,End final
+                    class JudicialNote,Cancel note`,
+      judicial: `flowchart TB
+                    Start([이혼 결심]) --> Consult[변호사 상담<br>- 이혼 사유 검토<br>- 증거 수집 계획<br>- 소송 전략 수립]
+                    
+                    Consult --> Court[재판이혼 결정<br>- 합의 불가능<br>- 법적 해결 필요]
+                    
+                    Court --> Petition[이혼소장 작성·제출<br>- 이혼사유 명시<br>- 증거자료 첨부<br>- 청구취지 기재]
+                    
+                    Petition --> Mediation{조정 회부<br>- 조정전치주의<br>- 조정위원회 구성}
+                    
+                    Mediation -->|조정 성립| MediationSuccess[조정조서 작성<br>- 판결과 동일 효력<br>- 즉시 확정]
+                    Mediation -->|조정 불성립| Trial[본안 소송 진행<br>- 조정불성립 조서<br>- 소송 절차 개시]
+                    
+                    Trial --> Evidence[변론기일<br>- 증거조사<br>- 증인신문<br>- 당사자 심문]
+                    
+                    Evidence --> ChildInvest{미성년자녀 유무}
+                    ChildInvest -->|있음| FamilyInvest[가사조사<br>- 가사조사관 조사<br>- 양육환경 파악<br>- 자녀 의견 청취]
+                    ChildInvest -->|없음| Judgment
+                    
+                    FamilyInvest --> Judgment[판결 선고<br>- 이혼 인용/기각<br>- 재산분할 결정<br>- 양육권·양육비 결정<br>- 위자료 결정]
+                    
+                    Judgment --> Appeal{항소 여부<br>- 2주 이내 결정}
+                    Appeal -->|항소| AppealCourt[항소심<br>- 고등법원<br>- 새로운 증거 제출 가능<br>- 사실심 재판]
+                    Appeal -->|확정| Final[1심 판결 확정]
+                    
+                    AppealCourt --> AppealJudgment[항소심 판결]
+                    AppealJudgment --> Supreme{상고 여부<br>- 2주 이내 결정}
+                    Supreme -->|상고| SupremeCourt[대법원<br>- 법률심만 진행<br>- 법리 판단]
+                    Supreme -->|확정| Final[2심 판결 확정]
+                    
+                    SupremeCourt --> Final[최종 확정]
+                    MediationSuccess --> Register[이혼신고<br>- 조서/판결문 첨부<br>- 가족관계등록부 정리]
+                    Final --> Register
+                    
+                    Register --> End([재판이혼 완료<br>새로운 시작])
+                    
+                    %% 스타일 정의
+                    classDef consult fill:#e3f2fd,stroke:#1e88e5,color:#000
+                    classDef court fill:#fff3e0,stroke:#fb8c00,color:#000
+                    classDef process fill:#fce4ec,stroke:#d81b60,color:#000
+                    classDef decision fill:#fff9c4,stroke:#f9a825,color:#000
+                    classDef final fill:#f1556c,stroke:#d9363e,color:#fff,stroke-width:2px
+                    
+                    class Consult consult
+                    class Court,Petition,Trial,Evidence,FamilyInvest,Judgment,AppealCourt,AppealJudgment,SupremeCourt court
+                    class Mediation,ChildInvest,Appeal,Supreme decision
+                    class MediationSuccess,Register,End,Final final`
+    };
+
+    // 다이어그램 렌더링 함수
+    function renderMermaidDiagrams(specificTab = null) {
+      const tabNames = ['agreement', 'judicial'];
+      const tabsToRender = specificTab ? [specificTab] : tabNames;
+      
+      tabsToRender.forEach(tabName => {
+        const elementId = `mermaidDiagram${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`;
+        const element = document.getElementById(elementId);
+        
+        if (element && mermaidDiagramTexts[tabName]) {
+          // 기존 내용 초기화
+          element.innerHTML = '';
+          element.removeAttribute('data-processed');
+          
+          // 새 다이어그램 텍스트 설정
+          element.textContent = mermaidDiagramTexts[tabName];
+          
+          try {
+            mermaid.init(undefined, element);
+          } catch (e) {
+            console.error(`Mermaid rendering error for ${tabName}:`, e);
+          }
+        }
+      });
+    }
+
+    // Alpine.js 컴포넌트 등록
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('processTab', () => ({
+        activeProcessTab: 'agreement',
+        init() {
+          // 초기 렌더링
+          this.$nextTick(() => {
+            setTimeout(() => {
+              renderMermaidDiagrams('agreement');
+            }, 100);
+          });
+          
+          // 탭 변경 감지
+          this.$watch('activeProcessTab', (newTab) => {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                renderMermaidDiagrams(newTab);
+              }, 100);
+            });
+          });
+        }
+      }));
+    });
+
+    // 드래그 기능 구현 함수
+    function setupDragFeature(containerId, diagramId) {
+      const container = document.getElementById(containerId);
+      const diagram = document.getElementById(diagramId);
+      if (!container || !diagram) return;
+
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        container.style.cursor = 'grabbing';
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
+
+      container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
+
+      container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
+        const walkX = (x - startX) * 1.5;
+        const walkY = (y - startY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+
+      // 터치 이벤트 지원
+      let touchStartX, touchStartY;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - container.offsetLeft;
+        touchStartY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const y = e.touches[0].pageY - container.offsetTop;
+        const walkX = (x - touchStartX) * 1.5;
+        const walkY = (y - touchStartY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+    }
+
+    // 두 개의 다이어그램에 대해 드래그 기능 설정
+    setupDragFeature('mermaidContainerAgreement', 'mermaidDiagramAgreement');
+    setupDragFeature('mermaidContainerJudicial', 'mermaidDiagramJudicial');
+
+    let currentZoomAgreement = window.innerWidth <= 768 ? 1: 1.2;
+    let currentZoomJudicial = window.innerWidth <= 768 ? 1: 1.2;
+
+    // 줌 기능
+    function zoomDiagram(delta, type) {
+      let currentZoom, diagramId;
+      
+      if (type === 'agreement') {
+        currentZoomAgreement = Math.max(0.5, Math.min(2, currentZoomAgreement + delta));
+        currentZoom = currentZoomAgreement;
+        diagramId = 'mermaidDiagramAgreement';
+      } else {
+        currentZoomJudicial = Math.max(0.5, Math.min(2, currentZoomJudicial + delta));
+        currentZoom = currentZoomJudicial;
+        diagramId = 'mermaidDiagramJudicial';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${currentZoom})`;
+      }
+    }
+
+    function resetZoom(type) {
+      if (type === 'agreement') {
+        currentZoomAgreement = window.innerWidth <= 768 ? 1: 1.2;
+        const diagram = document.getElementById('mermaidDiagramAgreement');
+        if (diagram) {
+          diagram.style.transform = `scale(${currentZoomAgreement})`;
+        }
+      } else {
+        currentZoomJudicial = window.innerWidth <= 768 ? 1: 1.2;
+        const diagram = document.getElementById('mermaidDiagramJudicial');
+        if (diagram) {
+          diagram.style.transform = `scale(${currentZoomJudicial})`;
+        }
+      }
+    }
+
+    // 초기 줌 적용
+    document.addEventListener('DOMContentLoaded', function() {
+      setTimeout(() => {
+        // 모바일이 아닌 경우 초기 줌 1.2 적용
+        if (window.innerWidth > 768) {
+          const diagramAgreement = document.getElementById('mermaidDiagramAgreement');
+          const diagramJudicial = document.getElementById('mermaidDiagramJudicial');
+          
+          if (diagramAgreement) {
+            diagramAgreement.style.transform = `scale(${currentZoomAgreement})`;
+          }
+          if (diagramJudicial) {
+            diagramJudicial.style.transform = `scale(${currentZoomJudicial})`;
+          }
+        }
+      }, 1500);
     });
   </script>
 </body>

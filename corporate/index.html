@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
-  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <style>
     body {
@@ -496,76 +496,319 @@
 
 
   <!-- PROCESS -->
-  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24" x-data="processTab">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- 섹션 헤더 -->
       <div class="text-center mb-16 sm:mb-20">
         <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
-          M&A 거래 프로세스
+          기업 법무 프로세스
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          성공적인 기업 인수를 위한 표준 절차를 한눈에 살펴보세요.
+          각 분야별 전문적인 법률 지원 절차를 한눈에 살펴보세요.
         </p>
       </div>
 
-      <!-- Mermaid 다이어그램 -->
-      <div class="mx-auto relative" style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
-        <div id="mermaidOverlay" class="mermaid-overlay">
-           성공적인 M&A를 위한 표준 절차를<br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <button @click="activeProcessTab = 'ma'"
+          :class="activeProcessTab === 'ma' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          M&A 및 투자
+        </button>
+        <button @click="activeProcessTab = 'contract'"
+          :class="activeProcessTab === 'contract' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          계약 관리
+        </button>
+        <button @click="activeProcessTab = 'compliance'"
+          :class="activeProcessTab === 'compliance' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          규제 준수
+        </button>
+        <button @click="activeProcessTab = 'dispute'"
+          :class="activeProcessTab === 'dispute' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          분쟁 해결
+        </button>
+        <button @click="activeProcessTab = 'restructure'"
+          :class="activeProcessTab === 'restructure' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          구조조정
+        </button>
+        <button @click="activeProcessTab = 'ip'"
+          :class="activeProcessTab === 'ip' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          지식재산권
+        </button>
+      </div>
+
+      <!-- Mermaid 다이어그램 - M&A 및 투자 -->
+      <div x-show="activeProcessTab === 'ma'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayMa" class="mermaid-overlay">
+           M&A 및 투자 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
          </div>
         <!-- 줌 컨트롤 -->
         <div class="absolute top-4 right-4 flex gap-2 z-10">
-          <button onclick="zoomDiagram(0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
-          <button onclick="zoomDiagram(-0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
-          <button onclick="resetZoom()" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+          <button onclick="zoomDiagram(0.1, 'ma')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'ma')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('ma')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
         </div>
 
-        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
-          <div id="mermaidDiagram" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
-            graph TD
-                subgraph "1. 거래 준비 단계 (Preparation)"
-                    A1[거래 목적 및 전략 수립<br>- 인수/매각 대상 선정<br>- 자문사 선정] --> A2[비밀유지약정(NDA) 체결<br>- 정보보호 의무 부과]
-                    A2 --> A3[티저 메모(Teaser) 배포<br>- 투자안내서(IM) 제공]
-                end
+        <div id="mermaidContainerMa" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramMa" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([M&A/투자 프로젝트 시작]) --> MAConsult[M&A 전략 자문<br>- 거래구조 설계<br>- 가치평가 검토<br>- 협상 전략 수립]
+            
+            MAConsult --> MAType{거래 유형}
+            MAType -->|인수| Acquisition[인수 프로세스<br>- 타겟 선정 지원<br>- LOI 작성<br>- 실사 수행]
+            MAType -->|매각| Divestiture[매각 프로세스<br>- IM 작성 지원<br>- 입찰 관리<br>- 협상 지원]
+            MAType -->|합작투자| JointVenture[JV 구조 설계<br>- 주주간계약 작성<br>- 지배구조 설계]
+            
+            Acquisition --> MADueDiligence[법률실사<br>- 계약 리스크 분석<br>- 규제 이슈 검토<br>- 소송 리스크 파악]
+            Divestiture --> MADueDiligence
+            JointVenture --> MADueDiligence
+            
+            MADueDiligence --> MAContract[본계약 작성<br>- SPA/APA 작성<br>- 진술보증 조항<br>- 손해배상 조항]
+            
+            MAContract --> MAReg[규제 대응<br>- 기업결합신고<br>- 외국인투자신고<br>- 산업별 인허가]
+            
+            MAReg --> MAClosing[거래 종결 지원<br>- CP 충족 확인<br>- 결제 프로세스<br>- 권리이전 절차]
+            
+            MAClosing --> MAPost[사후 관리<br>- PMI 법률 지원<br>- 가격조정 협상<br>- 보증 클레임 대응]
+            
+            MAPost --> End([M&A 완료])
+            
+            classDef maStyle fill:#e3f2fd,stroke:#1e88e5,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class MAConsult,Acquisition,Divestiture,JointVenture,MADueDiligence,MAContract,MAReg,MAClosing,MAPost maStyle
+            class MAType decisionStyle
+            class End endStyle
+          </div>
+        </div>
+      </div>
 
-                subgraph "2. 예비입찰 및 실사 단계 (Bidding & Due Diligence)"
-                    B1[인수의향서(LOI) 제출<br>- 예비 인수 가격 및<br>조건 제시] --> B2[우선협상대상자 선정<br>- 배타적 협상권 부여]
-                    B2 --> B3[상세 실사(Due Diligence)<br>- 법률, 재무, 세무, 사업 등<br>리스크 정밀 분석]
-                end
+      <!-- Mermaid 다이어그램 - 계약 관리 -->
+      <div x-show="activeProcessTab === 'contract'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayContract" class="mermaid-overlay">
+           계약 검토 및 관리 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'contract')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'contract')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('contract')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
 
-                subgraph "3. 본계약 협상 및 체결 단계 (Negotiation & Signing)"
-                    C1[본계약(SPA) 조건 협상<br>- 가격, 진술 및 보증<br>- 확약, 선행조건 등] --> C2[계약서 작성 및 서명<br>- 주식매매계약<br>- 영업양수도계약 등]
-                end
+        <div id="mermaidContainerContract" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramContract" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([계약 요청 발생]) --> ContractConsult[계약 자문<br>- 리스크 분석<br>- 협상 포인트 조언]
+            
+            ContractConsult --> ContractType{계약 유형}
+            ContractType -->|공급계약| Supply[공급/구매계약<br>- 품질보증 조항<br>- 납기/대금 조건<br>- 책임제한 조항]
+            ContractType -->|용역계약| Service[용역/위탁계약<br>- 업무범위 명확화<br>- 성과물 귀속<br>- 비밀유지 조항]
+            ContractType -->|라이선스| License[라이선스계약<br>- 사용권 범위<br>- 로열티 구조<br>- 기술지원 조항]
+            ContractType -->|유통계약| Distribution[판매/대리점계약<br>- 독점권 설정<br>- 판매조건<br>- 계약해지 조항]
+            
+            Supply --> ContractDraft[계약서 작성/검토<br>- 표준계약서 개발<br>- 상대방 계약서 검토<br>- 수정협상 지원]
+            Service --> ContractDraft
+            License --> ContractDraft
+            Distribution --> ContractDraft
+            
+            ContractDraft --> ContractManage[계약 관리 시스템<br>- 계약 DB 구축<br>- 갱신/만료 관리<br>- 의무사항 모니터링]
+            
+            ContractManage --> End([계약관리 체계화])
+            
+            classDef contractStyle fill:#e8f5e9,stroke:#43a047,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class ContractConsult,Supply,Service,License,Distribution,ContractDraft,ContractManage contractStyle
+            class ContractType decisionStyle
+            class End endStyle
+          </div>
+        </div>
+      </div>
 
-                subgraph "4. 거래 종결 단계 (Closing)"
-                    D1[정부 인허가 및 신고<br>- 공정위 기업결합신고<br>- 외국인투자신고 등] --> D2[계약상 선행조건 충족<br>- 주주총회 승인<br>- 제3자 동의 등]
-                    D2 --> D3[거래 종결(Closing)<br>- 대금 지급<br>- 주식/자산 이전]
-                end
-                
-                subgraph "5. 거래 후 통합 단계 (Post-Closing)"
-                    E1[거래 후 통합(PMI)<br>- 조직, 인사, 시스템 통합<br>- 시너지 창출] --> E2[최종 거래가격 조정<br>- 순운전자본, 순부채 등<br>정산]
-                    E2 --> E3([M&A 거래 완료])
-                end
+      <!-- Mermaid 다이어그램 - 규제 준수 -->
+      <div x-show="activeProcessTab === 'compliance'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayCompliance" class="mermaid-overlay">
+           규제 준수 및 대응 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'compliance')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'compliance')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('compliance')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
 
-                A1 --> B1
-                B3 --> C1
-                C2 --> D1
-                D3 --> E1
+        <div id="mermaidContainerCompliance" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramCompliance" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([규제 준수 필요]) --> ComplianceAudit[컴플라이언스 진단<br>- 규제 리스크 평가<br>- 내부통제 점검<br>- 개선방안 제시]
+            
+            ComplianceAudit --> RegArea{규제 영역}
+            RegArea -->|공정거래| FairTrade[공정거래법 준수<br>- 담합 방지 프로그램<br>- 하도급법 대응<br>- 불공정거래 예방]
+            RegArea -->|개인정보| Privacy[개인정보보호<br>- GDPR/개인정보보호법<br>- 정보처리방침 수립<br>- 유출 대응체계]
+            RegArea -->|자본시장| Capital[자본시장법 준수<br>- 공시 의무 관리<br>- 내부거래 통제<br>- 주식거래 규제]
+            RegArea -->|산업규제| Industry[산업별 규제 대응<br>- 금융업 규제<br>- 헬스케어 규제<br>- IT/통신 규제]
+            
+            FairTrade --> ComplianceSystem[준법경영시스템 구축<br>- 준법지원인 제도<br>- 내부신고 시스템<br>- 임직원 교육]
+            Privacy --> ComplianceSystem
+            Capital --> ComplianceSystem
+            Industry --> ComplianceSystem
+            
+            ComplianceSystem --> ComplianceMonitor[상시 모니터링<br>- 법규 개정 추적<br>- 리스크 조기 경보<br>- 정기 점검 실시]
+            
+            ComplianceMonitor --> End([준법경영 정착])
+            
+            classDef complianceStyle fill:#fff3e0,stroke:#fb8c00,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class ComplianceAudit,FairTrade,Privacy,Capital,Industry,ComplianceSystem,ComplianceMonitor complianceStyle
+            class RegArea decisionStyle
+            class End endStyle
+          </div>
+        </div>
+      </div>
 
-                classDef prep fill:#e3f2fd,stroke:#1e88e5,color:#000
-                classDef bidding fill:#e8f5e9,stroke:#43a047,color:#000
-                classDef sign fill:#fff3e0,stroke:#fb8c00,color:#000
-                classDef closing fill:#fce4ec,stroke:#d81b60,color:#000
-                classDef post fill:#f3e5f5,stroke:#8e24aa,color:#000
-                classDef finalEnd fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+      <!-- Mermaid 다이어그램 - 분쟁 해결 -->
+      <div x-show="activeProcessTab === 'dispute'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayDispute" class="mermaid-overlay">
+           기업 분쟁 해결 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'dispute')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'dispute')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('dispute')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
 
-                class A1,A2,A3 prep
-                class B1,B2,B3 bidding
-                class C1,C2 sign
-                class D1,D2,D3 closing
-                class E1,E2 post
-                class E3 finalEnd
+        <div id="mermaidContainerDispute" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramDispute" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([분쟁 발생]) --> DisputeAnalysis[분쟁 초기 분석<br>- 법적 쟁점 파악<br>- 증거 수집 전략<br>- 승소 가능성 평가]
+            
+            DisputeAnalysis --> DisputeType{분쟁 유형}
+            DisputeType -->|계약분쟁| ContractDispute[계약 분쟁<br>- 채무불이행<br>- 하자담보책임<br>- 손해배상]
+            DisputeType -->|주주분쟁| ShareholderDispute[주주/경영권 분쟁<br>- 경영권 분쟁<br>- 주주간 갈등<br>- 배당 분쟁]
+            DisputeType -->|노동분쟁| LaborDispute[노동 분쟁<br>- 부당해고<br>- 임금체불<br>- 산업재해]
+            DisputeType -->|IP분쟁| IPDispute[지식재산권 분쟁<br>- 특허침해<br>- 영업비밀<br>- 상표권]
+            
+            ContractDispute --> DisputeStrategy{해결 전략}
+            ShareholderDispute --> DisputeStrategy
+            LaborDispute --> DisputeStrategy
+            IPDispute --> DisputeStrategy
+            
+            DisputeStrategy -->|협상| Negotiation[협상/화해<br>- 직접 협상<br>- 합의서 작성<br>- 이행 보장]
+            DisputeStrategy -->|조정/중재| Mediation[ADR 절차<br>- 조정 신청<br>- 중재 절차<br>- 신속한 해결]
+            DisputeStrategy -->|소송| Litigation[소송 대응<br>- 소장/답변서 작성<br>- 증거 제출<br>- 법정 변론]
+            
+            Negotiation --> DisputeResolution[분쟁 해결<br>- 합의 이행 관리<br>- 재발 방지 대책<br>- 시스템 개선]
+            Mediation --> DisputeResolution
+            Litigation --> DisputeResolution
+            
+            DisputeResolution --> End([분쟁 해결])
+            
+            classDef disputeStyle fill:#fce4ec,stroke:#d81b60,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class DisputeAnalysis,ContractDispute,ShareholderDispute,LaborDispute,IPDispute,Negotiation,Mediation,Litigation,DisputeResolution disputeStyle
+            class DisputeType,DisputeStrategy decisionStyle
+            class End endStyle
+          </div>
+        </div>
+      </div>
+
+      <!-- Mermaid 다이어그램 - 구조조정 -->
+      <div x-show="activeProcessTab === 'restructure'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayRestructure" class="mermaid-overlay">
+           기업 구조조정 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'restructure')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'restructure')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('restructure')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
+
+        <div id="mermaidContainerRestructure" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramRestructure" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([구조조정 필요]) --> RestructureAssess[재무상태 진단<br>- 부채 구조 분석<br>- 자산 가치 평가<br>- 구조조정 필요성]
+            
+            RestructureAssess --> RestructureType{구조조정 유형}
+            RestructureType -->|자율협약| Workout[워크아웃<br>- 채권단 협상<br>- 자구계획 수립<br>- MOU 체결]
+            RestructureType -->|법정관리| CourtManagement[회생절차<br>- 회생계획 수립<br>- 채권자 동의<br>- 법원 인가]
+            RestructureType -->|M&A| MARestructure[M&A 구조조정<br>- 자산/사업 매각<br>- 전략적 투자유치<br>- 인수합병]
+            
+            Workout --> RestructureImpl[구조조정 실행<br>- 자산 매각 지원<br>- 인력 구조조정<br>- 사업 재편]
+            CourtManagement --> RestructureImpl
+            MARestructure --> RestructureImpl
+            
+            RestructureImpl --> RestructureMonitor[사후 관리<br>- 약정 이행 점검<br>- 경영정상화 지원<br>- Exit 전략]
+            
+            RestructureMonitor --> End([구조조정 완료])
+            
+            classDef restructureStyle fill:#f3e5f5,stroke:#8e24aa,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class RestructureAssess,Workout,CourtManagement,MARestructure,RestructureImpl,RestructureMonitor restructureStyle
+            class RestructureType decisionStyle
+            class End endStyle
+          </div>
+        </div>
+      </div>
+
+      <!-- Mermaid 다이어그램 - 지식재산권 -->
+      <div x-show="activeProcessTab === 'ip'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayIp" class="mermaid-overlay">
+           지식재산권 관리 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'ip')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
+          <button onclick="zoomDiagram(-0.1, 'ip')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
+          <button onclick="resetZoom('ip')" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+        </div>
+
+        <div id="mermaidContainerIp" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+          <div id="mermaidDiagramIp" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
+            flowchart TB
+            Start([IP 관리 필요]) --> IPStrategy[IP 전략 수립<br>- IP 포트폴리오 구축<br>- 보호 전략 개발<br>- 활용 방안 모색]
+            
+            IPStrategy --> IPType{IP 업무}
+            IPType -->|권리확보| IPSecure[권리 확보<br>- 특허/상표 출원<br>- 영업비밀 보호<br>- 저작권 등록]
+            IPType -->|라이선싱| IPLicense[라이선싱<br>- 기술이전 계약<br>- 로열티 협상<br>- 공동개발 계약]
+            IPType -->|침해대응| IPEnforce[침해 대응<br>- 침해 모니터링<br>- 경고장 발송<br>- 침해소송]
+            
+            IPSecure --> IPManage[IP 관리<br>- 권리 유지관리<br>- 포트폴리오 최적화<br>- 가치평가]
+            IPLicense --> IPManage
+            IPEnforce --> IPManage
+            
+            IPManage --> IPValue[IP 가치 실현<br>- 사업화 지원<br>- IP 금융<br>- Exit 전략]
+            
+            IPValue --> End([IP 가치 창출])
+            
+            classDef ipStyle fill:#e0f2f1,stroke:#00897b,color:#000,stroke-width:2px
+            classDef decisionStyle fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endStyle fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:3px
+            
+            class IPStrategy,IPSecure,IPLicense,IPEnforce,IPManage,IPValue ipStyle
+            class IPType decisionStyle
+            class End endStyle
           </div>
         </div>
       </div>
@@ -718,110 +961,237 @@
       });
     }, { threshold: 0.1 });
 
-    // Mermaid 다이어그램 관련
-    const container = document.getElementById('mermaidContainer');
-    const diagram = document.getElementById('mermaidDiagram');
-    let isDragging = false;
-    let startX, startY, scrollLeft, scrollTop;
+  </script>
 
-    container.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      container.style.cursor = 'grabbing';
-      startX = e.pageX - container.offsetLeft;
-      startY = e.pageY - container.offsetTop;
-      scrollLeft = container.scrollLeft;
-      scrollTop = container.scrollTop;
+  <!-- Mermaid 초기화 및 드래그 기능 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    // Mermaid 초기화 - Alpine.js와의 타이밍 문제 해결을 위해 수동으로 렌더링
+    mermaid.initialize({
+      startOnLoad: false,  // 자동 시작 비활성화
+      theme: 'neutral',
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 50
+      }
     });
 
-    container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
-    container.addEventListener('mouseup', () => { isDragging = false; container.style.cursor = 'grab'; });
-    container.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - container.offsetLeft;
-      const y = e.pageY - container.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    });
+    // 다이어그램 원본 텍스트 저장
+    const mermaidDiagramTexts = {};
 
-    // 터치 이벤트
-    container.addEventListener('touchstart', (e) => {
+    // Alpine.js가 렌더링된 후 Mermaid 다이어그램 렌더링
+    function renderMermaidDiagrams(specificTab = null) {
+      if (!specificTab) return;
+      
+      // 동적으로 탭 이름을 기반으로 요소 찾기
+      const elementId = `mermaidDiagram${specificTab.charAt(0).toUpperCase() + specificTab.slice(1)}`;
+      const element = document.getElementById(elementId);
+      
+      if (element && mermaidDiagramTexts[specificTab]) {
+        // 기존 내용 모두 제거
+        element.innerHTML = '';
+        element.removeAttribute('data-processed');
+        element.textContent = mermaidDiagramTexts[specificTab];
+        
+        // mermaid 렌더링
+        try {
+          mermaid.init(undefined, element);
+          console.log(`Rendered diagram for tab: ${specificTab}`);
+        } catch (e) {
+          console.error(`Mermaid rendering error for ${specificTab}:`, e);
+        }
+      } else {
+        console.warn(`No diagram found for tab: ${specificTab}`);
+      }
+    }
+
+    // 드래그 기능 구현 함수
+    function setupDragFeature(containerId, diagramId) {
+      const container = document.getElementById(containerId);
+      const diagram = document.getElementById(diagramId);
+      if (!container || !diagram) return;
+
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
+
+      container.addEventListener('mousedown', (e) => {
         isDragging = true;
-        startX = e.touches[0].pageX - container.offsetLeft;
-        startY = e.touches[0].pageY - container.offsetTop;
+        container.style.cursor = 'grabbing';
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
         scrollLeft = container.scrollLeft;
         scrollTop = container.scrollTop;
-    }, { passive: false });
+      });
 
-    container.addEventListener('touchend', () => { isDragging = false; });
-    container.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.touches[0].pageX - container.offsetLeft;
-      const y = e.touches[0].pageY - container.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    }, { passive: false });
+      container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
 
-    let currentZoom = window.innerWidth <= 768 ? 0.8 : 1;
+      container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
 
-    function zoomDiagram(delta) {
-      currentZoom = Math.max(0.3, Math.min(2, currentZoom + delta));
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
+      container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
+        const walkX = (x - startX) * 1.5;
+        const walkY = (y - startY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+
+      // 터치 이벤트 지원
+      let touchStartX, touchStartY;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - container.offsetLeft;
+        touchStartY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const y = e.touches[0].pageY - container.offsetTop;
+        const walkX = (x - touchStartX) * 1.5;
+        const walkY = (y - touchStartY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
     }
 
-    function resetZoom() {
-      currentZoom = window.innerWidth <= 768 ? 0.8 : 1;
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
+    // 탭 이름 정의
+    const tabNames = ['ma', 'contract', 'compliance', 'dispute', 'restructure', 'ip'];
+
+    // 각 탭에 대한 줌 변수
+    const currentZooms = {};
+    tabNames.forEach(tab => {
+      currentZooms[tab] = window.innerWidth <= 768 ? 1 : 1.2;
+    });
+
+    // 줌 기능
+    function zoomDiagram(delta, type) {
+      if (!currentZooms[type]) return;
+      
+      currentZooms[type] = Math.max(0.5, Math.min(2, currentZooms[type] + delta));
+      const currentZoom = currentZooms[type];
+      const diagramId = `mermaidDiagram${type.charAt(0).toUpperCase() + type.slice(1)}`;
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${currentZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * currentZoom}%`;
+        diagram.style.height = `${100 * currentZoom}%`;
+      }
     }
-    
+
+    function resetZoom(type) {
+      const defaultZoom = 1.2;
+      if (!currentZooms[type]) return;
+      
+      currentZooms[type] = defaultZoom;
+      const diagramId = `mermaidDiagram${type.charAt(0).toUpperCase() + type.slice(1)}`;
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${defaultZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * defaultZoom}%`;
+        diagram.style.height = `${100 * defaultZoom}%`;
+      }
+    }
+
+    // 통합된 DOMContentLoaded 이벤트 리스너
     document.addEventListener('DOMContentLoaded', function () {
+      // 1. 스탯 섹션 관찰 시작
       const statsSection = document.getElementById('stats');
       if (statsSection) {
         observer.observe(statsSection);
       }
-      
-      const initialDiagram = document.getElementById('mermaidDiagram');
-      if (initialDiagram) {
-        initialDiagram.style.transform = `scale(${currentZoom})`;
-        initialDiagram.style.transformOrigin = 'top left';
-      }
-      
-      const overlay = document.getElementById('mermaidOverlay');
-      if (overlay) {
-        const hideOverlay = () => {
-          overlay.classList.add('hide');
-          setTimeout(() => { overlay.style.display = 'none'; }, 500);
-        };
-        overlay.addEventListener('touchstart', hideOverlay, { once: true });
-        overlay.addEventListener('click', hideOverlay, { once: true });
-        overlay.addEventListener('wheel', hideOverlay, { once: true });
-        const mermaidContainer = document.getElementById('mermaidContainer');
-        if (mermaidContainer) {
-          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
-        }
-      }
-    });
-  </script>
 
-  <!-- Mermaid.js 라이브러리 추가 -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ 
-        startOnLoad: true,
-        theme: 'neutral',
-        flowchart: {
-            htmlLabels: true,
-            curve: 'basis'
+      // 2. Mermaid 다이어그램 원본 텍스트 저장
+      const mermaidElements = document.querySelectorAll('.mermaid[id^="mermaidDiagram"]');
+      mermaidElements.forEach(element => {
+        const tabName = element.id.replace('mermaidDiagram', '').toLowerCase();
+        if (tabName) {
+          mermaidDiagramTexts[tabName] = element.textContent.trim();
+          console.log(`Stored diagram for tab: ${tabName}`);
         }
+      });
+
+      // 3. 각 다이어그램에 대해 초기 확대 적용
+      tabNames.forEach(tab => {
+        const capitalizedTab = tab.charAt(0).toUpperCase() + tab.slice(1);
+        const diagram = document.getElementById(`mermaidDiagram${capitalizedTab}`);
+        if (diagram) {
+          diagram.style.transform = `scale(${currentZooms[tab]})`;
+          diagram.style.transformOrigin = 'top left';
+          diagram.style.width = `${100 * currentZooms[tab]}%`;
+          diagram.style.height = `${100 * currentZooms[tab]}%`;
+        }
+      });
+
+      // 4. 오버레이 터치/클릭/스크롤 시 사라지게 - 각 다이어그램에 대해 설정
+      function setupOverlay(overlayId, containerId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) {
+          const hideOverlay = () => {
+            overlay.classList.add('hide');
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+          };
+          overlay.addEventListener('touchstart', hideOverlay, { once: true });
+          overlay.addEventListener('click', hideOverlay, { once: true });
+          overlay.addEventListener('wheel', hideOverlay, { once: true });
+          const mermaidContainer = document.getElementById(containerId);
+          if (mermaidContainer) {
+            mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+          }
+        }
+      }
+
+      tabNames.forEach(tab => {
+        const capitalizedTab = tab.charAt(0).toUpperCase() + tab.slice(1);
+        setupOverlay(`mermaidOverlay${capitalizedTab}`, `mermaidContainer${capitalizedTab}`);
+      });
+
+      // 5. 드래그 기능 설정 - DOMContentLoaded 이후에 실행
+      tabNames.forEach(tab => {
+        const capitalizedTab = tab.charAt(0).toUpperCase() + tab.slice(1);
+        setupDragFeature(`mermaidContainer${capitalizedTab}`, `mermaidDiagram${capitalizedTab}`);
+      });
+    });
+
+    // Alpine.js x-show 전환시 Mermaid 재렌더링을 위한 이벤트 리스너
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('processTab', () => ({
+        activeProcessTab: 'ma',
+        init() {
+          // Alpine 컴포넌트 초기화 시점에 첫 렌더링을 수행합니다.
+          // setTimeout을 사용해 Alpine이 DOM을 업데이트할 시간을 확보합니다.
+          this.$nextTick(() => {
+            setTimeout(() => {
+              renderMermaidDiagrams('ma');
+            }, 100);
+          });
+
+          // activeProcessTab 값이 변경될 때마다 해당 탭의 다이어그램을 렌더링합니다.
+          this.$watch('activeProcessTab', (newTab) => {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                renderMermaidDiagrams(newTab);
+              }, 100);
+            });
+          });
+        }
+      }));
     });
   </script>
 </body>
