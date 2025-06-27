@@ -3,68 +3,300 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>성공사례 - 법무법인(유한) 예일법조</title>
+    <title>법무법인(유한) 예일법조</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet">
     <style>
         body { font-family: 'Pretendard', sans-serif; }
         .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* 메가메뉴 스타일 */
+        .mega-menu {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 100%;
+            background: white;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            transform: translateY(-10px);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .mega-menu.active {
+            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* 헤더 스타일 */
+        .header-transparent {
+            background-color: transparent;
+        }
+
+        .header-scrolled {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .mega-menu-open {
+            background-color: white !important;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1) !important;
+        }
     </style>
 
     <!-- Navigation and Footer Modules -->
     <script src="../assets/js/nav.js"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
-<body class="bg-white text-gray-900">
+<body class="bg-gray-50 text-gray-900">
     <!-- 헤더 네비게이션 -->
     <!-- Navigation will be inserted here by nav.js -->
-    <section class="bg-blue-600 text-white py-20 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold mb-6">검증된 성공사례</h1>
-        <p class="text-xl mb-8">실제 사건을 통해 입증된 전문성을 확인해보세요</p>
+    <div style="height: 80px;"></div>
+    
+    <!-- 히어로 섹션 -->
+    <section class="bg-gradient-to-r from-blue-900 to-blue-700 text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">주요 사건</h1>
+            <p class="text-xl text-blue-100">예일법무법인이 성공적으로 수행한 대표 사건들을 소개합니다</p>
+        </div>
     </section>
 
+    <!-- 필터 섹션 -->
+    <section class="bg-white shadow-sm sticky top-16 z-10">
+        <div class="container mx-auto px-4">
+            <div class="flex gap-2 py-4 overflow-x-auto">
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-blue-600 text-white" data-category="all">전체</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="형사">형사</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="민사">민사</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="부동산">부동산</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="교통사고">교통사고</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="기업">기업</button>
+                <button class="filter-btn px-6 py-2 rounded-full font-medium transition-all whitespace-nowrap bg-gray-100 text-gray-700 hover:bg-gray-200" data-category="가사">가사</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 케이스 목록 -->
     <main class="container mx-auto px-4 py-12">
-        <div id="cases-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div id="loading" class="col-span-full text-center py-20">성공사례를 불러오는 중...</div>
+        <div id="cases-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div id="loading" class="col-span-full text-center py-20">
+                <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                <p class="mt-4 text-gray-600">사건 정보를 불러오는 중...</p>
+            </div>
         </div>
     </main>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async function() {
+        let casesData = [];
+        let lawyersData = [];
+        let currentPage = 1;
+        const itemsPerPage = 6;
+
+        // 케이스 데이터 로드
+        async function loadCases() {
             try {
-                const response = await fetch('./data/cases.json');
-                const cases = await response.json();
-                
-                const container = document.getElementById('cases-container');
-                const loading = document.getElementById('loading');
-                
-                loading.style.display = 'none';
-                
-                const cardsHTML = cases.map(case_ => `
-                    <div class="bg-white rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
-                        <div class="flex justify-between mb-4">
-                            <span class="px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">${case_.category}</span>
-                            <span class="text-gray-500 text-sm">${new Date(case_.date).getFullYear()}.${String(new Date(case_.date).getMonth() + 1).padStart(2, '0')}</span>
+                const [casesResponse, lawyersResponse] = await Promise.all([
+                    fetch('../data/cases.json'),
+                    fetch('../data/lawyers.json')
+                ]);
+                casesData = await casesResponse.json();
+                lawyersData = await lawyersResponse.json();
+                displayCases('all');
+            } catch (error) {
+                console.error('데이터 로드 실패:', error);
+                document.getElementById('loading').innerHTML = `
+                    <p class="text-red-600">데이터를 불러올 수 없습니다.</p>
+                    <p class="text-gray-600 mt-2">잠시 후 다시 시도해주세요.</p>
+                `;
+            }
+        }
+
+        // 케이스 표시
+        function displayCases(category, page = 1) {
+            const container = document.getElementById('cases-container');
+            const filteredCases = category === 'all' 
+                ? casesData 
+                : casesData.filter(c => c.category === category);
+
+            if (filteredCases.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-gray-600">해당 카테고리에 사건이 없습니다.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            // 페이지네이션 계산
+            const totalPages = Math.ceil(filteredCases.length / itemsPerPage);
+            const startIndex = (page - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const paginatedCases = filteredCases.slice(startIndex, endIndex);
+
+            container.innerHTML = paginatedCases.map(caseItem => `
+                <div class="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer" onclick="window.location.href='detail.html?id=${caseItem.id}'">
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <span class="inline-block px-3 py-1 bg-blue-100 text-blue-700 text-sm font-medium rounded-full">${caseItem.category}</span>
+                            <span class="text-gray-500 text-sm">${formatDate(caseItem.date)}</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">${case_.title}</h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3">${case_.summary}</p>
-                        <div class="flex justify-between items-center">
-                            <span class="text-green-700 font-medium text-sm">${case_.result}</span>
-                            <a href="detail.html?id=${case_.id}" class="text-blue-600 hover:text-blue-700 font-medium text-sm">자세히 보기 →</a>
+                        <!-- 담당변호사 -->
+                        <div class="flex items-center gap-3 mb-4 p-3 bg-gray-50 rounded-lg">
+                            ${getLawyerDisplay(caseItem)}
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">${caseItem.title}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-3">${caseItem.summary}</p>
+                        <div class="flex justify-between items-center pt-4 border-t">
+                            <span class="font-medium ${getResultClass(caseItem.result)}">${caseItem.result}</span>
+                            <span class="text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1">
+                                자세히 보기
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                </svg>
+                            </span>
                         </div>
                     </div>
-                `).join('');
-                
-                container.innerHTML = cardsHTML;
-                
-            } catch (error) {
-                console.error('데이터 로딩 실패:', error);
-                document.getElementById('loading').textContent = '데이터를 불러올 수 없습니다.';
+                </div>
+            `).join('');
+            
+            // 페이지네이션 추가
+            if (totalPages > 1) {
+                container.innerHTML += `
+                    <div class="col-span-full mt-8">
+                        <div class="flex justify-center items-center gap-2">
+                            ${page > 1 ? `
+                                <button onclick="changePage(${page - 1})" class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+                                    </svg>
+                                </button>
+                            ` : '<div class="w-11"></div>'}
+                            
+                            <div class="flex gap-1">
+                                ${Array.from({length: totalPages}, (_, i) => i + 1).map(pageNum => `
+                                    <button onclick="changePage(${pageNum})" class="px-4 py-2 rounded-lg font-medium transition-colors ${
+                                        pageNum === page 
+                                        ? 'bg-blue-600 text-white' 
+                                        : 'text-gray-600 hover:bg-gray-100'
+                                    }">
+                                        ${pageNum}
+                                    </button>
+                                `).join('')}
+                            </div>
+                            
+                            ${page < totalPages ? `
+                                <button onclick="changePage(${page + 1})" class="px-3 py-2 text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                                    </svg>
+                                </button>
+                            ` : '<div class="w-11"></div>'}
+                        </div>
+                    </div>
+                `;
             }
+        }
+        
+        // 페이지 변경
+        function changePage(page) {
+            currentPage = page;
+            const activeCategory = document.querySelector('.filter-btn.bg-blue-600').dataset.category;
+            displayCases(activeCategory, page);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 날짜 포맷
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        // 결과에 따른 클래스 반환
+        function getResultClass(result) {
+            if (result.includes('무죄') || result.includes('승소') || result.includes('인용') || 
+                result.includes('회수') || result.includes('감액') || result.includes('완료') || 
+                result.includes('억원')) {
+                return 'text-green-600';
+            } else if (result.includes('패소') || result.includes('유죄') || result.includes('기각')) {
+                return 'text-red-600';
+            } else {
+                return 'text-blue-600';
+            }
+        }
+        
+        // 담당변호사 표시
+        function getLawyerDisplay(caseItem) {
+            // case ID로 변호사 찾기
+            const lawyer = lawyersData.find(l => 
+                l.cases && l.cases.includes(caseItem.id)
+            ) || lawyersData.find(l => 
+                l.categories && l.categories.includes(caseItem.category)
+            );
+            
+            if (!lawyer) {
+                return `
+                    <img src="../assets/images/lawyer-placeholder.svg" alt="담당변호사" class="w-10 h-10 rounded-full object-cover bg-gray-100">
+                    <div>
+                        <p class="text-sm font-medium text-gray-900">김법무 수석변호사</p>
+                        <p class="text-xs text-gray-600">종합법률서비스</p>
+                    </div>
+                `;
+            }
+            
+            return `
+                <img src="${lawyer.photo}" alt="${lawyer.name}" class="w-10 h-10 rounded-full object-cover bg-gray-100">
+                <div>
+                    <p class="text-sm font-medium text-gray-900">${lawyer.name} ${lawyer.title}</p>
+                    <p class="text-xs text-gray-600">${lawyer.specialty}</p>
+                </div>
+            `;
+        }
+
+        // 필터 버튼 이벤트
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            
+            // URL 파라미터에서 카테고리 가져오기
+            const urlParams = new URLSearchParams(window.location.search);
+            const categoryParam = urlParams.get('category');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 모든 버튼 스타일 초기화
+                    filterButtons.forEach(b => {
+                        b.classList.remove('bg-blue-600', 'text-white');
+                        b.classList.add('bg-gray-100', 'text-gray-700');
+                    });
+                    
+                    // 선택된 버튼 스타일 적용
+                    this.classList.remove('bg-gray-100', 'text-gray-700');
+                    this.classList.add('bg-blue-600', 'text-white');
+                    
+                    // 케이스 필터링 및 페이지 리셋
+                    currentPage = 1;
+                    displayCases(this.dataset.category, 1);
+                });
+            });
+
+            // 케이스 데이터 로드
+            loadCases();
+            
+            // 데이터 로드 후 URL 파라미터 처리
+            setTimeout(() => {
+                if (categoryParam) {
+                    const targetBtn = Array.from(filterButtons).find(btn => btn.dataset.category === categoryParam);
+                    if (targetBtn) {
+                        targetBtn.click();
+                    }
+                }
+            }, 500);
         });
-
-
     </script>
-    <!-- Footer will be inserted here by footer.js --></body>
+    
+    <!-- Footer will be inserted here by footer.js -->
+</body>
 </html> 

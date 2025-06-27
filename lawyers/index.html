@@ -1061,8 +1061,47 @@
             once: true
         });
 
-        // 변호사 데이터
-        const lawyersData = {
+        // 변호사 데이터 변수
+        let lawyersData = {};
+        
+        // JSON 데이터 로드
+        async function loadLawyersData() {
+            try {
+                const response = await fetch('../data/lawyers.json');
+                const lawyersArray = await response.json();
+                
+                // 배열을 객체로 변환 (이름을 키로 사용)
+                lawyersArray.forEach(lawyer => {
+                    lawyersData[lawyer.name] = {
+                        name: lawyer.name,
+                        position: lawyer.title,
+                        office: lawyer.office,
+                        image: lawyer.photo,
+                        specialties: lawyer.specialties,
+                        career: [...(lawyer.education || []), ...(lawyer.career || [])],
+                        email: lawyer.email,
+                        phone: lawyer.phone,
+                        categories: lawyer.categories,
+                        expertise: lawyer.expertise
+                    };
+                });
+                
+                // 데이터 로드 후 UI 초기화
+                initializeUI();
+                
+            } catch (error) {
+                console.error('변호사 데이터 로드 실패:', error);
+                document.querySelector('.lawyer-container').innerHTML = `
+                    <div class="col-span-full text-center py-20">
+                        <p class="text-red-600">데이터를 불러올 수 없습니다.</p>
+                        <p class="text-gray-600 mt-2">잠시 후 다시 시도해주세요.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // 기존 lawyersData 객체 시작 부분을 제거하고 로드 함수로 대체
+        const lawyersDataOld = {
             '하영주': {
                 name: '하영주',
                 position: '대표변호사',
@@ -1538,6 +1577,147 @@
                  ]
              }
          };
+         
+        // 변호사 카드 생성 함수
+        function createLawyerCards() {
+            const container = document.querySelector('.lawyer-container');
+            container.innerHTML = ''; // 기존 내용 초기화
+            
+            Object.values(lawyersData).forEach(lawyer => {
+                // 카테고리 판단
+                let category = 'lawyer';
+                if (lawyer.position.includes('대표변호사')) {
+                    category = 'representative';
+                } else if (lawyer.position.includes('손해사정사')) {
+                    category = 'adjuster';
+                }
+                
+                // 위치 판단
+                let location = 'seoul';
+                if (lawyer.office && !lawyer.office.includes('서울')) {
+                    location = 'regional';
+                }
+                
+                // 전문분야 문자열 생성
+                const specialtyText = lawyer.specialties ? lawyer.specialties.join(', ') : '';
+                
+                const cardHTML = `
+                    <div class="lawyer-card cursor-pointer group transition-all duration-300 hover:-translate-y-2" 
+                         data-name="${lawyer.name}" 
+                         data-category="${category}"
+                         data-location="${location}"
+                         data-specialty="${specialtyText}">
+                        <div class="bg-white rounded-2xl shadow-lg overflow-hidden h-full transition-all duration-300 group-hover:shadow-2xl">
+                            <div class="aspect-w-3 aspect-h-4 overflow-hidden bg-gray-100">
+                                <img src="${lawyer.image}" alt="${lawyer.name}" 
+                                     class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                                     onerror="this.src='../assets/images/lawyer-placeholder.svg'">
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-bold text-gray-900 mb-1">${lawyer.name}</h3>
+                                <p class="text-sm font-medium text-blue-600 mb-2">${lawyer.position}</p>
+                                <p class="text-sm text-gray-600 mb-3">${lawyer.office}</p>
+                                <div class="flex flex-wrap gap-2">
+                                    ${lawyer.specialties.map(specialty => 
+                                        `<span class="inline-block px-3 py-1 bg-gray-100 text-gray-700 rounded-full text-xs font-medium">${specialty}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                container.insertAdjacentHTML('beforeend', cardHTML);
+            });
+            
+            // 카드 클릭 이벤트 설정
+            setupCardClickEvents();
+        }
+        
+        // 카드 클릭 이벤트 설정
+        function setupCardClickEvents() {
+            const cards = document.querySelectorAll('.lawyer-card');
+            cards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const lawyerName = this.getAttribute('data-name');
+                    openModal(lawyerName);
+                });
+            });
+        }
+         
+        // UI 초기화 함수
+        function initializeUI() {
+            // 로딩 표시 제거
+            const loadingEl = document.querySelector('.lawyer-container .animate-spin');
+            if (loadingEl && loadingEl.parentElement) {
+                loadingEl.parentElement.remove();
+            }
+            
+            // 변호사 카드 생성
+            createLawyerCards();
+            
+            // 필터 버튼 및 검색 기능 활성화
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('searchInput');
+            
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    filterButtons.forEach(b => b.classList.remove('bg-blue-600', 'text-white'));
+                    this.classList.add('bg-blue-600', 'text-white');
+                    const filter = this.dataset.filter;
+                    const searchTerm = searchInput ? searchInput.value : '';
+                    filterLawyers(filter, searchTerm);
+                });
+            });
+            
+            if (searchInput) {
+                searchInput.addEventListener('input', function() {
+                    const activeFilter = document.querySelector('.filter-btn.bg-blue-600').dataset.filter;
+                    filterLawyers(activeFilter, this.value);
+                });
+            }
+            
+            // 초기 표시
+            filterLawyers('all', '');
+        }
+        
+        // 필터 함수
+        function filterLawyers(filter, searchTerm) {
+            const cards = document.querySelectorAll('.lawyer-card');
+            
+            cards.forEach(card => {
+                let showCard = true;
+                
+                // 필터 조건 확인
+                if (filter !== 'all') {
+                    const category = card.getAttribute('data-category');
+                    const location = card.getAttribute('data-location');
+                    
+                    if (filter === 'representative' && category !== 'representative') showCard = false;
+                    if (filter === 'lawyer' && category !== 'lawyer') showCard = false;
+                    if (filter === 'adjuster' && category !== 'adjuster') showCard = false;
+                    if (filter === 'seoul' && location !== 'seoul') showCard = false;
+                    if (filter === 'regional' && location !== 'regional') showCard = false;
+                }
+                
+                // 검색어 조건 확인
+                if (searchTerm) {
+                    const name = card.getAttribute('data-name');
+                    const specialty = card.getAttribute('data-specialty');
+                    const searchText = (name + ' ' + specialty).toLowerCase();
+                    
+                    if (!searchText.includes(searchTerm.toLowerCase())) showCard = false;
+                }
+                
+                // 카드 표시/숨김
+                if (showCard) {
+                    card.style.display = 'block';
+                    card.classList.add('animate-slide-in');
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
 
         // 모달 관련 함수들
         const modal = document.getElementById('lawyerModal');
@@ -1580,8 +1760,19 @@
                                 </ul>
                             </div>
                             
+                            ${lawyer.expertise && lawyer.expertise.length > 0 ? `
+                            <div class="bg-blue-50 rounded-lg p-4 border border-blue-200 mt-4">
+                                <h3 class="text-lg font-bold text-gray-900 mb-3">전문분야</h3>
+                                <div class="flex flex-wrap gap-2">
+                                    ${lawyer.expertise.map(item => 
+                                        `<span class="inline-block px-3 py-1 bg-white text-blue-700 rounded-full text-sm font-medium border border-blue-300">${item}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                            ` : ''}
+                            
                             <div class="mt-4 flex gap-2">
-                                <a href="tel:02-587-7787" 
+                                <a href="tel:${lawyer.phone || '02-587-7787'}" 
                                    class="bg-gray-800 text-white px-4 py-2 rounded font-medium hover:bg-gray-900 transition-colors text-sm">
                                     상담 문의
                                 </a>
@@ -1612,73 +1803,19 @@
             }
         }
 
-        // 변호사 카드 클릭 이벤트
+        // DOM 로드 시 JSON 데이터 로드
         document.addEventListener('DOMContentLoaded', function() {
-            const lawyerCards = document.querySelectorAll('.lawyer-card');
-            lawyerCards.forEach(card => {
-                card.addEventListener('click', function() {
-                    const lawyerName = this.getAttribute('data-name');
-                    openModal(lawyerName);
-                });
-            });
-
-            // 필터 기능
-            const filterBtns = document.querySelectorAll('.filter-btn');
-            const searchInput = document.getElementById('searchInput');
-
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    // 필터 버튼 활성화 스타일
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-
-                    const filter = this.getAttribute('data-filter');
-                    filterLawyers(filter, searchInput.value);
-                });
-            });
-
-            // 검색 기능
-            searchInput.addEventListener('input', function() {
-                const activeFilter = document.querySelector('.filter-btn.active').getAttribute('data-filter');
-                filterLawyers(activeFilter, this.value);
-            });
-
-            function filterLawyers(filter, searchTerm) {
-                const cards = document.querySelectorAll('.lawyer-card');
-                
-                cards.forEach(card => {
-                    let showCard = true;
-                    
-                    // 필터 조건 확인
-                    if (filter !== 'all') {
-                        const category = card.getAttribute('data-category');
-                        const location = card.getAttribute('data-location');
-                        
-                        if (filter === 'representative' && category !== 'representative') showCard = false;
-                        if (filter === 'lawyer' && category !== 'lawyer') showCard = false;
-                        if (filter === 'adjuster' && category !== 'adjuster') showCard = false;
-                        if (filter === 'seoul' && location !== 'seoul') showCard = false;
-                        if (filter === 'regional' && location !== 'regional') showCard = false;
-                    }
-                    
-                    // 검색어 조건 확인
-                    if (searchTerm) {
-                        const name = card.getAttribute('data-name');
-                        const specialty = card.getAttribute('data-specialty');
-                        const searchText = (name + ' ' + specialty).toLowerCase();
-                        
-                        if (!searchText.includes(searchTerm.toLowerCase())) showCard = false;
-                    }
-                    
-                    // 카드 표시/숨김
-                    if (showCard) {
-                        card.style.display = 'block';
-                        card.classList.add('animate-slide-in');
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-            }
+            // 로딩 애니메이션 표시
+            const container = document.querySelector('.lawyer-container');
+            container.innerHTML = `
+                <div class="col-span-full text-center py-20">
+                    <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+                    <p class="mt-4 text-gray-600">변호사 정보를 불러오는 중...</p>
+                </div>
+            `;
+            
+            // JSON 데이터 로드
+            loadLawyersData();
 
             // 스크롤 애니메이션
             const observerOptions = {

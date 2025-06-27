@@ -184,7 +184,7 @@ const Navigation = {
             <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
                 <a href="#" class="text-white hover:text-gray-300 transition nav-link">로펌소개</a>
                 <a href="#" class="text-white hover:text-gray-300 transition nav-link">전문분야</a>
-                <a href="#" class="text-white hover:text-gray-300 transition nav-link">성공사례</a>
+                <a href="${basePath}/cases/index.html" class="text-white hover:text-gray-300 transition nav-link">주요사건</a>
                 <a href="#" class="text-white hover:text-gray-300 transition nav-link">전국사무소</a>
             </div>
 
@@ -259,22 +259,20 @@ const Navigation = {
                         </ul>
                     </div>
 
-                    <!-- 성공사례 -->
+                    <!-- 주요사건 -->
                     <div>
-                        <h3 class="font-bold text-gray-900 mb-4 text-lg">성공사례</h3>
+                        <h3 class="font-bold text-gray-900 mb-4 text-lg">주요사건</h3>
                         <ul class="space-y-2">
-                            <li><a href="#criminal-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">형사 사례</a></li>
-                            <li><a href="#civil-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">민사 사례</a></li>
-                            <li><a href="#realestate-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">부동산 사례</a></li>
-                            <li><a href="#traffic-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고 사례</a></li>
-                            <li><a href="#corporate-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">기업 사례</a></li>
-                            <li><a href="#family-cases"
-                                    class="text-gray-600 hover:text-blue-600 transition block py-1">가사 사례</a></li>
+                            <li><a href="${basePath}/cases/index.html"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">전체 사건</a></li>
+                            <li><a href="${basePath}/cases/index.html?category=민사"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">민사소송</a></li>
+                            <li><a href="${basePath}/cases/index.html?category=형사"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">형사소송</a></li>
+                            <li><a href="${basePath}/cases/index.html?category=가사"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">가사소송</a></li>
+                            <li><a href="${basePath}/cases/index.html?category=부동산"
+                                    class="text-gray-600 hover:text-blue-600 transition block py-1">부동산소송</a></li>
                         </ul>
                     </div>
 
@@ -423,11 +421,11 @@ const Navigation = {
                             </div>
                         </div>
 
-                        <!-- 성공사례 아코디언 -->
+                        <!-- 주요사건 아코디언 -->
                         <div class="border-b border-white/10 pb-4">
                             <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
                                 onclick="Navigation.toggleMobileAccordion('cases')">
-                                <span>성공사례</span>
+                                <span>주요사건</span>
                                 <svg class="w-5 h-5 mobile-accordion-arrow" id="cases-arrow" fill="none"
                                     stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -436,24 +434,21 @@ const Navigation = {
                             </button>
                             <div class="mobile-accordion-content" id="cases-content">
                                 <div class="pl-4 space-y-2 mt-2">
-                                    <a href="#criminal-cases"
+                                    <a href="${basePath}/cases/index.html"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">형사 사례</a>
-                                    <a href="#civil-cases"
+                                        onclick="Navigation.closeMobileMenu()">전체 사건</a>
+                                    <a href="${basePath}/cases/index.html?category=민사"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">민사 사례</a>
-                                    <a href="#realestate-cases"
+                                        onclick="Navigation.closeMobileMenu()">민사소송</a>
+                                    <a href="${basePath}/cases/index.html?category=형사"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">부동산 사례</a>
-                                    <a href="#traffic-cases"
+                                        onclick="Navigation.closeMobileMenu()">형사소송</a>
+                                    <a href="${basePath}/cases/index.html?category=가사"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">교통사고 사례</a>
-                                    <a href="#corporate-cases"
+                                        onclick="Navigation.closeMobileMenu()">가사소송</a>
+                                    <a href="${basePath}/cases/index.html?category=부동산"
                                         class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">기업 사례</a>
-                                    <a href="#family-cases"
-                                        class="block text-gray-300 hover:text-white transition-colors py-2"
-                                        onclick="Navigation.closeMobileMenu()">가사 사례</a>
+                                        onclick="Navigation.closeMobileMenu()">부동산소송</a>
                                 </div>
                             </div>
                         </div>
