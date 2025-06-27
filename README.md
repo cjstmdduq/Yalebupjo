@@ -41,29 +41,23 @@ Yalebupjo_website/
 
 ## 작업 진행 상황
 
-### 완료된 페이지
-- [x] 메인 페이지 (index.html)
-- [x] 소개 페이지 (about/index.html)
-- [x] 변호사 소개 페이지 (lawyers/index.html)
-- [x] 사례 페이지 (cases/index.html, cases/detail.html)
-- [x] 위치 정보 페이지 (location/index.html, location/seoul.html, location/gangnam.html)
+**전반적 개선사항**
+뎁스 2는 히어로 사이즈다운, 영상제거
 
-### 전문 분야 페이지
-- [x] 민사 (civil/index.html)
-- [x] 기업법무 (corporate/index.html)
-- [x] 형사 (criminal/index.html)
-- [x] 가족법 (family/index.html)
-- [x] 부동산 (realestate/index.html)
-- [x] 교통사고 (traffic/index.html)
 
-### 자산 파일 
-- [x] 변호사 프로필 이미지 (28개)
-- [x] 로고 이미지들
-- [x] 비디오 파일들 (4개)
-- [x] 사례 데이터 (cases.json)
 
-### 백업 파일
-- [x] backup.html
+**Fix** 
 
-## 프로젝트 상태
-✅ **완료**: 모든 주요 페이지와 자산 파일이 구현되었습니다.
+- [x]  전문분야 >민사>머메이드
+- [x]  전문분야 >부동산>머메이드
+- [x]  전문분야 >교통사고>머메이드
+- [x]  전문분야>가사>머메이드
+
+- [ ]  로펌소개>구성원소개>네비게이션 충돌 : 메가메뉴가 닫히지 않음
+
+**produce**
+
+- [ ]  로펌소개>법인소개>히어로, 연혁, 스탯포인트 등
+- [ ]  로펌소개>대표변호사 인사말 : 0%
+- [ ]  성공사례 : 0%
+

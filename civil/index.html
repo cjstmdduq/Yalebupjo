@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
-  <script src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <style>
     body {
@@ -514,7 +514,7 @@
 
 
   <!-- PROCESS -->
-  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24" x-data="processTab">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- 섹션 헤더 -->
       <div class="text-center mb-16 sm:mb-20">
@@ -523,85 +523,245 @@
           민사소송 프로세스
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          복잡한 소송 절차를 한눈에 살펴보세요.
+          디테일한 절차를 한눈에 살펴보세요.
         </p>
       </div>
 
-      <!-- Mermaid 다이어그램 -->
-      <div class="mx-auto relative" style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
-        <div id="mermaidOverlay" class="mermaid-overlay">
-           민사소송 진행 절차를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+      <!-- 탭 버튼 -->
+      <div class="flex justify-center gap-4 mb-8">
+        <button @click="activeProcessTab = 'plaintiff'"
+          :class="activeProcessTab === 'plaintiff' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          원고 입장
+        </button>
+        <button @click="activeProcessTab = 'defendant'"
+          :class="activeProcessTab === 'defendant' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          피고 입장
+        </button>
+      </div>
+
+      <!-- Mermaid 다이어그램 - 원고 입장 -->
+      <div x-show="activeProcessTab === 'plaintiff'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayPlaintiff" class="mermaid-overlay">
+           원고 입장 소송 절차를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
          </div>
         <!-- 줌 컨트롤 -->
         <div class="absolute top-4 right-4 flex gap-2 z-10">
-          <button onclick="zoomDiagram(0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg></button>
-          <button onclick="zoomDiagram(-0.1)" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path></svg></button>
-          <button onclick="resetZoom()" class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors" style="background:transparent; border:none; border-radius:0;"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg></button>
+          <button onclick="zoomDiagram(0.1, 'plaintiff')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+          </button>
+          <button onclick="zoomDiagram(-0.1, 'plaintiff')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+          </button>
+          <button onclick="resetZoom('plaintiff')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </button>
         </div>
 
-        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
-          <div id="mermaidDiagram" class="mermaid transition-transform duration-300" style="transform: scale(1); transform-origin: center center;">
-            graph TD
-                Start([민사 분쟁 발생]) --> Consult[변호사 상담<br>- 사실관계 파악<br>- 증거자료 검토]
+        <div id="mermaidContainerPlaintiff" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <div id="mermaidDiagramPlaintiff" class="mermaid transition-transform duration-300"
+          style="transform: scale(1); transform-origin: center center;">
 
-                Consult --> ClientType{의뢰인 유형}
-                ClientType --> |원고 (소송 제기)| PlaintiffTrack
-                ClientType --> |피고 (소송 당함)| DefendantTrack
+            flowchart TB
+            Start([민사 분쟁 발생]) --> PlaintiffConsult[원고 변호사 상담<br>- 사실관계 파악<br>- 증거자료 검토]
 
-                %% 원고 트랙
-                PlaintiffTrack --> Strategy[소송 전략 수립<br>- 청구원인/취지 특정<br>- 입증계획 수립]
-                Strategy --> Preserve[증거보전/보전처분<br>- 가압류/가처분 신청]
-                Preserve --> FileSuit[소장 작성 및 제출]
-                FileSuit --> Serve[법원의 소장 심사 및<br>피고에게 부본 송달]
-                Serve --> DefendantTrack
+            PlaintiffConsult --> PreservationDecision{보전처분 필요성}
+            PreservationDecision -->|필요| PreservationProc[보전처분 신청<br>- 가압류: 금전채권<br>- 가처분: 권리관계]
+            PreservationDecision -->|불필요| Strategy
 
-                %% 피고 트랙
-                DefendantTrack --> Receive[소장 부본 수령]
-                Receive --> DefendStrategy[변호사 상담<br>- 답변서 제출 기한 확인<br>- 대응 전략 수립]
-                DefendStrategy --> Answer[답변서 작성 및 제출]
-                Answer --> Pleadings
+            PreservationProc --> PreservationHearing[보전처분 심문기일<br>- 피보전권리 소명<br>- 보전의 필요성 소명]
+            PreservationHearing --> PreservationResult{보전처분 결정}
+            PreservationResult -->|인용| PreservationExec[보전처분 집행<br>- 담보 제공<br>- 집행 실시]
+            PreservationResult -->|기각| Strategy
 
-                %% 공통 절차
-                Pleadings[준비서면 공방<br>- 원고/피고 주장 및<br>증거 제출] --> HearingPrep[변론기일 준비<br>- 증인/감정 신청<br>- 사실조회 신청]
-                HearingPrep --> Hearings{변론기일 진행}
-                Hearings -- 변론 종결 --> Judgment[판결 선고]
-                Hearings -- 추가 심리 필요 --> Pleadings
+            PreservationExec --> Strategy[소송 전략 수립<br>- 청구원인 특정<br>- 청구취지 작성<br>- 입증계획 수립]
+            
+            Strategy --> FileSuit[소장 작성 및 제출<br>- 관할법원 확인<br>- 인지/송달료 납부]
+            
+            FileSuit --> CourtReview[법원 소장 심사<br>- 보정명령 대응<br>- 부본 송달]
+            
+            CourtReview --> FirstHearing[1차 변론기일<br>- 쟁점 정리<br>- 입증계획 인부]
+            
+            FirstHearing --> EvidenceSubmit[증거 제출<br>- 서증 제출<br>- 증인/감정 신청<br>- 사실조회 신청]
+            
+            EvidenceSubmit --> Pleadings[준비서면 제출<br>- 상대방 주장 반박<br>- 추가 주장/증거]
+            
+            Pleadings --> SubsequentHearings[후속 변론기일<br>- 증인신문<br>- 당사자신문<br>- 감정결과 현출]
+            
+            SubsequentHearings --> SettlementAttempt{조정/화해 시도}
+            SettlementAttempt -->|성립| SettlementComplete[조정/화해 성립<br>- 조서 작성<br>- 강제집행력 확보]
+            SettlementAttempt -->|불성립| FinalArguments
+            
+            FinalArguments[최종 변론<br>- 최종준비서면<br>- 변론종결]
+            
+            FinalArguments --> Judgment[1심 판결 선고]
+            
+            Judgment --> JudgmentAnalysis[판결문 분석<br>- 주문 검토<br>- 이유 검토<br>- 항소 필요성 판단]
+            
+            JudgmentAnalysis --> AppealDecision{항소 결정}
+            AppealDecision -->|항소| Appeal[항소장 제출<br>- 2주 이내<br>- 항소이유서 준비]
+            AppealDecision -->|수용| FinalizeJudgment
+            
+            Appeal --> AppealProc[항소심 진행<br>- 항소이유서 제출<br>- 새로운 증거 제출<br>- 항소심 변론]
+            
+            AppealProc --> AppealJudgment[항소심 판결]
+            
+            AppealJudgment --> SupremeDecision{상고 검토}
+            SupremeDecision -->|상고| SupremeCourt[상고심<br>- 법률심<br>- 상고이유서]
+            SupremeDecision -->|포기| FinalizeJudgment
+            
+            SupremeCourt --> FinalJudgment[최종 판결]
+            FinalJudgment --> FinalizeJudgment
+            
+            FinalizeJudgment[판결 확정] --> ExecutionPrep[강제집행 준비<br>- 집행문 부여<br>- 송달증명원]
+            
+            ExecutionPrep --> ExecutionProc[강제집행 실시<br>- 부동산/동산 경매<br>- 채권 압류/추심<br>- 유체동산 인도]
+            
+            ExecutionProc --> ExecutionComplete[집행 완료<br>- 배당 수령<br>- 권리 실현]
+            
+            ExecutionComplete --> End([사건 종결])
+            
+            SettlementComplete --> End
 
-                Judgment --> Analysis[판결문 분석<br>- 승/패소 결과 확인<br>- 항소 여부 결정]
-                Analysis --> AppealChoice{항소 결정}
-                
-                AppealChoice --> |항소 포기| Finalize[판결 확정]
-                AppealChoice --> |항소 제기| Appeal[항소장 제출<br>(2주 이내)]
-                
-                Finalize --> Enforcement[강제집행/권리실현<br>- 압류, 추심, 경매 등]
-                Enforcement --> End([사건 종결])
+            classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+            classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+            classDef clientStatus fill:#ff6b6b,stroke:#c92a2a,color:#fff,stroke-width:2px
+            classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
+            classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+            
+            class PlaintiffConsult,Strategy,FileSuit,EvidenceSubmit,Pleadings,FinalArguments,JudgmentAnalysis,Appeal,AppealProc,ExecutionPrep,ExecutionProc lawyerAction
+            class CourtReview,FirstHearing,SubsequentHearings,Judgment,AppealJudgment,FinalJudgment,FinalizeJudgment courtProcess
+            class PreservationProc,PreservationHearing,PreservationExec,SettlementComplete,ExecutionComplete clientStatus
+            class PreservationDecision,PreservationResult,SettlementAttempt,AppealDecision,SupremeDecision decision
+            class End endNode
 
-                Appeal --> AppealCourt[항소심 진행<br>- 항소이유서 제출<br>- 2심 변론 및 판결]
-                AppealCourt --> SupremeChoice{상고 검토}
-                
-                SupremeChoice --> |상고 포기| Finalize
-                SupremeChoice --> |상고 제기| SupremeCourt[상고심 진행<br>(대법원)]
-                
-                SupremeCourt --> FinalVerdict[최종 판결]
-                FinalVerdict --> Finalize
+          </div>
+        </div>
+      </div>
 
-                %% 조정/화해
-                Pleadings --> Mediation[조정/화해권고<br>- 법원의 직권 회부<br>- 당사자 신청]
-                Mediation --> MediationResult{조정/화해 결과}
-                MediationResult --> |성립| Finalize
-                MediationResult --> |불성립| Hearings
+      <!-- Mermaid 다이어그램 - 피고 입장 -->
+      <div x-show="activeProcessTab === 'defendant'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayDefendant" class="mermaid-overlay">
+           피고 입장 소송 절차를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'defendant')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+          </button>
+          <button onclick="zoomDiagram(-0.1, 'defendant')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+          </button>
+          <button onclick="resetZoom('defendant')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </button>
+        </div>
 
-                classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
-                classDef clientAction fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
-                classDef courtProcess fill:#e9ecef,stroke:#adb5bd,color:#000,stroke-width:2px
-                classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
-                classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+        <div id="mermaidContainerDefendant" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <div id="mermaidDiagramDefendant" class="mermaid transition-transform duration-300"
+          style="transform: scale(1); transform-origin: center center;">
 
-                class Consult,Strategy,Preserve,DefendStrategy,Answer,Pleadings,HearingPrep,Analysis lawyerAction
-                class PlaintiffTrack,DefendantTrack,FileSuit,Receive,Appeal,Enforcement,SupremeCourt clientAction
-                class Serve,Hearings,Judgment,AppealCourt,FinalVerdict,Mediation courtProcess
-                class ClientType,AppealChoice,SupremeChoice,MediationResult decision
-                class End,Finalize endNode
+          flowchart TB
+          Start([소장 부본 수령]) --> ReceiveNotice[소장 검토<br>- 청구취지 확인<br>- 청구원인 파악<br>- 변론기일 확인]
+      
+          ReceiveNotice --> DefendantConsult[피고 변호사 상담<br>- 사실관계 확인<br>- 반박 증거 수집<br>- 방어 전략 수립]
+      
+          DefendantConsult --> PreservationCheck{보전처분 여부}
+          PreservationCheck -->|있음| PreservationResponse[보전처분 대응<br>- 이의신청<br>- 취소신청<br>- 담보취소신청]
+          PreservationCheck -->|없음| AnswerStrategy
+      
+          PreservationResponse --> AnswerStrategy[답변서 작성 전략<br>- 본안 전 항변<br>- 청구원인 부인<br>- 적극적 항변]
+      
+          AnswerStrategy --> FileAnswer[답변서 제출<br>- 30일 이내<br>- 관할 이송 신청<br>- 반소 제기 검토]
+      
+          FileAnswer --> FirstDefenseHearing[1차 변론기일<br>- 쟁점 정리<br>- 원고 주장 다툼]
+      
+          FirstDefenseHearing --> DefenseEvidence[방어 증거 제출<br>- 반박 서증<br>- 증인 신청<br>- 감정 신청]
+      
+          DefenseEvidence --> DefensePleadings[피고 준비서면<br>- 원고 증거 탄핵<br>- 추가 항변 제시]
+      
+          DefensePleadings --> DefenseHearings[변론기일 대응<br>- 증인 반대신문<br>- 당사자신문 대비<br>- 감정결과 다툼]
+      
+          DefenseHearings --> SettlementNegotiation{조정/화해 협상}
+          SettlementNegotiation -->|합의| SettlementDone[조정/화해 성립<br>- 조건 협상<br>- 이행 계획]
+          SettlementNegotiation -->|결렬| DefenseFinalArgument
+      
+          DefenseFinalArgument[최종 변론<br>- 최종준비서면<br>- 기각/각하 주장]
+      
+          DefenseFinalArgument --> DefenseJudgment[1심 판결 선고]
+      
+          DefenseJudgment --> DefenseAnalysis[판결 분석<br>- 패소 범위 확인<br>- 항소 이익 검토]
+      
+          DefenseAnalysis --> DefenseAppealDecision{항소 여부}
+          DefenseAppealDecision -->|항소| DefenseAppeal[항소장 제출<br>- 항소이유 정리<br>- 새로운 방어방법]
+          DefenseAppealDecision -->|수용| CompliancePrep
+      
+          DefenseAppeal --> DefenseAppealProc[항소심 방어<br>- 항소이유 반박<br>- 부대항소 검토]
+      
+          DefenseAppealProc --> DefenseAppealJudgment[항소심 판결]
+      
+          DefenseAppealJudgment --> DefenseSupremeDecision{상고 검토}
+          DefenseSupremeDecision -->|상고| DefenseSupremeCourt[상고심 대응<br>- 법리 다툼<br>- 파기환송 목표]
+          DefenseSupremeDecision -->|포기| CompliancePrep
+      
+          DefenseSupremeCourt --> DefenseFinalJudgment[최종 판결]
+          DefenseFinalJudgment --> CompliancePrep
+      
+          CompliancePrep[판결 이행 준비] --> ComplianceChoice{이행 방법}
+          ComplianceChoice -->|임의이행| VoluntaryCompliance[자발적 이행<br>- 분할 납부 협의<br>- 이행 완료]
+          ComplianceChoice -->|강제집행| ExecutionDefense[집행 방어<br>- 청구이의<br>- 제3자이의<br>- 집행정지신청]
+      
+          VoluntaryCompliance --> DefenseEnd([사건 종결])
+          ExecutionDefense --> ForcedExecution[강제집행 수인<br>- 재산 처분<br>- 배당 절차]
+          ForcedExecution --> DefenseEnd
+      
+          SettlementDone --> DefenseEnd
+      
+          classDef lawyerAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+          classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+          classDef defenseStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
+          classDef decision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+          classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+          
+          class DefendantConsult,AnswerStrategy,FileAnswer,DefenseEvidence,DefensePleadings,DefenseFinalArgument,DefenseAnalysis,DefenseAppeal,DefenseAppealProc,ExecutionDefense lawyerAction
+          class FirstDefenseHearing,DefenseHearings,DefenseJudgment,DefenseAppealJudgment,DefenseFinalJudgment,CompliancePrep courtProcess
+          class ReceiveNotice,PreservationResponse,SettlementDone,VoluntaryCompliance,ForcedExecution defenseStatus
+          class PreservationCheck,SettlementNegotiation,DefenseAppealDecision,DefenseSupremeDecision,ComplianceChoice decision
+          class DefenseEnd endNode
+
           </div>
         </div>
       </div>
@@ -703,25 +863,206 @@
     </div>
   </section>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
+  <script>
+    // Mermaid 초기화 - Alpine.js와의 타이밍 문제 해결을 위해 수동으로 렌더링
+    mermaid.initialize({
+      startOnLoad: false,  // 자동 시작 비활성화
+      theme: 'neutral',
+      flowchart: {
+        htmlLabels: true,
+        curve: 'basis',
+        nodeSpacing: 50,
+        rankSpacing: 50
+      }
+    });
+
+    // 다이어그램 원본 텍스트 저장
+    const mermaidDiagramTexts = {};
+    
+    // 페이지 로드시 원본 텍스트 저장 - 자동으로 모든 mermaid 다이어그램 감지
+    document.addEventListener('DOMContentLoaded', () => {
+      // data-tab 속성을 가진 모든 mermaid 요소를 찾아서 저장
+      const mermaidElements = document.querySelectorAll('.mermaid[id^="mermaidDiagram"]');
+      
+      mermaidElements.forEach(element => {
+        // ID에서 탭 이름 추출 (예: mermaidDiagramPlaintiff -> plaintiff)
+        const tabName = element.id.replace('mermaidDiagram', '').toLowerCase();
+        if (tabName) {
+          mermaidDiagramTexts[tabName] = element.textContent.trim();
+          console.log(`Stored diagram for tab: ${tabName}`);
+        }
+      });
+    });
+
+    // Alpine.js가 렌더링된 후 Mermaid 다이어그램 렌더링
+    function renderMermaidDiagrams(specificTab = null) {
+      if (!specificTab) return;
+      
+      // 동적으로 탭 이름을 기반으로 요소 찾기
+      const elementId = `mermaidDiagram${specificTab.charAt(0).toUpperCase() + specificTab.slice(1)}`;
+      const element = document.getElementById(elementId);
+      
+      if (element && mermaidDiagramTexts[specificTab]) {
+        // 기존 내용 모두 제거
+        element.innerHTML = '';
+        element.removeAttribute('data-processed');
+        element.textContent = mermaidDiagramTexts[specificTab];
+        
+        // mermaid 렌더링
+        try {
+          mermaid.init(undefined, element);
+          console.log(`Rendered diagram for tab: ${specificTab}`);
+        } catch (e) {
+          console.error(`Mermaid rendering error for ${specificTab}:`, e);
+        }
+      } else {
+        console.warn(`No diagram found for tab: ${specificTab}`);
+      }
+    }
+
+    // 드래그 기능 구현 함수
+    function setupDragFeature(containerId, diagramId) {
+      const container = document.getElementById(containerId);
+      const diagram = document.getElementById(diagramId);
+      if (!container || !diagram) return;
+
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
+
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        container.style.cursor = 'grabbing';
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
+
+      container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
+
+      container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
+        const walkX = (x - startX) * 1.5;
+        const walkY = (y - startY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+
+      // 터치 이벤트 지원
+      let touchStartX, touchStartY;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - container.offsetLeft;
+        touchStartY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const y = e.touches[0].pageY - container.offsetTop;
+        const walkX = (x - touchStartX) * 1.5;
+        const walkY = (y - touchStartY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+    }
+
+    // 두 개의 다이어그램에 대해 드래그 기능 설정
+    setupDragFeature('mermaidContainerPlaintiff', 'mermaidDiagramPlaintiff');
+    setupDragFeature('mermaidContainerDefendant', 'mermaidDiagramDefendant');
+
+    let currentZoomPlaintiff = window.innerWidth <= 768 ? 1: 1.2;
+    let currentZoomDefendant = window.innerWidth <= 768 ? 1: 1.2;
+
+    // 줌 기능
+    function zoomDiagram(delta, type) {
+      let currentZoom, diagramId;
+      
+      if (type === 'plaintiff') {
+        currentZoomPlaintiff = Math.max(0.5, Math.min(2, currentZoomPlaintiff + delta));
+        currentZoom = currentZoomPlaintiff;
+        diagramId = 'mermaidDiagramPlaintiff';
+      } else {
+        currentZoomDefendant = Math.max(0.5, Math.min(2, currentZoomDefendant + delta));
+        currentZoom = currentZoomDefendant;
+        diagramId = 'mermaidDiagramDefendant';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${currentZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * currentZoom}%`;
+        diagram.style.height = `${100 * currentZoom}%`;
+      }
+    }
+
+    function resetZoom(type) {
+      const defaultZoom = 1.2;
+      let diagramId;
+      
+      if (type === 'plaintiff') {
+        currentZoomPlaintiff = defaultZoom;
+        diagramId = 'mermaidDiagramPlaintiff';
+      } else {
+        currentZoomDefendant = defaultZoom;
+        diagramId = 'mermaidDiagramDefendant';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${defaultZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * defaultZoom}%`;
+        diagram.style.height = `${100 * defaultZoom}%`;
+      }
+    }
+  </script>
+
   <!-- JS -->
   <script>
-    // 네비게이션 및 스크롤 관련 기능 (가정: nav.js에서 처리)
-    // ...
+    // 네비게이션 관련 함수들은 nav.js에서 처리됩니다
 
-    // 스탯 섹션 카운터 애니메이션
+    // 스크롤 관련 기능들은 nav.js에서 처리됩니다
+
+    // ===================================
+    // 스탯 섹션 관련 기능 (카운터 애니메이션)
+    // ===================================
+
+    // 숫자 카운트업 애니메이션 (개선된 버전)
     function animateCounter(element) {
-      if (element.isAnimating) return;
+      // 이미 애니메이션이 실행 중이면 중복 실행 방지
+      if (element.isAnimating) {
+        return;
+      }
       element.isAnimating = true;
 
       const target = parseInt(element.getAttribute('data-target'));
-      const duration = 2500;
-      let start = 0;
+      const duration = 3000; // 3초로 조금 더 길게
+      const start = 0;
       let current = start;
       let startTime = null;
 
+      // requestAnimationFrame을 사용하여 더 부드러운 애니메이션
       function animate(currentTime) {
         if (startTime === null) startTime = currentTime;
         const progress = Math.min((currentTime - startTime) / duration, 1);
+
+        // easeOutQuart 이징 함수 적용
         const easeProgress = 1 - Math.pow(1 - progress, 4);
         current = Math.floor(target * easeProgress);
 
@@ -737,128 +1078,134 @@
       requestAnimationFrame(animate);
     }
 
+    // 옵저버 설정 (모바일 최적화)
+    const observerOptions = {
+      threshold: [0, 0.1, 0.2], // 여러 임계점 설정으로 더 정확한 감지
+      rootMargin: '-20px 0px -20px 0px' // 상하 20px 여유 (모바일 친화적)
+    };
+
+    // Intersection Observer로 스크롤 시 애니메이션 트리거 (개선된 버전)
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
+          console.log('스탯 섹션이 화면에 나타남'); // 디버깅용
+
           const counters = entry.target.querySelectorAll('.counter');
+          console.log('찾은 카운터 개수:', counters.length); // 디버깅용
+
           counters.forEach((counter, index) => {
             if (!counter.classList.contains('animated')) {
               counter.classList.add('animated');
+
+              // 각 카운터를 순차적으로 애니메이션 (0.2초 간격)
               setTimeout(() => {
                 animateCounter(counter);
               }, index * 200);
             }
           });
+
+          // 애니메이션이 시작되면 옵저버 해제 (중복 실행 방지)
           observer.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.1 });
+    }, observerOptions);
 
-    // Mermaid 다이어그램 관련
-    const container = document.getElementById('mermaidContainer');
-    const diagram = document.getElementById('mermaidDiagram');
-    let isDragging = false;
-    let startX, startY, scrollLeft, scrollTop;
-
-    container.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      container.style.cursor = 'grabbing';
-      startX = e.pageX - container.offsetLeft;
-      startY = e.pageY - container.offsetTop;
-      scrollLeft = container.scrollLeft;
-      scrollTop = container.scrollTop;
-    });
-
-    container.addEventListener('mouseleave', () => { isDragging = false; container.style.cursor = 'grab'; });
-    container.addEventListener('mouseup', () => { isDragging = false; container.style.cursor = 'grab'; });
-    container.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - container.offsetLeft;
-      const y = e.pageY - container.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    });
-
-    // 터치 이벤트
-    container.addEventListener('touchstart', (e) => {
-        isDragging = true;
-        startX = e.touches[0].pageX - container.offsetLeft;
-        startY = e.touches[0].pageY - container.offsetTop;
-        scrollLeft = container.scrollLeft;
-        scrollTop = container.scrollTop;
-    }, { passive: false });
-
-    container.addEventListener('touchend', () => { isDragging = false; });
-    container.addEventListener('touchmove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.touches[0].pageX - container.offsetLeft;
-      const y = e.touches[0].pageY - container.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    }, { passive: false });
-
-    let currentZoom = window.innerWidth <= 768 ? 1: 1.2;
-
-    function zoomDiagram(delta) {
-      currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
-    }
-
-    function resetZoom() {
-      currentZoom = window.innerWidth <= 768 ? 1: 1.2;
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
-    }
-    
+    // 페이지 로드 시 초기화
     document.addEventListener('DOMContentLoaded', function () {
+      // 네비게이션 관련 설정은 nav.js에서 처리됩니다
+
+      // 스탯 섹션 관찰 시작
       const statsSection = document.getElementById('stats');
       if (statsSection) {
         observer.observe(statsSection);
-      }
-      
-      const initialDiagram = document.getElementById('mermaidDiagram');
-      if (initialDiagram) {
-        initialDiagram.style.transform = `scale(${currentZoom})`;
-        initialDiagram.style.transformOrigin = 'top left';
-      }
-      
-      const overlay = document.getElementById('mermaidOverlay');
-      if (overlay) {
-        const hideOverlay = () => {
-          overlay.classList.add('hide');
-          setTimeout(() => { overlay.style.display = 'none'; }, 500);
-        };
-        overlay.addEventListener('touchstart', hideOverlay, { once: true });
-        overlay.addEventListener('click', hideOverlay, { once: true });
-        overlay.addEventListener('wheel', hideOverlay, { once: true });
-        const mermaidContainer = document.getElementById('mermaidContainer');
-        if (mermaidContainer) {
-          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
-        }
-      }
-    });
-  </script>
 
-  <!-- Mermaid.js 라이브러리 추가 -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ 
-        startOnLoad: true,
-        theme: 'neutral',
-        flowchart: {
-            htmlLabels: true,
-            curve: 'basis'
+        // 모바일에서 Intersection Observer가 작동하지 않을 때를 대비한 fallback
+        // 5초 후에 스탯 섹션이 여전히 애니메이션되지 않았다면 강제 실행
+        setTimeout(() => {
+          const counters = statsSection.querySelectorAll('.counter:not(.animated)');
+          if (counters.length > 0) {
+            console.log('Fallback: 스탯 애니메이션을 강제 실행합니다');
+            counters.forEach((counter, index) => {
+              counter.classList.add('animated');
+              setTimeout(() => {
+                animateCounter(counter);
+              }, index * 200);
+            });
+          }
+        }, 5000);
+      }
+
+      // 두 개의 다이어그램에 대해 초기 확대 적용
+      const diagramPlaintiff = document.getElementById('mermaidDiagramPlaintiff');
+      if (diagramPlaintiff) {
+        diagramPlaintiff.style.transform = `scale(${currentZoomPlaintiff})`;
+        diagramPlaintiff.style.transformOrigin = 'top left';
+        diagramPlaintiff.style.width = `${100 * currentZoomPlaintiff}%`;
+        diagramPlaintiff.style.height = `${100 * currentZoomPlaintiff}%`;
+      }
+
+      const diagramDefendant = document.getElementById('mermaidDiagramDefendant');
+      if (diagramDefendant) {
+        diagramDefendant.style.transform = `scale(${currentZoomDefendant})`;
+        diagramDefendant.style.transformOrigin = 'top left';
+        diagramDefendant.style.width = `${100 * currentZoomDefendant}%`;
+        diagramDefendant.style.height = `${100 * currentZoomDefendant}%`;
+      }
+
+      // 오버레이 터치/클릭/스크롤 시 사라지게 - 각 다이어그램에 대해 설정
+      function setupOverlay(overlayId, containerId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) {
+          const hideOverlay = () => {
+            overlay.classList.add('hide');
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+          };
+          // 터치, 클릭, 스크롤 모두 감지
+          overlay.addEventListener('touchstart', hideOverlay, { once: true });
+          overlay.addEventListener('click', hideOverlay, { once: true });
+          overlay.addEventListener('wheel', hideOverlay, { once: true });
+          // 다이어그램 컨테이너 스크롤도 감지
+          const mermaidContainer = document.getElementById(containerId);
+          if (mermaidContainer) {
+            mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+          }
         }
+      }
+
+      setupOverlay('mermaidOverlayPlaintiff', 'mermaidContainerPlaintiff');
+      setupOverlay('mermaidOverlayDefendant', 'mermaidContainerDefendant');
     });
+
+    // Alpine.js x-show 전환시 Mermaid 재렌더링을 위한 이벤트 리스너
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('processTab', () => ({
+        activeProcessTab: 'plaintiff',
+        init() {
+          // Alpine 컴포넌트 초기화 시점에 첫 렌더링을 수행합니다.
+          // setTimeout을 사용해 Alpine이 DOM을 업데이트할 시간을 확보합니다.
+          this.$nextTick(() => {
+            setTimeout(() => {
+              renderMermaidDiagrams('plaintiff');
+            }, 100);
+          });
+
+          // activeProcessTab 값이 변경될 때마다 해당 탭의 다이어그램을 렌더링합니다.
+          this.$watch('activeProcessTab', (newTab) => {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                renderMermaidDiagrams(newTab);
+              }, 100);
+            });
+          });
+        }
+      }));
+    });
+
+    // ===================================
+    // 스탯 섹션 관련 기능 (카운터 애니메이션)
+    // ===================================
+
+    // 메가메뉴 및 모바일 아코디언 제어는 nav.js에서 처리됩니다
   </script>
 </body>
 

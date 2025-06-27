@@ -114,6 +114,39 @@
       transform: translateY(0);
     }
 
+    .mermaid-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 20;
+      text-align: center;
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: #fff;
+      background: rgba(0, 0, 0, .5);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 0 10px;
+      border-radius: 8px;
+      pointer-events: auto;
+      transition: opacity .5s;
+      opacity: 1;
+    }
+
+    .mermaid-overlay.hide {
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    @media (max-width: 768px) {
+      .mermaid-overlay {
+        display: flex;
+      }
+    }
+
     /* Mermaid Overlay */
     .mermaid-overlay {
       position: absolute;
@@ -817,33 +850,41 @@
   </section>
 
   <!-- PROCESS SECTION -->
-  <section id="process" class="py-24 lg:py-32 bg-white scroll-mt-24">
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24" x-data="processTab">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <div class="text-center mb-16 sm:mb-20">
-        <span class="text-blue-600 font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
+        <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">PROCESS</span>
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
-          이혼 절차 안내
+          가사법률 프로세스
         </h2>
         <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-          협의이혼과 재판이혼의 전체 과정을 한눈에 확인하세요
+          각 분야별 상세한 절차를 한눈에 살펴보십시오
         </p>
       </div>
 
-      <div class="max-w-6xl mx-auto">
-        <div x-data="processTab">
-          <!-- 탭 메뉴 -->
-          <div class="flex justify-center gap-4 mb-8">
-            <button @click="activeProcessTab = 'agreement'" 
-                    :class="activeProcessTab === 'agreement' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
-                    class="px-6 py-3 rounded-full font-medium transition-all duration-300">
-              협의이혼
-            </button>
-            <button @click="activeProcessTab = 'judicial'" 
-                    :class="activeProcessTab === 'judicial' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
-                    class="px-6 py-3 rounded-full font-medium transition-all duration-300">
-              재판이혼
-            </button>
-          </div>
+      <!-- 탭 버튼 -->
+      <div class="flex flex-wrap justify-center gap-4 mb-8">
+        <button @click="activeProcessTab = 'agreement'"
+          :class="activeProcessTab === 'agreement' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233] hover:text-white'"
+          class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">
+          협의이혼
+        </button>
+        <button @click="activeProcessTab = 'judicial'"
+          :class="activeProcessTab === 'judicial' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233] hover:text-white'"
+          class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">
+          재판이혼
+        </button>
+        <button @click="activeProcessTab = 'custody'"
+          :class="activeProcessTab === 'custody' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233] hover:text-white'"
+          class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">
+          양육권 변경
+        </button>
+        <button @click="activeProcessTab = 'inheritance'"
+          :class="activeProcessTab === 'inheritance' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233] hover:text-white'"
+          class="px-4 md:px-6 py-3 rounded-full font-medium transition-all duration-300 text-sm md:text-base">
+          상속 분쟁
+        </button>
+      </div>
 
           <!-- 협의이혼 탭 -->
           <div x-show="activeProcessTab === 'agreement'" x-transition class="mx-auto relative"
@@ -1001,6 +1042,220 @@
                     class Court,Petition,Trial,Evidence,FamilyInvest,Judgment,AppealCourt,AppealJudgment,SupremeCourt court
                     class Mediation,ChildInvest,Appeal,Supreme decision
                     class MediationSuccess,Register,End,Final final
+              </div>
+            </div>
+          </div>
+
+          <!-- 양육권 변경 탭 -->
+          <div x-show="activeProcessTab === 'custody'" x-transition class="mx-auto relative"
+               style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+            <div id="mermaidOverlayCustody" class="mermaid-overlay">
+              양육권 변경 프로세스를 <br>미리 확인하십시오.<br>(확대,축소 등 터치로 화면을 조작할 수 있습니다.)
+            </div>
+            <!-- 줌 컨트롤 -->
+            <div class="absolute top-4 right-4 flex gap-2 z-10">
+              <button onclick="zoomDiagram(0.1, 'custody')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </button>
+              <button onclick="zoomDiagram(-0.1, 'custody')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                </svg>
+              </button>
+              <button onclick="resetZoom('custody')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div id="mermaidContainerCustody" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+              <div id="mermaidDiagramCustody" class="mermaid transition-transform duration-300"
+                   style="transform: scale(1); transform-origin: center center;">
+                flowchart TB
+                  Start([양육권 변경 필요]) --> Consult[변호사 상담<br>- 변경 사유 검토<br>- 승소 가능성 판단<br>- 증거 수집 계획]
+                  
+                  Consult --> Grounds{변경 사유 충족}
+                  
+                  Grounds -->|충족| Evidence[증거 수집<br>- 양육환경 변화 입증<br>- 자녀 복리 증명<br>- 상대방 양육 문제점]
+                  Grounds -->|미충족| MoreEvidence[추가 증거 확보<br>- 지속적 모니터링<br>- 전문가 의견 수렴]
+                  
+                  Evidence --> ChildAge{자녀 나이}
+                  MoreEvidence --> Evidence
+                  
+                  ChildAge -->|13세 이상| ChildOpinion[자녀 의사 확인<br>- 진술서 작성<br>- 법원 출석 준비<br>- 심리적 지원]
+                  ChildAge -->|13세 미만| DirectPetition
+                  
+                  ChildOpinion --> DirectPetition[양육권 변경 신청<br>- 신청서 작성<br>- 증거자료 첨부<br>- 법원 접수]
+                  
+                  DirectPetition --> CourtAssign[사건 배당<br>- 담당 재판부 지정<br>- 기일 통지]
+                  
+                  CourtAssign --> FamilyInvestigation[가사조사<br>- 가사조사관 방문<br>- 양육환경 실사<br>- 부모 면담<br>- 자녀 면담]
+                  
+                  FamilyInvestigation --> Report[조사보고서<br>- 양육환경 평가<br>- 자녀 의견 기재<br>- 변경 필요성 의견]
+                  
+                  Report --> Hearing[변론기일<br>- 당사자 진술<br>- 증거조사<br>- 증인신문]
+                  
+                  Hearing --> ExpertOpinion{전문가 의견 필요}
+                  
+                  ExpertOpinion -->|필요| Expert[전문가 감정<br>- 아동심리 전문가<br>- 정신건강 평가<br>- 감정보고서 제출]
+                  ExpertOpinion -->|불필요| Decision
+                  
+                  Expert --> Decision[법원 결정<br>- 양육권 변경 여부<br>- 면접교섭 조정<br>- 양육비 재산정]
+                  
+                  Decision --> Result{결정 결과}
+                  
+                  Result -->|인용| Granted[양육권 변경 인용<br>- 양육자 변경<br>- 인도 시기 결정<br>- 집행문 부여]
+                  Result -->|기각| Denied[변경 기각<br>- 기존 양육자 유지<br>- 면접교섭 보완]
+                  
+                  Granted --> Execution[결정 이행<br>- 자녀 인도<br>- 주민등록 이전<br>- 학교 전학]
+                  
+                  Denied --> AppealCheck{항고 검토}
+                  
+                  AppealCheck -->|항고| Appeal[즉시항고<br>- 2주 이내<br>- 고등법원<br>- 추가 증거 제출]
+                  AppealCheck -->|수용| Accept[결정 수용<br>- 면접교섭 이행<br>- 관계 개선 노력]
+                  
+                  Appeal --> AppealDecision[항고심 결정]
+                  
+                  AppealDecision --> FinalResult{최종 결과}
+                  FinalResult -->|인용| Execution
+                  FinalResult -->|기각| Accept
+                  
+                  Execution --> NewLife([새로운 양육 시작])
+                  Accept --> ContinueEffort([지속적 노력])
+                  
+                  classDef startEnd fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+                  classDef legal fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+                  classDef court fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+                  classDef investigation fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
+                  classDef decision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+                  classDef success fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+                  
+                  class Start,NewLife,ContinueEffort startEnd
+                  class Consult,Evidence,MoreEvidence,ChildOpinion,DirectPetition,Appeal legal
+                  class CourtAssign,Hearing,Decision,AppealDecision court
+                  class FamilyInvestigation,Report,Expert investigation
+                  class Grounds,ChildAge,ExpertOpinion,Result,AppealCheck,FinalResult decision
+                  class Granted,Execution,Accept success
+              </div>
+            </div>
+          </div>
+
+          <!-- 상속 분쟁 탭 -->
+          <div x-show="activeProcessTab === 'inheritance'" x-transition class="mx-auto relative"
+               style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+            <div id="mermaidOverlayInheritance" class="mermaid-overlay">
+              상속 분쟁 프로세스를 <br>미리 확인하십시오.<br>(확대,축소 등 터치로 화면을 조작할 수 있습니다.)
+            </div>
+            <!-- 줌 컨트롤 -->
+            <div class="absolute top-4 right-4 flex gap-2 z-10">
+              <button onclick="zoomDiagram(0.1, 'inheritance')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+              </button>
+              <button onclick="zoomDiagram(-0.1, 'inheritance')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+                </svg>
+              </button>
+              <button onclick="resetZoom('inheritance')"
+                      class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+                      style="background:transparent; border:none; border-radius:0;">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+              </button>
+            </div>
+
+            <div id="mermaidContainerInheritance" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+              <div id="mermaidDiagramInheritance" class="mermaid transition-transform duration-300"
+                   style="transform: scale(1); transform-origin: center center;">
+                flowchart TB
+                  Death([피상속인 사망]) --> Notice[사망 인지<br>- 사망진단서<br>- 기본증명서 확인]
+                  
+                  Notice --> Heirs[상속인 확정<br>- 가족관계증명서<br>- 법정상속인 파악<br>- 대습상속인 확인]
+                  
+                  Heirs --> WillCheck{유언 존재}
+                  
+                  WillCheck -->|있음| WillVerify[유언 검인<br>- 자필증서 유언<br>- 공정증서 유언<br>- 유언의 유효성 검토]
+                  WillCheck -->|없음| LegalHeir[법정상속<br>- 상속순위 확인<br>- 상속분 계산]
+                  
+                  WillVerify --> WillValid{유언 유효성}
+                  WillValid -->|유효| WillContent[유언 내용 검토<br>- 지정상속분<br>- 유증 내용<br>- 유류분 침해 여부]
+                  WillValid -->|무효| LegalHeir
+                  
+                  WillContent --> ReserveCheck{유류분 침해}
+                  LegalHeir --> AssetInvest[상속재산 조사<br>- 부동산 조회<br>- 금융재산 조회<br>- 채무 조사<br>- 특별수익 확인]
+                  
+                  ReserveCheck -->|침해| ReserveClaim[유류분 청구<br>- 유류분 계산<br>- 반환청구 통지<br>- 1년내 권리행사]
+                  ReserveCheck -->|미침해| AssetInvest
+                  
+                  ReserveClaim --> AssetInvest
+                  
+                  AssetInvest --> DebtCheck{채무초과 여부}
+                  
+                  DebtCheck -->|초과| LimitedAccept[한정승인/포기<br>- 3개월내 신고<br>- 법원 신청<br>- 재산목록 작성]
+                  DebtCheck -->|미초과| Division[상속재산 분할<br>- 상속인 협의<br>- 분할협의서 작성]
+                  
+                  Division --> Agreement{분할 합의}
+                  
+                  Agreement -->|합의| Agreed[협의분할<br>- 분할협의서 작성<br>- 공증 진행<br>- 등기/명의이전]
+                  Agreement -->|불합의| Mediation[조정신청<br>- 가정법원 조정<br>- 조정위원 중재]
+                  
+                  Mediation --> MediationResult{조정 성립}
+                  
+                  MediationResult -->|성립| MediationDoc[조정조서<br>- 확정판결 효력<br>- 강제집행 가능]
+                  MediationResult -->|불성립| Lawsuit[상속재산분할소송<br>- 소장 제출<br>- 증거 제출<br>- 감정 신청]
+                  
+                  Lawsuit --> Trial[변론절차<br>- 주장/입증<br>- 증인신문<br>- 감정결과]
+                  
+                  Trial --> Judgment[판결선고<br>- 분할방법 결정<br>- 구체적 상속분<br>- 특별수익/기여분]
+                  
+                  Judgment --> AppealPeriod{항소 여부}
+                  
+                  AppealPeriod -->|항소| AppealCourt[항소심<br>- 고등법원<br>- 추가 증거<br>- 새로운 주장]
+                  AppealPeriod -->|확정| Execution
+                  
+                  AppealCourt --> FinalJudgment[최종판결<br>- 대법원 상고<br>- 확정판결]
+                  
+                  LimitedAccept --> LimitedProcess[한정승인 절차<br>- 재산 청산<br>- 채권자 변제<br>- 잔여재산 분배]
+                  
+                  Agreed --> Execution[분할 실행<br>- 부동산 등기<br>- 예금 해지/이전<br>- 주식 명의변경]
+                  MediationDoc --> Execution
+                  FinalJudgment --> Execution
+                  
+                  Execution --> Tax[상속세 신고<br>- 6개월내 신고<br>- 재산평가<br>- 세금 납부]
+                  LimitedProcess --> End([상속 완료])
+                  Tax --> End
+                  
+                  classDef death fill:#ff6b6b,stroke:#c92a2a,color:#fff,stroke-width:2px
+                  classDef investigate fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
+                  classDef legal fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+                  classDef court fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
+                  classDef decision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+                  classDef execution fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+                  
+                  class Death,Notice death
+                  class Heirs,AssetInvest,WillVerify,WillContent investigate
+                  class LegalHeir,ReserveClaim,Division,Lawsuit,Trial,Judgment,AppealCourt,FinalJudgment legal
+                  class Mediation,MediationDoc court
+                  class WillCheck,WillValid,ReserveCheck,DebtCheck,Agreement,MediationResult,AppealPeriod decision
+                  class Agreed,Execution,Tax,LimitedAccept,LimitedProcess,End execution
               </div>
             </div>
           </div>
@@ -1179,8 +1434,24 @@
       }
     });
 
-    // 다이어그램 텍스트 저장
-    const mermaidDiagramTexts = {
+    // 다이어그램 원본 텍스트 저장
+    const mermaidDiagramTexts = {};
+    
+    // 페이지 로드시 원본 텍스트 저장
+    document.addEventListener('DOMContentLoaded', () => {
+      const mermaidElements = document.querySelectorAll('.mermaid[id^="mermaidDiagram"]');
+      
+      mermaidElements.forEach(element => {
+        const tabName = element.id.replace('mermaidDiagram', '').toLowerCase();
+        if (tabName) {
+          mermaidDiagramTexts[tabName] = element.textContent.trim();
+          console.log(`Stored diagram for tab: ${tabName}`);
+        }
+      });
+    });
+    
+    // 더미 텍스트 (초기화시 사용)
+    const dummyDiagramTexts = {
       agreement: `flowchart TB
                     Start([이혼 결심]) --> Consult[변호사 상담<br>- 합의 가능성 검토<br>- 재산 현황 파악<br>- 자녀 양육 계획]
                     
@@ -1267,28 +1538,27 @@
 
     // 다이어그램 렌더링 함수
     function renderMermaidDiagrams(specificTab = null) {
-      const tabNames = ['agreement', 'judicial'];
-      const tabsToRender = specificTab ? [specificTab] : tabNames;
+      if (!specificTab) return;
       
-      tabsToRender.forEach(tabName => {
-        const elementId = `mermaidDiagram${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`;
-        const element = document.getElementById(elementId);
+      const elementId = `mermaidDiagram${specificTab.charAt(0).toUpperCase() + specificTab.slice(1)}`;
+      const element = document.getElementById(elementId);
+      
+      if (element && mermaidDiagramTexts[specificTab]) {
+        // 기존 내용 모두 제거
+        element.innerHTML = '';
+        element.removeAttribute('data-processed');
+        element.textContent = mermaidDiagramTexts[specificTab];
         
-        if (element && mermaidDiagramTexts[tabName]) {
-          // 기존 내용 초기화
-          element.innerHTML = '';
-          element.removeAttribute('data-processed');
-          
-          // 새 다이어그램 텍스트 설정
-          element.textContent = mermaidDiagramTexts[tabName];
-          
-          try {
-            mermaid.init(undefined, element);
-          } catch (e) {
-            console.error(`Mermaid rendering error for ${tabName}:`, e);
-          }
+        // mermaid 렌더링
+        try {
+          mermaid.init(undefined, element);
+          console.log(`Rendered diagram for tab: ${specificTab}`);
+        } catch (e) {
+          console.error(`Mermaid rendering error for ${specificTab}:`, e);
         }
-      });
+      } else {
+        console.warn(`No diagram found for tab: ${specificTab}`);
+      }
     }
 
     // Alpine.js 컴포넌트 등록
@@ -1375,12 +1645,16 @@
       });
     }
 
-    // 두 개의 다이어그램에 대해 드래그 기능 설정
+    // 네 개의 다이어그램에 대해 드래그 기능 설정
     setupDragFeature('mermaidContainerAgreement', 'mermaidDiagramAgreement');
     setupDragFeature('mermaidContainerJudicial', 'mermaidDiagramJudicial');
+    setupDragFeature('mermaidContainerCustody', 'mermaidDiagramCustody');
+    setupDragFeature('mermaidContainerInheritance', 'mermaidDiagramInheritance');
 
     let currentZoomAgreement = window.innerWidth <= 768 ? 1: 1.2;
     let currentZoomJudicial = window.innerWidth <= 768 ? 1: 1.2;
+    let currentZoomCustody = window.innerWidth <= 768 ? 1: 1.2;
+    let currentZoomInheritance = window.innerWidth <= 768 ? 1: 1.2;
 
     // 줌 기능
     function zoomDiagram(delta, type) {
@@ -1390,50 +1664,115 @@
         currentZoomAgreement = Math.max(0.5, Math.min(2, currentZoomAgreement + delta));
         currentZoom = currentZoomAgreement;
         diagramId = 'mermaidDiagramAgreement';
-      } else {
+      } else if (type === 'judicial') {
         currentZoomJudicial = Math.max(0.5, Math.min(2, currentZoomJudicial + delta));
         currentZoom = currentZoomJudicial;
         diagramId = 'mermaidDiagramJudicial';
+      } else if (type === 'custody') {
+        currentZoomCustody = Math.max(0.5, Math.min(2, currentZoomCustody + delta));
+        currentZoom = currentZoomCustody;
+        diagramId = 'mermaidDiagramCustody';
+      } else {
+        currentZoomInheritance = Math.max(0.5, Math.min(2, currentZoomInheritance + delta));
+        currentZoom = currentZoomInheritance;
+        diagramId = 'mermaidDiagramInheritance';
       }
       
       const diagram = document.getElementById(diagramId);
       if (diagram) {
         diagram.style.transform = `scale(${currentZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * currentZoom}%`;
+        diagram.style.height = `${100 * currentZoom}%`;
       }
     }
 
     function resetZoom(type) {
+      const defaultZoom = 1.2;
+      let diagramId;
+      
       if (type === 'agreement') {
-        currentZoomAgreement = window.innerWidth <= 768 ? 1: 1.2;
-        const diagram = document.getElementById('mermaidDiagramAgreement');
-        if (diagram) {
-          diagram.style.transform = `scale(${currentZoomAgreement})`;
-        }
+        currentZoomAgreement = defaultZoom;
+        diagramId = 'mermaidDiagramAgreement';
+      } else if (type === 'judicial') {
+        currentZoomJudicial = defaultZoom;
+        diagramId = 'mermaidDiagramJudicial';
+      } else if (type === 'custody') {
+        currentZoomCustody = defaultZoom;
+        diagramId = 'mermaidDiagramCustody';
       } else {
-        currentZoomJudicial = window.innerWidth <= 768 ? 1: 1.2;
-        const diagram = document.getElementById('mermaidDiagramJudicial');
-        if (diagram) {
-          diagram.style.transform = `scale(${currentZoomJudicial})`;
-        }
+        currentZoomInheritance = defaultZoom;
+        diagramId = 'mermaidDiagramInheritance';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${defaultZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * defaultZoom}%`;
+        diagram.style.height = `${100 * defaultZoom}%`;
       }
     }
 
-    // 초기 줌 적용
+    // 초기 줌 적용 및 오버레이 설정
     document.addEventListener('DOMContentLoaded', function() {
-      setTimeout(() => {
-        // 모바일이 아닌 경우 초기 줌 1.2 적용
-        if (window.innerWidth > 768) {
-          const diagramAgreement = document.getElementById('mermaidDiagramAgreement');
-          const diagramJudicial = document.getElementById('mermaidDiagramJudicial');
-          
-          if (diagramAgreement) {
-            diagramAgreement.style.transform = `scale(${currentZoomAgreement})`;
-          }
-          if (diagramJudicial) {
-            diagramJudicial.style.transform = `scale(${currentZoomJudicial})`;
+      // 네 개의 다이어그램에 대해 초기 확대 적용
+      const diagramAgreement = document.getElementById('mermaidDiagramAgreement');
+      if (diagramAgreement) {
+        diagramAgreement.style.transform = `scale(${currentZoomAgreement})`;
+        diagramAgreement.style.transformOrigin = 'top left';
+        diagramAgreement.style.width = `${100 * currentZoomAgreement}%`;
+        diagramAgreement.style.height = `${100 * currentZoomAgreement}%`;
+      }
+
+      const diagramJudicial = document.getElementById('mermaidDiagramJudicial');
+      if (diagramJudicial) {
+        diagramJudicial.style.transform = `scale(${currentZoomJudicial})`;
+        diagramJudicial.style.transformOrigin = 'top left';
+        diagramJudicial.style.width = `${100 * currentZoomJudicial}%`;
+        diagramJudicial.style.height = `${100 * currentZoomJudicial}%`;
+      }
+
+      const diagramCustody = document.getElementById('mermaidDiagramCustody');
+      if (diagramCustody) {
+        diagramCustody.style.transform = `scale(${currentZoomCustody})`;
+        diagramCustody.style.transformOrigin = 'top left';
+        diagramCustody.style.width = `${100 * currentZoomCustody}%`;
+        diagramCustody.style.height = `${100 * currentZoomCustody}%`;
+      }
+
+      const diagramInheritance = document.getElementById('mermaidDiagramInheritance');
+      if (diagramInheritance) {
+        diagramInheritance.style.transform = `scale(${currentZoomInheritance})`;
+        diagramInheritance.style.transformOrigin = 'top left';
+        diagramInheritance.style.width = `${100 * currentZoomInheritance}%`;
+        diagramInheritance.style.height = `${100 * currentZoomInheritance}%`;
+      }
+
+      // 오버레이 터치/클릭/스크롤 시 사라지게 - 각 다이어그램에 대해 설정
+      function setupOverlay(overlayId, containerId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) {
+          const hideOverlay = () => {
+            overlay.classList.add('hide');
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+          };
+          // 터치, 클릭, 스크롤 모두 감지
+          overlay.addEventListener('touchstart', hideOverlay, { once: true });
+          overlay.addEventListener('click', hideOverlay, { once: true });
+          overlay.addEventListener('wheel', hideOverlay, { once: true });
+          // 다이어그램 컨테이너 스크롤도 감지
+          const mermaidContainer = document.getElementById(containerId);
+          if (mermaidContainer) {
+            mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
           }
         }
-      }, 1500);
+      }
+
+      setupOverlay('mermaidOverlayAgreement', 'mermaidContainerAgreement');
+      setupOverlay('mermaidOverlayJudicial', 'mermaidContainerJudicial');
+      setupOverlay('mermaidOverlayCustody', 'mermaidContainerCustody');
+      setupOverlay('mermaidOverlayInheritance', 'mermaidContainerInheritance');
     });
   </script>
 </body>
