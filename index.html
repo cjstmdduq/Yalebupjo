@@ -1481,7 +1481,7 @@
                 console.log('성공사례 데이터 로딩 시작...');
 
                 // JSON 파일에서 성공사례 데이터 로드
-                const response = await fetch('./cases/data/cases.json');
+                const response = await fetch('./data/cases.json');
                 if (!response.ok) {
                     throw new Error('성공사례 데이터를 불러올 수 없습니다.');
                 }
@@ -1541,7 +1541,7 @@
                                 ${caseItem.result}
                             </span>
                         </div>
-                        <a href="/cases/detail.html?id=${caseItem.id}" 
+                        <a href="cases/detail.html?id=${caseItem.id}" 
                            class="text-blue-600 hover:text-blue-700 font-medium text-sm group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                             자세히 보기
                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

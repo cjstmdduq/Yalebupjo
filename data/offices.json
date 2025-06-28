@@ -1,0 +1,156 @@
+[
+  {
+    "id": "seoul",
+    "name": "서울 본사",
+    "address": "서울특별시 서초구 반포대로 98 일신빌딩 4층",
+    "tel": "02-587-7787 / 02-591-4111",
+    "fax": "02-587-7788 (더미데이터)",
+    "email": "seoul@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "3호선 고속터미널역 도보 8분",
+    "bus": "반포대로 주요 노선",
+    "coordinates": {
+      "lat": 37.4923615,
+      "lng": 127.0292881
+    },
+    "lawyers": {
+      "representative": ["kim-beopmu", "lee-jungui"],
+      "members": ["park-minsu", "choi-youngmin", "jung-soojin", "kang-donghoon"]
+    },
+    "specialties": ["기업법무", "M&A", "금융", "부동산", "형사"],
+    "image": "../assets/images/office-seoul.jpg (더미데이터)"
+  },
+  {
+    "id": "gangnam",
+    "name": "서울 강남 분사무소",
+    "address": "서울특별시 강남구 테헤란로37길 7 12층",
+    "tel": "02-587-7787",
+    "fax": "02-555-7788 (더미데이터)",
+    "email": "gangnam@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "2호선 역삼역 도보 5분",
+    "bus": "강남역, 역삼역 주요 노선",
+    "coordinates": {
+      "lat": 37.5080776,
+      "lng": 127.0506378
+    },
+    "lawyers": {
+      "representative": ["song-jihoon"],
+      "members": ["kim-taehyung", "lee-minjae"]
+    },
+    "specialties": ["스타트업 법률자문", "지적재산권", "국제거래"],
+    "image": "../assets/images/office-gangnam.jpg (더미데이터)"
+  },
+  {
+    "id": "ulsan",
+    "name": "울산 지점",
+    "address": "울산광역시 남구 문수로 312 2-3층",
+    "tel": "052-221-7100",
+    "fax": "052-221-7101 (더미데이터)",
+    "email": "ulsan@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "울산 시내버스 이용",
+    "bus": "문수로 주요 노선",
+    "coordinates": {
+      "lat": 35.5383773,
+      "lng": 129.3113596
+    },
+    "lawyers": {
+      "representative": ["kim-dongsoo"],
+      "members": ["park-jiyoung", "lee-sangwoo"]
+    },
+    "specialties": ["해양·조선", "산업재해", "노동법", "건설"],
+    "image": "../assets/images/office-ulsan.jpg (더미데이터)"
+  },
+  {
+    "id": "daegu",
+    "name": "대구 지점",
+    "address": "대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호",
+    "tel": "053-756-9072",
+    "fax": "053-756-9073 (더미데이터)",
+    "email": "daegu@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "2호선 수성구청역 도보 10분",
+    "bus": "달구벌대로 주요 노선",
+    "coordinates": {
+      "lat": 35.8666024,
+      "lng": 128.5930643
+    },
+    "lawyers": {
+      "representative": ["choi-seonghyun"],
+      "members": ["kim-yeonsu", "park-junho"]
+    },
+    "specialties": ["의료소송", "보험", "교통사고", "부동산"],
+    "image": "../assets/images/office-daegu.jpg (더미데이터)"
+  },
+  {
+    "id": "cheongju",
+    "name": "청주 지점",
+    "address": "충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호",
+    "tel": "043-298-0201",
+    "fax": "043-298-0202 (더미데이터)",
+    "email": "cheongju@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "청주 시내버스 이용",
+    "bus": "산남로 주요 노선",
+    "coordinates": {
+      "lat": 36.6424341,
+      "lng": 127.4890319
+    },
+    "lawyers": {
+      "representative": ["lee-jaehyun"],
+      "members": ["kim-sunghoon", "park-soyeon"]
+    },
+    "specialties": ["건설·부동산", "행정소송", "농업법인", "중소기업"],
+    "image": "../assets/images/office-cheongju.jpg (더미데이터)"
+  },
+  {
+    "id": "daejeon",
+    "name": "대전 지점",
+    "address": "대전 서구 둔산로123번길 21 엠시티타워 701호",
+    "tel": "0507-1444-8003 / 042-489-1970",
+    "fax": "042-489-1971 (더미데이터)",
+    "email": "daejeon@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "건물 내 주차장 이용 가능",
+    "subway": "1호선 정부청사역 도보 5분",
+    "bus": "둔산로 주요 노선",
+    "coordinates": {
+      "lat": 36.3504119,
+      "lng": 127.3845475
+    },
+    "lawyers": {
+      "representative": ["jung-hyunwoo"],
+      "members": ["lee-dongmin", "kim-jiwon"]
+    },
+    "specialties": ["특허·지식재산권", "정부계약", "공공기관 자문"],
+    "image": "../assets/images/office-daejeon.jpg (더미데이터)"
+  },
+  {
+    "id": "gwangju",
+    "name": "광주 지점",
+    "address": "광주광역시 서구 화개중앙로 59 5층",
+    "tel": "0507-1329-4973",
+    "fax": "062-236-7788 (더미데이터)",
+    "email": "gwangju@yalebupjo.com (더미데이터)",
+    "hours": "평일 09:00 - 18:00",
+    "parking": "인근 공영주차장 이용",
+    "subway": "광주 시내버스 이용",
+    "bus": "화개중앙로 주요 노선",
+    "coordinates": {
+      "lat": 35.1468067,
+      "lng": 126.9198675
+    },
+    "lawyers": {
+      "representative": ["park-sanghoon"],
+      "members": ["choi-eunji", "kim-minseok"]
+    },
+    "specialties": ["문화·예술 법률", "프랜차이즈", "소비자보호"],
+    "image": "../assets/images/office-gwangju.jpg (더미데이터)"
+  }
+]
