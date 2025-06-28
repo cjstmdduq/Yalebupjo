@@ -44,7 +44,7 @@
           style.textContent = `
       /* header 상태 */
       .header-transparent {background:transparent;}
-      .header-scrolled    {background:#ffffff;box-shadow:0 2px 10px rgba(0,0,0,.05);}
+      .header-scrolled    {background:#ffffff;}
       .mega-menu-open     {overflow:visible;}
       
       /* mega-menu */
@@ -55,33 +55,7 @@
       .mobile-accordion-content{max-height:0;overflow:hidden;transition:max-height .3s ease-out;}
       .mobile-accordion-content.show{max-height:500px;transition:max-height .3s ease-in;}
       .mobile-accordion-arrow{transition:transform .3s ease;}
-      .mobile-accordion-arrow.rotate-180{transform:rotate(180deg);}
-      
-      /* floating buttons */
-      .floating-buttons{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%);box-shadow:0 -5px 20px rgba(0,0,0,.1);transform:translateY(100%);transition:transform .3s ease-in-out;z-index:1000;}
-      .floating-buttons.show{transform:translateY(0);}
-      .floating-content{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 0;}
-      .floating-info{display:flex;gap:30px;align-items:center;}
-      .floating-item{display:flex;align-items:center;gap:10px;}
-      .floating-icon{width:40px;height:40px;background:rgba(255,255,255,.1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-      .floating-text{display:flex;flex-direction:column;color:#fff;}
-      .floating-label{font-size:12px;opacity:.8;}
-      .floating-value{font-size:14px;font-weight:600;}
-      .floating-cta{display:flex;align-items:center;gap:10px;background:#fff;color:#1e3a8a;padding:12px 24px;border-radius:50px;font-weight:700;font-size:18px;transition:.3s;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,.2);}
-      .floating-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
-      
-      /* responsive tweaks */
-      @media(max-width:1024px){
-        .floating-content{padding:12px 0;}
-        .floating-info{gap:20px;}
-        .floating-item:nth-child(2),.floating-item:nth-child(3){display:none;}
-        .floating-cta{padding:10px 20px;font-size:16px;}
-      }
-      @media(max-width:640px){
-        .floating-content{justify-content:center;}
-        .floating-info{display:none;}
-        .floating-cta{padding:12px 24px;}
-      }
+      .mobile-accordion-arrow.rotate-180{transform:rotate(180deg);
           `;
           document.head.appendChild(style);
         },
@@ -159,8 +133,7 @@
               <div>
                 <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
                 <ul class="space-y-2">
-                  <li><a href="${basePath}/about/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대표변호사 인사말</a></li>
+                  <li><a href="${basePath}/about/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a></li>                  
                   <li><a href="${basePath}/lawyers/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">구성원 소개</a></li>
                 </ul>
               </div>
@@ -194,13 +167,7 @@
               <div>
                 <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
                 <ul class="space-y-2">
-                  <li><a href="${basePath}/location/seoul.html"   class="text-gray-600 hover:text-blue-600 transition block py-1">서울본사</a></li>
-                  <li><a href="${basePath}/location/gangnam.html" class="text-gray-600 hover:text-blue-600 transition block py-1">서울강남</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">울산</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대구</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">청주</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대전</a></li>
-                  <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">광주</a></li>
+                  <li><a href="${basePath}/location/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">전국사무소</a></li>
                 </ul>
               </div>
             </div>
@@ -239,7 +206,6 @@
                   <div class="mobile-accordion-content" id="about-content">
                     <div class="pl-4 space-y-2 mt-2">
                       <a href="${basePath}/about/index.html"        class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">법인소개</a>
-                      <a href="#"                                   class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">대표변호사 인사말</a>
                       <a href="${basePath}/lawyers/index.html"      class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">구성원소개</a>
                     </div>
                   </div>
@@ -268,18 +234,12 @@
                 <div class="border-b border-white/10 pb-4">
                   <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
                           onclick="Navigation.toggleMobileAccordion('location')">
-                    <span>오시는길</span>
+                    <span>전국사무소소</span>
                     <svg class="w-5 h-5 mobile-accordion-arrow" id="location-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
                   <div class="mobile-accordion-content" id="location-content">
                     <div class="pl-4 space-y-2 mt-2">
-                      <a href="${basePath}/location/seoul.html"   class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">서울본사</a>
-                      <a href="${basePath}/location/gangnam.html" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">서울강남</a>
-                      <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">울산</a>
-                      <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">대구</a>
-                      <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">청주</a>
-                      <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">대전</a>
-                      <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">광주</a>
+                      <a href="${basePath}/location/index.html" class="block text-gray-300 hover:text-white transition-colors py-2" onclick="Navigation.closeMobileMenu()">전국사무소</a>
                     </div>
                   </div>
                 </div>

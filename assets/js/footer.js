@@ -49,17 +49,6 @@ const Footer = {
                     </ul>
                 </div>
 
-                <!-- 예일법조 서비스 -->
-                <div>
-                    <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">24시간 대응</a></li>
-                    </ul>
-                </div>
-
                 <!-- 전국지사 -->
                 <div>
                     <h4 class="text-white font-bold mb-4">전국지사</h4>
@@ -73,20 +62,6 @@ const Footer = {
                         <li><a href="#" class="text-gray-400 hover:text-white transition">광주</a></li>
                     </ul>
                 </div>
-
-                <!-- 고객센터 -->
-                <div>
-                    <h4 class="text-white font-bold mb-4">고객센터</h4>
-                    <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">공지사항</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">자주묻는질문</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">1:1 문의</a></li>
-                        <li class="pt-2">
-                            <p class="text-white font-bold text-lg">02-587-7787</p>
-                            <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
-                        </li>
-                    </ul>
-                </div>
             </div>
 
             <!-- 구분선 -->
@@ -97,11 +72,11 @@ const Footer = {
                 <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
                     <span class="text-gray-400">법무법인(유한) 예일법조</span>
                     <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-                    <span class="text-gray-400">사업자등록번호 : 000-00-00000</span>
+                    <span class="text-gray-400">사업자등록번호 : 826-81-02302</span>
                     <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-                    <span class="text-gray-400">대표변호사 : 김예일</span>
+                    <span class="text-gray-400">대표변호사 : 하영주,김진환,엄운용</span>
                     <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-                    <span class="text-gray-400">광고책임변호사 : 박법조</span>
+                    <span class="text-gray-400">광고책임변호사 : 하영주</span>
                 </div>
 
                 <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">

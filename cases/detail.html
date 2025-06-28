@@ -48,6 +48,8 @@
 
     <!-- Navigation and Footer Modules -->
     <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/floating-banner.js"></script>
+    <script src="../assets/js/breadcrumb.js"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
 <body class="bg-gray-50 text-gray-900">
@@ -64,19 +66,6 @@
 
     <!-- 메인 컨텐츠 -->
     <main id="content" class="hidden">
-        <!-- 브레드크럼 -->
-        <section class="bg-white border-b">
-            <div class="container mx-auto px-4 py-4">
-                <nav class="flex items-center gap-2 text-sm text-gray-600">
-                    <a href="../index.html" class="hover:text-blue-600">홈</a>
-                    <span>/</span>
-                    <a href="index.html" class="hover:text-blue-600">주요 사건</a>
-                    <span>/</span>
-                    <span id="breadcrumb-title" class="text-gray-900">사건 상세</span>
-                </nav>
-            </div>
-        </section>
-
         <!-- 사건 헤더 -->
         <section class="relative h-[60vh] flex items-center bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
             <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-gray-900/50"></div>
@@ -227,9 +216,6 @@
 
                 // 페이지 타이틀 업데이트
                 document.title = `${caseData.title} - 법무법인(유한) 예일법조`;
-
-                // 브레드크럼 업데이트
-                document.getElementById('breadcrumb-title').textContent = caseData.title;
 
                 // 헤더 정보
                 document.getElementById('case-category').textContent = caseData.category;
