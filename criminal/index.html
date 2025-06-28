@@ -148,163 +148,19 @@
   </style>
     
     <!-- Navigation and Footer Modules -->
-    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/nav.js?v=2"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
 
 
 <body class="bg-white text-black">
-  <!-- Hero Section -->
-  <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
-    <!-- 배경 비디오 -->
-    <div class="absolute inset-0 z-0">
-      <video autoplay muted loop playsinline class="w-full h-full object-cover scale-125 object-[50%_30%]">
-        <source src="../assets/video/2.mp4" type="video/mp4">
-      </video>
-      <div class="absolute inset-0 bg-black/50"></div>
-    </div>
-
-    <!-- 콘텐츠 영역 -->
-    <div class="container mx-auto px-6 md:px-12 relative z-10">
-      <div class="flex items-center justify-center min-h-screen">
-        <div class="text-center">
-          <p class="text-xl md:text-2xl font-light mb-4 text-white/90 animate-fade-in-up [animation-delay:0.1s]">
-            법무법인(유한) 예일법조 형사전담팀
-          </p>
-          <h1
-            class="text-5xl md:text-7xl lg:text-8xl font-bold mb-6 md:mb-8 leading-tight text-white animate-fade-in-up [animation-delay:0.3s]">
-            첫 48시간이<br>결과를 바꿉니다.
-          </h1>
-          <p
-            class="text-lg md:text-xl mb-8 md:mb-12 font-light leading-relaxed text-white/90 max-w-3xl mx-auto animate-fade-in-up [animation-delay:0.5s]">
-            경제·성·교통 범죄 전 분야 긴급 대응.<br>
-            형사전담팀과 전략을 세워보세요.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 아래 스크롤 화살표 -->
-    <div class="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
-      <svg class="w-6 h-6 text-white opacity-70" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-      </svg>
-    </div>
-  </section>
-
-  <!-- 로펌 소개 (스탯형) -->
-  <section id="stats" class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 py-32 relative overflow-hidden">
-    <!-- 배경 그라디언트 효과 -->
-    <div class="absolute inset-0 bg-gradient-to-t from-blue-600/10 via-transparent to-transparent"></div>
-
-    <!-- 메인 그라디언트 원형들 -->
-    <div class="absolute -top-40 -right-40 w-80 h-80 bg-blue-500 rounded-full blur-3xl opacity-15 animate-pulse">
-    </div>
-    <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-purple-500 rounded-full blur-3xl opacity-15 animate-pulse">
-    </div>
-
-    <!-- 추가 그라디언트 효과들 -->
-    <div
-      class="absolute top-20 left-1/4 w-60 h-60 bg-gradient-to-r from-cyan-400/10 to-blue-500/10 rounded-full blur-2xl opacity-20 animate-float">
-    </div>
-    <div
-      class="absolute bottom-20 right-1/4 w-60 h-60 bg-gradient-to-l from-purple-400/10 to-pink-500/10 rounded-full blur-2xl opacity-20 animate-float-delayed">
-    </div>
-    <div
-      class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gradient-radial from-transparent via-blue-500/5 to-transparent rounded-full animate-pulse">
-    </div>
-
-    <!-- 기하학적 그라디언트 라인들 -->
-    <div class="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-blue-400/30 to-transparent">
-    </div>
-    <div
-      class="absolute bottom-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-purple-400/30 to-transparent">
-    </div>
-
-    <!-- 대각선 그라디언트 -->
-    <div class="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-cyan-400/20 to-transparent">
-    </div>
-    <div class="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-purple-400/20 to-transparent">
-    </div>
-
-    <div class="container mx-auto px-6 md:px-12 relative z-10">
-      <div class="text-center mb-20">
-        <span class="text-gray-400 font-medium text-sm mb-4 block tracking-wider uppercase">Criminal Defense</span>
-        <h2 class="text-4xl md:text-6xl font-bold mb-6 text-white">
-          수치로 입증합니다
-        </h2>
-        <p class="text-xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-          변호사의 실력은 숫자로 증명됩니다.<br>
-          억울한 구속을 막고, 실형을 줄이며, 삶을 지켜낸 통계입니다.
-        </p>
-      </div>
-
-      <!-- 메인 스탯 그리드 -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-6xl mx-auto mb-20">
-
-
-        <!-- 누적 사건 해결 -->
-        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
-          <div
-            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-500/10 to-transparent rounded-full blur-2xl">
-          </div>
-          <div class="relative z-10">
-            <div class="border-t border-white/20 pt-6 mb-4"></div>
-            <div
-              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
-              <span class="counter" data-target="91">0</span>%
-            </div>
-            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Detention Defense</p>
-            <p class="text-xl text-white font-medium">구속 방어 성공률</p>
-            <p class="text-gray-400 mt-2">체포·영장 단계에서 불구속 확보</p>
-          </div>
-        </div>
-
-        <!-- 승소율 -->
-        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
-          <div
-            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-500/10 to-transparent rounded-full blur-2xl">
-          </div>
-          <div class="relative z-10">
-            <div class="border-t border-white/20 pt-6 mb-4"></div>
-            <div
-              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
-              <span class="counter" data-target="78">0</span>%
-            </div>
-            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Sentence Reduction</p>
-            <p class="text-xl text-white font-medium">실형 감경 성공률</p>
-            <p class="text-gray-400 mt-2">초범·참작사유 중심 감형 유도</p>
-          </div>
-        </div>
-
-        <!-- 전문 변호사 -->
-        <div class="group relative p-8 hover:scale-105 transition-all duration-300">
-          <div
-            class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-500/10 to-transparent rounded-full blur-2xl">
-          </div>
-          <div class="relative z-10">
-            <div class="border-t border-white/20 pt-6 mb-4"></div>
-            <div
-              class="text-6xl md:text-7xl font-bold mb-2 bg-gradient-to-br from-white to-gray-300 bg-clip-text text-transparent">
-              <span class="counter" data-target="42">0</span>건
-            </div>
-            <p class="text-gray-400 text-sm uppercase tracking-wider mb-2">Major Cases</p>
-            <p class="text-xl text-white font-medium">중대 형사사건 수행</p>
-            <p class="text-gray-400 mt-2">강력·성범죄·경제범죄 등 실적 중심</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
   <!-- SERVICES -->
   <section id="services" class="py-24 lg:py-32 bg-white" x-data="{ activeTab: 'economic-crimes' }">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
       <div class="text-center mb-16 sm:mb-20">
         <span class="text-[#22304a] font-medium text-sm mb-4 block tracking-wider">OUR EXPERTISE</span>
         <h2 class="text-4xl md:text-5xl font-bold mb-4 text-[#111827]">
-          분야별 법률 서비스
+          형사 법률 서비스
         </h2>
         <p class="text-lg text-[#22304a] max-w-2xl mx-auto">
           형사 전문 변호사는 의뢰인의 상황을 가장 유리한 방향으로 이끌어갈 전략을 제시합니다.
@@ -314,32 +170,32 @@
       <!-- 탭 버튼 -->
       <div class="flex flex-wrap justify-center gap-4 mb-16">
         <button @click="activeTab = 'economic-crimes'"
-          :class="activeTab === 'economic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'economic-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           경제범죄
         </button>
         <button @click="activeTab = 'sex-crimes'"
-          :class="activeTab === 'sex-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'sex-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           성범죄
         </button>
         <button @click="activeTab = 'violence-crimes'"
-          :class="activeTab === 'violence-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'violence-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           폭력범죄
         </button>
         <button @click="activeTab = 'traffic-crimes'"
-          :class="activeTab === 'traffic-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'traffic-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           교통범죄
         </button>
         <button @click="activeTab = 'drug-crimes'"
-          :class="activeTab === 'drug-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'drug-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           마약범죄
         </button>
         <button @click="activeTab = 'other-crimes'"
-          :class="activeTab === 'other-crimes' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeTab === 'other-crimes' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           기타범죄
         </button>
@@ -561,12 +417,12 @@
       <!-- 탭 버튼 -->
       <div class="flex justify-center gap-4 mb-8">
         <button @click="activeProcessTab = 'defense'"
-          :class="activeProcessTab === 'defense' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeProcessTab === 'defense' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           피의자 변호
         </button>
         <button @click="activeProcessTab = 'complaint'"
-          :class="activeProcessTab === 'complaint' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          :class="activeProcessTab === 'complaint' ? 'bg-[#22304a] text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'"
           class="px-6 py-3 rounded-full font-medium transition-all duration-300">
           피해자 고소
         </button>

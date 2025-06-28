@@ -167,31 +167,46 @@ const Navigation = {
 
     render() {
         const basePath = this.getBasePath();
+        
+        // 페이지 유형 확인
+        const isMainPage = window.location.pathname === '/' || 
+                          window.location.pathname.endsWith('/index.html') ||
+                          window.location.pathname.endsWith('/Yalebupjo/') ||
+                          window.location.pathname.endsWith('/Yalebupjo/index.html');
+        
+        // 페이지에 따른 초기 스타일 설정
+        const headerClass = isMainPage ? 'header-transparent' : 'header-scrolled';
+        const textColor = isMainPage ? 'text-white' : 'text-black';
+        const textHover = isMainPage ? 'hover:text-gray-300' : 'hover:text-gray-600';
+        const logoWhiteDisplay = isMainPage ? '' : 'hidden';
+        const logoBlackDisplay = isMainPage ? 'hidden' : '';
+        const mobileMenuBtnBg = isMainPage ? 'hover:bg-white/10' : 'hover:bg-gray-100';
+        
         const navHTML = `
-    <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
+    <nav id="header" class="fixed top-0 w-full ${headerClass} z-50 transition-all duration-300">
         <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
             <!-- 로고 -->
             <div class="flex items-center z-10">
                 <a href="${basePath}/index.html">
                     <img id="logo-white" src="${basePath}/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고"
-                        class="h-8 md:h-10">
+                        class="h-8 md:h-10 ${logoWhiteDisplay}">
                     <img id="logo-black" src="${basePath}/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고"
-                        class="h-8 md:h-10 hidden">
+                        class="h-8 md:h-10 ${logoBlackDisplay}">
                 </a>
             </div>
 
             <!-- 데스크톱 메뉴 -->
             <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
-                <a href="#" class="text-white hover:text-gray-300 transition nav-link">로펌소개</a>
-                <a href="#" class="text-white hover:text-gray-300 transition nav-link">전문분야</a>
-                <a href="${basePath}/cases/index.html" class="text-white hover:text-gray-300 transition nav-link">주요사건</a>
-                <a href="#" class="text-white hover:text-gray-300 transition nav-link">전국사무소</a>
+                <a href="#" class="${textColor} ${textHover} transition nav-link">로펌소개</a>
+                <a href="#" class="${textColor} ${textHover} transition nav-link">전문분야</a>
+                <a href="${basePath}/cases/index.html" class="${textColor} ${textHover} transition nav-link">주요사건</a>
+                <a href="#" class="${textColor} ${textHover} transition nav-link">전국사무소</a>
             </div>
 
             <!-- 우측 컨트롤 -->
             <div class="flex items-center z-10">
                 <!-- 데스크톱 전화번호 -->
-                <a href="tel:02-587-7787" class="hidden md:block text-white hover:text-gray-300 transition-colors">
+                <a href="tel:02-587-7787" class="hidden md:block ${textColor} ${textHover} transition-colors">
                     <div class="text-right">
                         <div class="text-sm opacity-80 font-medium">상담문의</div>
                         <div class="text-xl font-bold">02-587-7787</div>
@@ -199,7 +214,7 @@ const Navigation = {
                 </a>
 
                 <!-- 모바일 전화번호 버튼 -->
-                <a href="tel:02-587-7787" class="md:hidden mr-4 text-white hover:text-gray-300 transition">
+                <a href="tel:02-587-7787" class="md:hidden mr-4 ${textColor} ${textHover} transition">
                     <div class="text-right">
                         <div class="text-xs opacity-80">상담문의</div>
                         <div class="text-lg font-bold">02-587-7787</div>
@@ -208,7 +223,7 @@ const Navigation = {
 
                 <!-- 모바일 햄버거 메뉴 버튼 -->
                 <button id="mobile-menu-btn"
-                    class="md:hidden text-white ml-2 p-2 hover:bg-white/10 rounded-lg transition-colors">
+                    class="md:hidden ${textColor} ml-2 p-2 ${mobileMenuBtnBg} rounded-lg transition-colors">
                     <svg id="hamburger-icon" class="w-6 h-6 transition-transform duration-300" fill="none"
                         stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -558,11 +573,37 @@ const Navigation = {
             // nav가 없는 경우 body 최상단에 추가
             document.body.insertAdjacentHTML('afterbegin', navHTML);
         }
+
+        // 서브페이지라면 강제로 스타일 한 번 더 적용
+        if (!isMainPage) {
+            const header = document.getElementById('header');
+            const logoWhite = document.getElementById('logo-white');
+            const logoBlack = document.getElementById('logo-black');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            if (header) {
+                header.classList.remove('header-transparent');
+                header.classList.add('header-scrolled');
+            }
+            if (logoWhite) logoWhite.classList.add('hidden');
+            if (logoBlack) logoBlack.classList.remove('hidden');
+            navLinks.forEach(link => {
+                link.classList.remove('text-white', 'hover:text-gray-300');
+                link.classList.add('text-black', 'hover:text-gray-600');
+            });
+            if (mobileMenuBtn) {
+                mobileMenuBtn.classList.remove('hover:bg-white/10');
+                mobileMenuBtn.classList.add('hover:bg-gray-100');
+            }
+        }
     },
 
     bindEvents() {
         // DOM이 완전히 로드된 후 이벤트 바인딩
         setTimeout(() => {
+            // 초기 스타일 설정
+            this.handleScroll();
+            
             // 스크롤 이벤트
             window.addEventListener('scroll', this.handleScroll.bind(this));
 
@@ -628,95 +669,64 @@ const Navigation = {
     },
 
     handleScroll() {
+        // 페이지 유형 확인
+        const isMainPage = window.location.pathname === '/' || 
+                          window.location.pathname.endsWith('/index.html') ||
+                          window.location.pathname.endsWith('/Yalebupjo/') ||
+                          window.location.pathname.endsWith('/Yalebupjo/index.html');
         const header = document.getElementById('header');
         const logoWhite = document.getElementById('logo-white');
         const logoBlack = document.getElementById('logo-black');
         const navLinks = document.querySelectorAll('.nav-link');
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 
-        if (header && logoWhite && logoBlack) {
+        // 서브페이지면 네비게이션 스타일 변경 로직을 아예 실행하지 않음
+        if (!isMainPage) {
+            // 플로팅 버튼만 제어
+            const floatingButtons = document.getElementById('floating-buttons');
+            if (floatingButtons) {
+                const heroHeight = window.innerHeight;
+                if (window.scrollY > heroHeight * 0.8) {
+                    floatingButtons.classList.add('show');
+                } else {
+                    floatingButtons.classList.remove('show');
+                }
+            }
+            return; // 네비게이션 스타일 로직 종료
+        }
+
+        // 이하 메인페이지에서만 네비게이션 스타일 변경
+        if (isMainPage) {
             if (window.scrollY > 50) {
-                // 네비게이션 바 변경
                 header.classList.remove('header-transparent');
                 header.classList.add('header-scrolled');
-
-                // 메가메뉴가 열려있으면 그대로 유지
-                if (document.querySelector('.mega-menu.active')) {
-                    header.classList.add('mega-menu-open');
-                }
-
-                // 로고 전환
-                logoWhite.classList.add('hidden');
-                logoBlack.classList.remove('hidden');
-
-                // 데스크톱 메뉴 색상 변경
-                const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-                desktopLinks.forEach(el => {
-                    el.classList.remove('text-white', 'hover:text-gray-300');
-                    el.classList.add('text-black', 'hover:text-gray-600');
+                if (logoWhite) logoWhite.classList.add('hidden');
+                if (logoBlack) logoBlack.classList.remove('hidden');
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white', 'hover:text-gray-300');
+                    link.classList.add('text-black', 'hover:text-gray-600');
                 });
-
-                // 데스크톱 전화번호 색상 변경
-                const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
-                if (desktopPhoneBtn) {
-                    desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-                    desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-                }
-
-                // 모바일 전화번호와 햄버거 버튼 색상 변경
-                const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
-                if (mobilePhoneBtn) {
-                    mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-                    mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-                }
-
                 if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.remove('text-white');
-                    mobileMenuBtn.classList.add('text-black');
+                    mobileMenuBtn.classList.remove('hover:bg-white/10');
+                    mobileMenuBtn.classList.add('hover:bg-gray-100');
                 }
             } else {
-                // 네비게이션 바 원상복구
                 header.classList.remove('header-scrolled');
                 header.classList.add('header-transparent');
-
-                // 메가메뉴가 열려있지 않으면 mega-menu-open 클래스 제거
-                if (!document.querySelector('.mega-menu.active')) {
-                    header.classList.remove('mega-menu-open');
-                }
-
-                // 로고 전환
-                logoBlack.classList.add('hidden');
-                logoWhite.classList.remove('hidden');
-
-                // 데스크톱 메뉴 색상 원상복구
-                const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-                desktopLinks.forEach(el => {
-                    el.classList.remove('text-black', 'hover:text-gray-600');
-                    el.classList.add('text-white', 'hover:text-gray-300');
+                if (logoWhite) logoWhite.classList.remove('hidden');
+                if (logoBlack) logoBlack.classList.add('hidden');
+                navLinks.forEach(link => {
+                    link.classList.remove('text-black', 'hover:text-gray-600');
+                    link.classList.add('text-white', 'hover:text-gray-300');
                 });
-
-                // 데스크톱 전화번호 색상 원상복구
-                const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
-                if (desktopPhoneBtn) {
-                    desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-                    desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-                }
-
-                // 모바일 전화번호와 햄버거 버튼 색상 원상복구
-                const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
-                if (mobilePhoneBtn) {
-                    mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-                    mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-                }
-
                 if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.remove('text-black');
-                    mobileMenuBtn.classList.add('text-white');
+                    mobileMenuBtn.classList.remove('hover:bg-gray-100');
+                    mobileMenuBtn.classList.add('hover:bg-white/10');
                 }
             }
         }
 
-        // 플로팅 버튼 제어
+        // 플로팅 버튼 제어 (메인페이지)
         const floatingButtons = document.getElementById('floating-buttons');
         if (floatingButtons) {
             const heroHeight = window.innerHeight;
@@ -789,66 +799,29 @@ const Navigation = {
     },
 
     updateLogoForMegaMenu(isOpen) {
+        // 메가메뉴 열림/닫힘에 따른 처리는 메인 페이지에서만 필요
+        const isMainPage = window.location.pathname === '/' || 
+                          window.location.pathname.endsWith('/index.html') ||
+                          window.location.pathname.endsWith('/Yalebupjo/') ||
+                          window.location.pathname.endsWith('/Yalebupjo/index.html');
+        
+        if (!isMainPage) return;
+        
         const logoWhite = document.getElementById('logo-white');
         const logoBlack = document.getElementById('logo-black');
-        const header = document.getElementById('header');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
-        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
         
-        // 스크롤이 맨 위에 있고 메가메뉴가 열린 경우
-        if (window.scrollY <= 50 && isOpen) {
-            // 검은색 로고로 전환
-            logoWhite.classList.add('hidden');
-            logoBlack.classList.remove('hidden');
-            
-            // 메뉴 색상을 검은색으로 변경
-            const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-            desktopLinks.forEach(el => {
-                el.classList.remove('text-white', 'hover:text-gray-300');
-                el.classList.add('text-black', 'hover:text-gray-600');
-            });
-            
-            if (desktopPhoneBtn) {
-                desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-                desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-            }
-            
-            if (mobilePhoneBtn) {
-                mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-                mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-            }
-            
-            if (mobileMenuBtn) {
-                mobileMenuBtn.classList.remove('text-white');
-                mobileMenuBtn.classList.add('text-black');
-            }
-        } else if (window.scrollY <= 50 && !isOpen) {
-            // 메가메뉴가 닫히고 스크롤이 맨 위에 있으면 흰색 로고로 복구
-            logoBlack.classList.add('hidden');
-            logoWhite.classList.remove('hidden');
-            
-            // 메뉴 색상을 흰색으로 복구
-            const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-            desktopLinks.forEach(el => {
-                el.classList.remove('text-black', 'hover:text-gray-600');
-                el.classList.add('text-white', 'hover:text-gray-300');
-            });
-            
-            if (desktopPhoneBtn) {
-                desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-                desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-            }
-            
-            if (mobilePhoneBtn) {
-                mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-                mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-            }
-            
-            if (mobileMenuBtn) {
-                mobileMenuBtn.classList.remove('text-black');
-                mobileMenuBtn.classList.add('text-white');
+        if (isOpen) {
+            // 메가메뉴 열림: 검정 로고 표시
+            if (logoWhite) logoWhite.classList.add('hidden');
+            if (logoBlack) logoBlack.classList.remove('hidden');
+        } else {
+            // 메가메뉴 닫힘: 스크롤 위치에 따라 로고 결정
+            if (window.scrollY > 50) {
+                if (logoWhite) logoWhite.classList.add('hidden');
+                if (logoBlack) logoBlack.classList.remove('hidden');
+            } else {
+                if (logoWhite) logoWhite.classList.remove('hidden');
+                if (logoBlack) logoBlack.classList.add('hidden');
             }
         }
     }

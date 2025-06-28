@@ -11,8 +11,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" rel="stylesheet" />
-
-  <!-- AlpineJS -->
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
   <style>
@@ -150,308 +148,12 @@
   </style>
     
     <!-- Navigation and Footer Modules -->
-    <script src="/assets/js/nav.js"></script>
-    <script src="/assets/js/footer.js"></script>
+    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/footer.js"></script>
 </head>
 
+
 <body class="bg-white text-black">
-  <!-- HEADER -->
-  <nav id="header" class="fixed top-0 w-full header-transparent z-50 transition-all duration-300">
-    <div class="container mx-auto px-4 py-4 flex justify-between items-center relative">
-      <!-- 로고 -->
-      <div class="flex items-center z-10">
-        <a href="../index.html">
-          <img id="logo-white" src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조 흰색 로고" class="h-8 md:h-10">
-          <img id="logo-black" src="../assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조 검은색 로고"
-            class="h-8 md:h-10 hidden">
-        </a>
-      </div>
-
-      <!-- 데스크톱 메뉴 -->
-      <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
-        <a href="#" class="text-white hover:text-gray-300 transition nav-link">로펌소개</a>
-        <a href="#" class="text-white hover:text-gray-300 transition nav-link">전문분야</a>
-        <a href="#" class="text-white hover:text-gray-300 transition nav-link">성공사례</a>
-        <a href="#" class="text-white hover:text-gray-300 transition nav-link">전국사무소</a>
-      </div>
-
-      <!-- 우측 컨트롤 -->
-      <div class="flex items-center z-10">
-        <!-- 데스크톱 전화번호 -->
-        <a href="tel:02-587-7787" class="hidden md:block text-white hover:text-gray-300 transition-colors">
-          <div class="text-right">
-            <div class="text-sm opacity-80 font-medium">상담문의</div>
-            <div class="text-xl font-bold">02-587-7787</div>
-          </div>
-        </a>
-
-        <!-- 모바일 전화번호 버튼 -->
-        <a href="tel:02-587-7787" class="md:hidden mr-4 text-white hover:text-gray-300 transition">
-          <div class="text-right">
-            <div class="text-xs opacity-80">상담문의</div>
-            <div class="text-lg font-bold">02-587-7787</div>
-          </div>
-        </a>
-
-        <!-- 모바일 햄버거 메뉴 버튼 -->
-        <button id="mobile-menu-btn"
-          class="md:hidden text-white ml-2 p-2 hover:bg-white/10 rounded-lg transition-colors">
-          <svg id="hamburger-icon" class="w-6 h-6 transition-transform duration-300" fill="none" stroke="currentColor"
-            viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-          </svg>
-          <svg id="close-icon" class="w-6 h-6 hidden transition-transform duration-300" fill="none"
-            stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- 통합 메가메뉴 -->
-    <div id="mega-menu" class="mega-menu">
-      <div class="container mx-auto px-4 py-8">
-        <div class="grid grid-cols-4 gap-8">
-          <!-- 로펌소개 -->
-          <div>
-            <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
-            <ul class="space-y-2">
-              <li><a href="../about/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a>
-              </li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대표변호사 인사말</a></li>
-              <li><a href="../lawyers/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">구성원
-                  소개</a></li>
-            </ul>
-          </div>
-
-          <!-- 전문분야 -->
-          <div>
-            <h3 class="font-bold text-gray-900 mb-4 text-lg">전문분야</h3>
-            <ul class="space-y-2">
-              <li><a href="../criminal/index.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">형사</a></li>
-              <li><a href="../civil/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">민사</a>
-              </li>
-              <li><a href="../realestate/index.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">부동산</a></li>
-              <li><a href="../traffic/index.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고</a></li>
-              <li><a href="../corporate/index.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">기업</a></li>
-              <li><a href="../family/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">가사</a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- 성공사례 -->
-          <div>
-            <h3 class="font-bold text-gray-900 mb-4 text-lg">성공사례</h3>
-            <ul class="space-y-2">
-              <li><a href="#criminal-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">형사 사례</a>
-              </li>
-              <li><a href="#civil-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">민사 사례</a></li>
-              <li><a href="#realestate-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">부동산 사례</a>
-              </li>
-              <li><a href="#traffic-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고 사례</a>
-              </li>
-              <li><a href="#corporate-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">기업 사례</a>
-              </li>
-              <li><a href="#family-cases" class="text-gray-600 hover:text-blue-600 transition block py-1">가사 사례</a></li>
-            </ul>
-          </div>
-
-          <!-- 전국사무소 -->
-          <div>
-            <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
-            <ul class="space-y-2">
-              <li><a href="../location/seoul.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">서울본사</a></li>
-              <li><a href="../location/gangnam.html"
-                  class="text-gray-600 hover:text-blue-600 transition block py-1">서울강남</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">울산</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대구</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">청주</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">대전</a></li>
-              <li><a href="#" class="text-gray-600 hover:text-blue-600 transition block py-1">광주</a></li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- 하단 상담 안내 -->
-        <div class="mt-8 pt-6 border-t border-gray-200 text-center">
-          <p class="text-gray-600">빠른 상담이 필요하신가요? <span class="font-bold text-gray-900">02-587-7787</span> 로 연락주세요.
-            <span class="text-sm text-gray-500">(평일 09:00-18:00)</span>
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <!-- 모바일 메뉴 오버레이 -->
-    <div id="mobile-menu"
-      class="md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg transform translate-x-full transition-transform duration-300 ease-in-out z-40">
-      <div class="flex flex-col h-full max-h-screen">
-        <!-- 메뉴 헤더 -->
-        <div class="flex items-center justify-between p-6 border-b border-white/10">
-          <img src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8">
-
-          <!-- 닫기 버튼 -->
-          <button onclick="closeMobileMenu()"
-            class="text-white hover:text-gray-300 p-2 hover:bg-white/10 rounded-lg transition-colors">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-
-        <!-- 메뉴 내용 -->
-        <div class="flex-1 flex flex-col p-6 min-h-0">
-          <!-- 메뉴 리스트 -->
-          <nav class="flex-1 space-y-4 overflow-y-auto min-h-0">
-            <!-- 로펌소개 아코디언 -->
-            <div class="border-b border-white/10 pb-4">
-              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
-                onclick="toggleMobileAccordion('about')">
-                <span>로펌소개</span>
-                <svg class="w-5 h-5 mobile-accordion-arrow" id="about-arrow" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div class="mobile-accordion-content" id="about-content">
-                <div class="pl-4 space-y-2 mt-2">
-                  <a href="../about/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">법인소개</a>
-                  <a href="#" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">대표변호사 인사말</a>
-                  <a href="../lawyers/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">구성원소개</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- 전문분야 아코디언 -->
-            <div class="border-b border-white/10 pb-4">
-              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
-                onclick="toggleMobileAccordion('expertise')">
-                <span>전문분야</span>
-                <svg class="w-5 h-5 mobile-accordion-arrow" id="expertise-arrow" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div class="mobile-accordion-content" id="expertise-content">
-                <div class="pl-4 space-y-2 mt-2">
-                  <a href="../criminal/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">형사</a>
-                  <a href="../civil/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">민사</a>
-                  <a href="../realestate/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">부동산</a>
-                  <a href="../traffic/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">교통사고</a>
-                  <a href="../corporate/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">기업</a>
-                  <a href="../family/index.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">가사</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- 오시는길 아코디언 -->
-            <div class="border-b border-white/10 pb-4">
-              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
-                onclick="toggleMobileAccordion('location')">
-                <span>오시는길</span>
-                <svg class="w-5 h-5 mobile-accordion-arrow" id="location-arrow" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div class="mobile-accordion-content" id="location-content">
-                <div class="pl-4 space-y-2 mt-2">
-                  <a href="../location/seoul.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">서울본사</a>
-                  <a href="../location/gangnam.html" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">서울강남</a>
-                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">울산</a>
-                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">대구</a>
-                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">청주</a>
-                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">대전</a>
-                  <a href="#offices" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">광주</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- 성공사례 아코디언 -->
-            <div class="border-b border-white/10 pb-4">
-              <button class="w-full flex items-center justify-between text-xl font-bold text-white py-3"
-                onclick="toggleMobileAccordion('cases')">
-                <span>성공사례</span>
-                <svg class="w-5 h-5 mobile-accordion-arrow" id="cases-arrow" fill="none" stroke="currentColor"
-                  viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                </svg>
-              </button>
-              <div class="mobile-accordion-content" id="cases-content">
-                <div class="pl-4 space-y-2 mt-2">
-                  <a href="#criminal-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">형사 사례</a>
-                  <a href="#civil-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">민사 사례</a>
-                  <a href="#realestate-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">부동산 사례</a>
-                  <a href="#traffic-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">교통사고 사례</a>
-                  <a href="#corporate-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">기업 사례</a>
-                  <a href="#family-cases" class="block text-gray-300 hover:text-white transition-colors py-2"
-                    onclick="closeMobileMenu()">가사 사례</a>
-                </div>
-              </div>
-            </div>
-
-            <!-- 단일 메뉴들 -->
-            <a href="#"
-              class="block text-xl font-medium text-white hover:text-gray-300 transition-colors py-3 border-b border-white/10"
-              onclick="closeMobileMenu()">
-              상담예약
-            </a>
-          </nav>
-
-          <!-- 하단 연락처 정보 -->
-          <div class="mt-6 pt-6 border-t border-white/10 space-y-6 flex-shrink-0">
-            <!-- 대표 전화번호 -->
-            <a href="tel:02-587-7787"
-              class="block bg-white text-black rounded-2xl p-6 hover:bg-gray-100 transition-colors">
-              <div class="flex items-center justify-between">
-                <div>
-                  <div class="text-sm text-gray-600 mb-1">대표 상담 전화</div>
-                  <div class="text-2xl font-bold">02-587-7787</div>
-                </div>
-                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
-                  </path>
-                </svg>
-              </div>
-            </a>
-
-            <!-- 운영시간 -->
-            <div class="text-center text-white/70">
-              <div class="text-sm">평일 09:00 - 18:00</div>
-              <div class="text-xs mt-1">24시간 상담 접수 가능</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </nav>
-
   <!-- Hero Section -->
   <section class="min-h-screen flex items-center bg-white relative overflow-hidden">
     <!-- 배경 비디오 -->
@@ -843,7 +545,7 @@
 
 
   <!-- PROCESS -->
-  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24">
+  <section id="process" class="py-24 bg-gray-50 lg:py-32 scroll-mt-24" x-data="processTab">
     <div class="container mx-auto px-4 sm:px-6 lg:px-8">
       <!-- 섹션 헤더 -->
       <div class="text-center mb-16 sm:mb-20">
@@ -856,15 +558,29 @@
         </p>
       </div>
 
-      <!-- Mermaid 다이어그램 -->
-      <div class="mx-auto relative"
+      <!-- 탭 버튼 -->
+      <div class="flex justify-center gap-4 mb-8">
+        <button @click="activeProcessTab = 'defense'"
+          :class="activeProcessTab === 'defense' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          피의자 변호
+        </button>
+        <button @click="activeProcessTab = 'complaint'"
+          :class="activeProcessTab === 'complaint' ? 'bg-[#22304a] text-white' : 'bg-[#f3f4f6] text-[#22304a] hover:bg-[#1a2233]'"
+          class="px-6 py-3 rounded-full font-medium transition-all duration-300">
+          피해자 고소
+        </button>
+      </div>
+
+      <!-- Mermaid 다이어그램 - 피의자 변호 -->
+      <div x-show="activeProcessTab === 'defense'" x-transition class="mx-auto relative"
         style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
-        <div id="mermaidOverlay" class="mermaid-overlay">
-           형사사건 변호/고소 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+        <div id="mermaidOverlayDefense" class="mermaid-overlay">
+           피의자 변호 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
          </div>
         <!-- 줌 컨트롤 -->
         <div class="absolute top-4 right-4 flex gap-2 z-10">
-          <button onclick="zoomDiagram(0.1)"
+          <button onclick="zoomDiagram(0.1, 'defense')"
             class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
             style="background:transparent; border:none; border-radius:0;">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -872,14 +588,14 @@
               </path>
             </svg>
           </button>
-          <button onclick="zoomDiagram(-0.1)"
+          <button onclick="zoomDiagram(-0.1, 'defense')"
             class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
             style="background:transparent; border:none; border-radius:0;">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
             </svg>
           </button>
-          <button onclick="resetZoom()"
+          <button onclick="resetZoom('defense')"
             class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
             style="background:transparent; border:none; border-radius:0;">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -890,55 +606,17 @@
           </button>
         </div>
 
-        <div id="mermaidContainer" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
-        <div id="mermaidDiagram" class="mermaid transition-transform duration-300"
+        <div id="mermaidContainerDefense" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <div id="mermaidDiagramDefense" class="mermaid transition-transform duration-300"
           style="transform: scale(1); transform-origin: center center;">
 
             flowchart TB
-            Start([형사 문제 발생]) --> ClientType{의뢰인 유형}
+            Start([형사 문제 발생]) --> DefenseTrack[피의자 방어 트랙]
 
-            ClientType -->|피의자/피고인| DefenseTrack[피의자 방어 트랙]
-            ClientType -->|고소인/피해자| AccuserTrack[고소인 지원 트랙]
-
-            %% 피의자 방어 트랙
             DefenseTrack --> InitConsult[변호사 초기 상담<br>- 사건 파악<br>- 긴급성 판단]
 
             InitConsult -->|긴급체포| Emergency[긴급대응<br>- 체포/구속 상황]
             InitConsult -->|일반상담| Regular[일반 상담<br>- 수사 대응 전략]
-
-            %% 고소인 지원 트랙
-            AccuserTrack --> AccuserConsult[고소인 상담<br>- 사건 경위 파악<br>- 증거 수집 조언]
-
-            AccuserConsult --> ComplaintStrategy[고소 전략 수립<br>- 고소 가능성 검토<br>- 필요 증거 목록화<br>- 예상 결과 설명]
-
-            ComplaintStrategy --> ComplaintType{고소 방법}
-            ComplaintType -->|직접고소| DirectComplaint[직접 고소장 작성<br>- 변호사 고소장 작성<br>- 증거자료 정리<br>- 경찰서 동행]
-            ComplaintType -->|고소대리| ProxyComplaint[고소대리<br>- 변호사 명의 고소<br>- 전문적 법리 구성]
-
-            DirectComplaint --> PoliceAccept{경찰 접수}
-            ProxyComplaint --> PoliceAccept
-
-            PoliceAccept -->|접수| AccuserPolice[고소인 조사<br>- 변호사 동행<br>- 진술 조력<br>- 추가 증거 제출]
-            PoliceAccept -->|불수리| AccuserAppeal[이의제기<br>- 검찰 직접 고소<br>- 불수리 사유 대응]
-
-            AccuserPolice --> AccuserWait[수사 진행 모니터링<br>- 수사 진행 확인<br>- 피의자 소환 확인<br>- 추가 조치 대응]
-            AccuserAppeal --> AccuserPolice
-
-            AccuserWait --> AccuserPros[검찰 단계<br>- 고소인 조사 대응<br>- 의견서 제출<br>- 처분 결과 확인]
-
-            AccuserPros --> AccuserDecision{검찰 처분}
-            AccuserDecision -->|기소| AccuserTrial[재판 참여<br>- 증인 출석<br>- 피해 진술<br>- 합의 여부 결정]
-            AccuserDecision -->|불기소| AccuserReview{불기소 검토}
-
-            AccuserReview -->|수용| AccuserEnd1([고소 종결])
-            AccuserReview -->|불복| AccuserAppealPros[항고/재정신청<br>- 검찰 항고<br>- 법원 재정신청]
-
-            AccuserAppealPros --> AccuserCourt{재정신청 결과}
-            AccuserCourt -->|인용| AccuserTrial
-            AccuserCourt -->|기각| AccuserEnd2([최종 종결])
-
-            AccuserTrial --> AccuserVerdict[판결 확인<br>- 피해 회복<br>- 민사소송 연계]
-            AccuserVerdict --> AccuserEnd3([사건 종결])
 
             Emergency --> LawyerVisit[변호사 긴급 조치<br>- 24시간 내 접견<br>- 진술거부권 행사 조언<br>- 가족 연락]
             LawyerVisit --> WarrantReview[영장실질심사]
@@ -1029,19 +707,100 @@
             classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
             classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
             classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
-            classDef accuserAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
-            classDef accuserStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
-            classDef accuserDecision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
             
             class InitConsult,LawyerVisit,LawyerWarrant,InvestStrategy,DetainedSupport,LawyerPolice,LawyerPros,NonPros,LawyerSummary,TrialPrep,LawyerTrial,LawyerAppeal,LawyerAppealCourt,LawyerSupreme,LawyerPost lawyerAction
             class Emergency,Detained,Released,PoliceInvest,ProsInvest,Summary,Indictment,FirstTrial,Guilty,Appeal,Supreme,Execution clientStatus
             class WarrantReview,ProsecutionSend,AcceptVerdict courtProcess
             class WarrantResult,ProsDecision,SummaryChoice,Verdict,AppealDecision,AppealVerdict,SupremeDecision,FinalVerdict decision
             class End1,End2,End3,End4,Acquittal endNode
-            class AccuserConsult,ComplaintStrategy,DirectComplaint,ProxyComplaint,AccuserPolice,AccuserAppeal,AccuserWait,AccuserPros,AccuserAppealPros,AccuserTrial,AccuserVerdict accuserAction
-            class AccuserTrack accuserStatus
-            class ComplaintType,PoliceAccept,AccuserDecision,AccuserReview,AccuserCourt accuserDecision
-            class AccuserEnd1,AccuserEnd2,AccuserEnd3 endNode
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Mermaid 다이어그램 - 피해자 고소 -->
+      <div x-show="activeProcessTab === 'complaint'" x-transition class="mx-auto relative"
+        style="padding:0; background:transparent; box-shadow:none; border:none; border-radius:0;">
+        <div id="mermaidOverlayComplaint" class="mermaid-overlay">
+           피해자 고소 프로세스를 <br>미리 확인해보세요.<br>(확대,축소 등 터치로 화면을 조작할 수 있어요.)
+         </div>
+        <!-- 줌 컨트롤 -->
+        <div class="absolute top-4 right-4 flex gap-2 z-10">
+          <button onclick="zoomDiagram(0.1, 'complaint')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+              </path>
+            </svg>
+          </button>
+          <button onclick="zoomDiagram(-0.1, 'complaint')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
+            </svg>
+          </button>
+          <button onclick="resetZoom('complaint')"
+            class="w-10 h-10 flex items-center justify-center text-gray-600 transition-colors"
+            style="background:transparent; border:none; border-radius:0;">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15">
+              </path>
+            </svg>
+          </button>
+        </div>
+
+        <div id="mermaidContainerComplaint" class="overflow-auto" style="height: 60vh; cursor: grab; background: white; border: 1px solid #e0e0e0; border-radius: 8px;">
+        <div id="mermaidDiagramComplaint" class="mermaid transition-transform duration-300"
+          style="transform: scale(1); transform-origin: center center;">
+
+          flowchart TB
+          Start([형사 문제 발생]) --> AccuserTrack[고소인 지원 트랙]
+      
+          AccuserTrack --> AccuserConsult[고소인 상담<br>- 사건 경위 파악<br>- 증거 수집 조언]
+      
+          AccuserConsult --> ComplaintStrategy[고소 전략 수립<br>- 고소 가능성 검토<br>- 필요 증거 목록화<br>- 예상 결과 설명]
+      
+          ComplaintStrategy --> ComplaintType{고소 방법}
+          ComplaintType -->|직접고소| DirectComplaint[직접 고소장 작성<br>- 변호사 고소장 작성<br>- 증거자료 정리<br>- 경찰서 동행]
+          ComplaintType -->|고소대리| ProxyComplaint[고소대리<br>- 변호사 명의 고소<br>- 전문적 법리 구성]
+      
+          DirectComplaint --> PoliceAccept{경찰 접수}
+          ProxyComplaint --> PoliceAccept
+      
+          PoliceAccept -->|접수| AccuserPolice[고소인 조사<br>- 변호사 동행<br>- 진술 조력<br>- 추가 증거 제출]
+          PoliceAccept -->|불수리| AccuserAppeal[이의제기<br>- 검찰 직접 고소<br>- 불수리 사유 대응]
+      
+          AccuserPolice --> AccuserWait[수사 진행 모니터링<br>- 수사 진행 확인<br>- 피의자 소환 확인<br>- 추가 조치 대응]
+          AccuserAppeal --> AccuserPolice
+      
+          AccuserWait --> AccuserPros[검찰 단계<br>- 고소인 조사 대응<br>- 의견서 제출<br>- 처분 결과 확인]
+      
+          AccuserPros --> AccuserDecision{검찰 처분}
+          AccuserDecision -->|기소| AccuserTrial[재판 참여<br>- 증인 출석<br>- 피해 진술<br>- 합의 여부 결정]
+          AccuserDecision -->|불기소| AccuserReview{불기소 검토}
+      
+          AccuserReview -->|수용| AccuserEnd1([고소 종결])
+          AccuserReview -->|불복| AccuserAppealPros[항고/재정신청<br>- 검찰 항고<br>- 법원 재정신청]
+      
+          AccuserAppealPros --> AccuserCourt{재정신청 결과}
+          AccuserCourt -->|인용| AccuserTrial
+          AccuserCourt -->|기각| AccuserEnd2([최종 종결])
+      
+          AccuserTrial --> AccuserVerdict[판결 확인<br>- 피해 회복<br>- 민사소송 연계]
+          AccuserVerdict --> AccuserEnd3([사건 종결])
+      
+          classDef accuserAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
+          classDef accuserStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
+          classDef accuserDecision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
+          classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
+          
+          class AccuserConsult,ComplaintStrategy,DirectComplaint,ProxyComplaint,AccuserPolice,AccuserAppeal,AccuserWait,AccuserPros,AccuserAppealPros,AccuserTrial,AccuserVerdict accuserAction
+          class AccuserTrack accuserStatus
+          class ComplaintType,PoliceAccept,AccuserDecision,AccuserReview,AccuserCourt accuserDecision
+          class AccuserEnd1,AccuserEnd2,AccuserEnd3 endNode
 
           </div>
         </div>
@@ -1050,30 +809,11 @@
   </section>
 
 
-  <!-- classDef lawyerAction fill:#2c5aa0,stroke:#1a3a52,color:#fff,stroke-width:2px
-  classDef clientStatus fill:#ff6b6b,stroke:#c92a2a,color:#fff,stroke-width:2px
-  classDef courtProcess fill:#4dabf7,stroke:#1971c2,color:#fff,stroke-width:2px
-  classDef decision fill:#ffd43b,stroke:#fab005,color:#000,stroke-width:2px
-  classDef endNode fill:#51cf66,stroke:#2f9e44,color:#fff,stroke-width:2px
-  classDef accuserAction fill:#9775fa,stroke:#7048e8,color:#fff,stroke-width:2px
-  classDef accuserStatus fill:#ff8787,stroke:#fa5252,color:#fff,stroke-width:2px
-  classDef accuserDecision fill:#fcc419,stroke:#f59f00,color:#000,stroke-width:2px
-  
-  class InitConsult,LawyerVisit,LawyerWarrant,InvestStrategy,DetainedSupport,LawyerPolice,LawyerPros,NonPros,LawyerSummary,TrialPrep,LawyerTrial,LawyerAppeal,LawyerAppealCourt,LawyerSupreme,LawyerPost lawyerAction
-  class Emergency,Detained,Released,PoliceInvest,ProsInvest,Summary,Indictment,FirstTrial,Guilty,Appeal,Supreme,Execution clientStatus
-  class WarrantReview,ProsecutionSend,AcceptVerdict courtProcess
-  class WarrantResult,ProsDecision,SummaryChoice,Verdict,AppealDecision,AppealVerdict,SupremeDecision,FinalVerdict decision
-  class End1,End2,End3,End4,Acquittal endNode
-  class AccuserConsult,ComplaintStrategy,DirectComplaint,ProxyComplaint,AccuserPolice,AccuserAppeal,AccuserWait,AccuserPros,AccuserAppealPros,AccuserTrial,AccuserVerdict accuserAction
-  class AccuserTrack accuserStatus
-  class ComplaintType,PoliceAccept,AccuserDecision,AccuserReview,AccuserCourt accuserDecision
-  class AccuserEnd1,AccuserEnd2,AccuserEnd3 endNode -->
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.6.1/mermaid.min.js"></script>
   <script>
-    // Mermaid 초기화
+    // Mermaid 초기화 - Alpine.js와의 타이밍 문제 해결을 위해 수동으로 렌더링
     mermaid.initialize({
-      startOnLoad: true,
+      startOnLoad: false,  // 자동 시작 비활성화
       theme: 'neutral',
       flowchart: {
         htmlLabels: true,
@@ -1083,93 +823,161 @@
       }
     });
 
-    // 드래그 기능 구현
-    const container = document.getElementById('mermaidContainer');
-    const diagram = document.getElementById('mermaidDiagram');
-    let isDragging = false;
-    let startX, startY, scrollLeft, scrollTop;
-
-    container.addEventListener('mousedown', (e) => {
-      isDragging = true;
-      container.style.cursor = 'grabbing';
-      startX = e.pageX - container.offsetLeft;
-      startY = e.pageY - container.offsetTop;
-      scrollLeft = container.scrollLeft;
-      scrollTop = container.scrollTop;
+    // 다이어그램 원본 텍스트 저장
+    const mermaidDiagramTexts = {};
+    
+    // 페이지 로드시 원본 텍스트 저장 - 자동으로 모든 mermaid 다이어그램 감지
+    document.addEventListener('DOMContentLoaded', () => {
+      // data-tab 속성을 가진 모든 mermaid 요소를 찾아서 저장
+      const mermaidElements = document.querySelectorAll('.mermaid[id^="mermaidDiagram"]');
+      
+      mermaidElements.forEach(element => {
+        // ID에서 탭 이름 추출 (예: mermaidDiagramDefense -> defense)
+        const tabName = element.id.replace('mermaidDiagram', '').toLowerCase();
+        if (tabName) {
+          mermaidDiagramTexts[tabName] = element.textContent.trim();
+          console.log(`Stored diagram for tab: ${tabName}`);
+        }
+      });
     });
 
-    container.addEventListener('mouseleave', () => {
-      isDragging = false;
-      container.style.cursor = 'grab';
-    });
+    // Alpine.js가 렌더링된 후 Mermaid 다이어그램 렌더링
+    function renderMermaidDiagrams(specificTab = null) {
+      if (!specificTab) return;
+      
+      // 동적으로 탭 이름을 기반으로 요소 찾기
+      const elementId = `mermaidDiagram${specificTab.charAt(0).toUpperCase() + specificTab.slice(1)}`;
+      const element = document.getElementById(elementId);
+      
+      if (element && mermaidDiagramTexts[specificTab]) {
+        // 기존 내용 모두 제거
+        element.innerHTML = '';
+        element.removeAttribute('data-processed');
+        element.textContent = mermaidDiagramTexts[specificTab];
+        
+        // mermaid 렌더링
+        try {
+          mermaid.init(undefined, element);
+          console.log(`Rendered diagram for tab: ${specificTab}`);
+        } catch (e) {
+          console.error(`Mermaid rendering error for ${specificTab}:`, e);
+        }
+      } else {
+        console.warn(`No diagram found for tab: ${specificTab}`);
+      }
+    }
 
-    container.addEventListener('mouseup', () => {
-      isDragging = false;
-      container.style.cursor = 'grab';
-    });
+    // 드래그 기능 구현 함수
+    function setupDragFeature(containerId, diagramId) {
+      const container = document.getElementById(containerId);
+      const diagram = document.getElementById(diagramId);
+      if (!container || !diagram) return;
 
-    container.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      e.preventDefault();
-      const x = e.pageX - container.offsetLeft;
-      const y = e.pageY - container.offsetTop;
-      const walkX = (x - startX) * 1.5;
-      const walkY = (y - startY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    });
+      let isDragging = false;
+      let startX, startY, scrollLeft, scrollTop;
 
-    // 터치 이벤트 지원
-    let touchStartX, touchStartY;
+      container.addEventListener('mousedown', (e) => {
+        isDragging = true;
+        container.style.cursor = 'grabbing';
+        startX = e.pageX - container.offsetLeft;
+        startY = e.pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
 
-    container.addEventListener('touchstart', (e) => {
-      touchStartX = e.touches[0].pageX - container.offsetLeft;
-      touchStartY = e.touches[0].pageY - container.offsetTop;
-      scrollLeft = container.scrollLeft;
-      scrollTop = container.scrollTop;
-    });
+      container.addEventListener('mouseleave', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
 
-    container.addEventListener('touchmove', (e) => {
-      e.preventDefault();
-      const x = e.touches[0].pageX - container.offsetLeft;
-      const y = e.touches[0].pageY - container.offsetTop;
-      const walkX = (x - touchStartX) * 1.5;
-      const walkY = (y - touchStartY) * 1.5;
-      container.scrollLeft = scrollLeft - walkX;
-      container.scrollTop = scrollTop - walkY;
-    });
+      container.addEventListener('mouseup', () => {
+        isDragging = false;
+        container.style.cursor = 'grab';
+      });
 
-    let currentZoom = window.innerWidth <= 768 ? 1: 1.2; // 모바일/PC 분기 확대 비율
+      container.addEventListener('mousemove', (e) => {
+        if (!isDragging) return;
+        e.preventDefault();
+        const x = e.pageX - container.offsetLeft;
+        const y = e.pageY - container.offsetTop;
+        const walkX = (x - startX) * 1.5;
+        const walkY = (y - startY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+
+      // 터치 이벤트 지원
+      let touchStartX, touchStartY;
+
+      container.addEventListener('touchstart', (e) => {
+        touchStartX = e.touches[0].pageX - container.offsetLeft;
+        touchStartY = e.touches[0].pageY - container.offsetTop;
+        scrollLeft = container.scrollLeft;
+        scrollTop = container.scrollTop;
+      });
+
+      container.addEventListener('touchmove', (e) => {
+        e.preventDefault();
+        const x = e.touches[0].pageX - container.offsetLeft;
+        const y = e.touches[0].pageY - container.offsetTop;
+        const walkX = (x - touchStartX) * 1.5;
+        const walkY = (y - touchStartY) * 1.5;
+        container.scrollLeft = scrollLeft - walkX;
+        container.scrollTop = scrollTop - walkY;
+      });
+    }
+
+    // 두 개의 다이어그램에 대해 드래그 기능 설정
+    setupDragFeature('mermaidContainerDefense', 'mermaidDiagramDefense');
+    setupDragFeature('mermaidContainerComplaint', 'mermaidDiagramComplaint');
+
+    let currentZoomDefense = window.innerWidth <= 768 ? 1: 1.2;
+    let currentZoomComplaint = window.innerWidth <= 768 ? 1: 1.2;
 
     // 줌 기능
-    function zoomDiagram(delta) {
-      currentZoom = Math.max(0.5, Math.min(2, currentZoom + delta));
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
-      // 확대 비율에 맞게 실제 크기도 조정
-      diagram.style.width = `${100 * currentZoom}%`;
-      diagram.style.height = `${100 * currentZoom}%`;
+    function zoomDiagram(delta, type) {
+      let currentZoom, diagramId;
+      
+      if (type === 'defense') {
+        currentZoomDefense = Math.max(0.5, Math.min(2, currentZoomDefense + delta));
+        currentZoom = currentZoomDefense;
+        diagramId = 'mermaidDiagramDefense';
+      } else {
+        currentZoomComplaint = Math.max(0.5, Math.min(2, currentZoomComplaint + delta));
+        currentZoom = currentZoomComplaint;
+        diagramId = 'mermaidDiagramComplaint';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${currentZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * currentZoom}%`;
+        diagram.style.height = `${100 * currentZoom}%`;
+      }
     }
 
-    function resetZoom() {
-      currentZoom = 1.2;
-      const diagram = document.getElementById('mermaidDiagram');
-      diagram.style.transform = `scale(${currentZoom})`;
-      diagram.style.transformOrigin = 'top left';
-      diagram.style.width = `${100 * currentZoom}%`;
-      diagram.style.height = `${100 * currentZoom}%`;
+    function resetZoom(type) {
+      const defaultZoom = 1.2;
+      let diagramId;
+      
+      if (type === 'defense') {
+        currentZoomDefense = defaultZoom;
+        diagramId = 'mermaidDiagramDefense';
+      } else {
+        currentZoomComplaint = defaultZoom;
+        diagramId = 'mermaidDiagramComplaint';
+      }
+      
+      const diagram = document.getElementById(diagramId);
+      if (diagram) {
+        diagram.style.transform = `scale(${defaultZoom})`;
+        diagram.style.transformOrigin = 'top left';
+        diagram.style.width = `${100 * defaultZoom}%`;
+        diagram.style.height = `${100 * defaultZoom}%`;
+      }
     }
   </script>
-
-
-
-
-
-
-
-
-
 
 
   <!-- FAQ -->
@@ -1308,283 +1116,11 @@
     </div>
   </section>
 
-
-
-
-
-
-
-
-  <!-- CONTACT CTA -->
-  <section id="contact" class="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 overflow-hidden">
-    <div class="relative z-10 text-center py-24 px-8 lg:py-32 lg:px-16">
-      <div class="container mx-auto">
-        <h2 class="text-4xl lg:text-5xl font-bold text-white mb-6">
-          형사사건, 초기 대응이 가장 중요합니다.
-        </h2>
-        <p class="text-lg lg:text-xl text-gray-300 max-w-3xl mx-auto mb-12 leading-relaxed">
-          지금 바로 전문가와 상담해 최선의 전략을 세우세요.
-        </p>
-        <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <a href="tel:02-587-7787"
-            class="inline-flex items-center justify-center bg-white text-gray-900 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-100 transition-all hover:scale-105">
-            전화 상담 바로 연결
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 푸터 -->
-  <footer class="bg-black text-white pt-12 pb-24">
-    <div class="container mx-auto px-4">
-      <!-- 메뉴 섹션 -->
-      <div class="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-        <!-- 로고 -->
-        <div>
-          <img src="../assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8 mb-6">
-          <p class="text-sm text-gray-400">
-            믿을 수 있는 법률 파트너<br>
-            예일법조가 함께합니다
-          </p>
-        </div>
-
-        <!-- 전문분야 -->
-        <div>
-          <h4 class="text-white font-bold mb-4">전문분야</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="../criminal/index.html" class="text-gray-400 hover:text-white transition">형사</a></li>
-            <li><a href="../civil/index.html" class="text-gray-400 hover:text-white transition">민사</a></li>
-            <li><a href="../traffic/index.html" class="text-gray-400 hover:text-white transition">교통사고</a></li>
-            <li><a href="../realestate/index.html" class="text-gray-400 hover:text-white transition">부동산</a>
-            </li>
-            <li><a href="../corporate/index.html" class="text-gray-400 hover:text-white transition">기업법무</a>
-            </li>
-            <li><a href="../family/index.html" class="text-gray-400 hover:text-white transition">가사</a></li>
-          </ul>
-        </div>
-
-        <!-- 예일법조 서비스 -->
-        <div>
-          <h4 class="text-white font-bold mb-4">예일법조 서비스</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="#" class="text-gray-400 hover:text-white transition">변호사 매칭</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">법률 자문</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">온라인 상담</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">24시간 대응</a></li>
-          </ul>
-        </div>
-
-        <!-- 전국지사 -->
-        <div>
-          <h4 class="text-white font-bold mb-4">전국지사</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="../location/seoul.html" class="text-gray-400 hover:text-white transition">서울본사</a></li>
-            <li><a href="../location/gangnam.html" class="text-gray-400 hover:text-white transition">서울강남</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">청주</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">대전</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">광주</a></li>
-          </ul>
-        </div>
-
-        <!-- 고객센터 -->
-        <div>
-          <h4 class="text-white font-bold mb-4">고객센터</h4>
-          <ul class="space-y-2 text-sm">
-            <li><a href="#" class="text-gray-400 hover:text-white transition">공지사항</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">자주묻는질문</a></li>
-            <li><a href="#" class="text-gray-400 hover:text-white transition">1:1 문의</a></li>
-            <li class="pt-2">
-              <p class="text-white font-bold text-lg">02-587-7787</p>
-              <p class="text-gray-500 text-xs">평일 09:00 - 18:00</p>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <!-- 구분선 -->
-      <hr class="border-gray-800 mb-6">
-
-      <!-- 회사 정보 -->
-      <div class="flex flex-col space-y-4">
-        <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
-          <span class="text-gray-400">법무법인(유한) 예일법조</span>
-          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-          <span class="text-gray-400">사업자등록번호 : 000-00-00000</span>
-          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-          <span class="text-gray-400">대표변호사 : 김예일</span>
-          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-          <span class="text-gray-400">광고책임변호사 : 박법조</span>
-        </div>
-
-        <div class="flex flex-col md:flex-row md:flex-wrap md:items-center gap-y-1 md:gap-x-4 text-sm">
-          <span class="text-gray-400">서울특별시 서초구 반포대로 98 일신빌딩 4층</span>
-          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-          <span class="text-gray-400">대표전화 : 02-587-7787</span>
-          <div class="hidden md:block w-px h-3 bg-gray-700"></div>
-          <span class="text-gray-400">팩스 : 02-587-7788</span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-4 mt-4">
-          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이용약관</a>
-          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">개인정보처리방침</a>
-          <a href="#" class="text-gray-500 hover:text-gray-300 text-xs transition">이메일무단수집거부</a>
-        </div>
-
-        <p class="text-gray-500 text-xs mt-4">
-          COPYRIGHT©2025 법무법인(유한) 예일법조. ALL RIGHTS RESERVED
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- FLOATING BUTTON -->
-  <div id="floating-buttons" class="floating-buttons">
-    <div class="container mx-auto px-4">
-      <div class="flex justify-center items-center">
-        <a href="tel:02-587-7787"
-          class="group flex items-center justify-center gap-3 bg-gray-900 text-white px-6 py-3 rounded-full text-base font-medium hover:bg-gray-800 transition-all duration-300 shadow-lg">
-          <span class="text-gray-400">상담문의</span>
-          <span class="text-gray-400">|</span>
-          <span class="font-bold">02-587-7787</span>
-          <svg class="w-5 h-5 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <!-- JS -->
   <script>
-    // 모바일 메뉴 토글 기능
-    function toggleMobileMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      const hamburgerIcon = document.getElementById('hamburger-icon');
-      const closeIcon = document.getElementById('close-icon');
-      const body = document.body;
+    // 네비게이션 관련 함수들은 nav.js에서 처리됩니다
 
-      const isOpen = !mobileMenu.classList.contains('translate-x-full');
-
-      if (isOpen) {
-        // 메뉴 닫기
-        mobileMenu.classList.add('translate-x-full');
-        hamburgerIcon.classList.remove('hidden');
-        closeIcon.classList.add('hidden');
-        body.style.overflow = '';
-      } else {
-        // 메뉴 열기
-        mobileMenu.classList.remove('translate-x-full');
-        hamburgerIcon.classList.add('hidden');
-        closeIcon.classList.remove('hidden');
-        body.style.overflow = 'hidden';
-      }
-    }
-
-    // 모바일 메뉴 닫기 함수
-    function closeMobileMenu() {
-      const mobileMenu = document.getElementById('mobile-menu');
-      const hamburgerIcon = document.getElementById('hamburger-icon');
-      const closeIcon = document.getElementById('close-icon');
-      const body = document.body;
-
-      mobileMenu.classList.add('translate-x-full');
-      hamburgerIcon.classList.remove('hidden');
-      closeIcon.classList.add('hidden');
-      body.style.overflow = '';
-    }
-
-    // 헤더 스크롤 효과 및 플로팅 버튼 제어
-    window.addEventListener('scroll', function () {
-      const header = document.getElementById('header');
-      const logoWhite = document.getElementById('logo-white');
-      const logoBlack = document.getElementById('logo-black');
-      const floatingButtons = document.getElementById('floating-buttons');
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-
-      // 히어로 섹션 높이 (대략적으로 뷰포트 높이)
-      const heroHeight = window.innerHeight;
-
-      if (window.scrollY > 50) {
-        // 네비게이션 바 변경
-        header.classList.remove('header-transparent');
-        header.classList.add('header-scrolled');
-
-        // 로고 전환
-        logoWhite.classList.add('hidden');
-        logoBlack.classList.remove('hidden');
-
-        // 데스크톱 메뉴 색상 변경
-        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-        desktopLinks.forEach(el => {
-          el.classList.remove('text-white', 'hover:text-gray-300');
-          el.classList.add('text-black', 'hover:text-gray-600');
-        });
-
-        // 데스크톱 전화번호 색상 변경
-        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
-        if (desktopPhoneBtn) {
-          desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-          desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-        }
-
-        // 모바일 전화번호와 햄버거 버튼 색상 변경
-        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
-        if (mobilePhoneBtn) {
-          mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
-          mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
-        }
-
-        if (mobileMenuBtn) {
-          mobileMenuBtn.classList.remove('text-white');
-          mobileMenuBtn.classList.add('text-black');
-        }
-      } else {
-        // 네비게이션 바 원상복구
-        header.classList.remove('header-scrolled');
-        header.classList.add('header-transparent');
-
-        // 로고 전환
-        logoBlack.classList.add('hidden');
-        logoWhite.classList.remove('hidden');
-
-        // 데스크톱 메뉴 색상 원상복구
-        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
-        desktopLinks.forEach(el => {
-          el.classList.remove('text-black', 'hover:text-gray-600');
-          el.classList.add('text-white', 'hover:text-gray-300');
-        });
-
-        // 데스크톱 전화번호 색상 원상복구
-        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
-        if (desktopPhoneBtn) {
-          desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-          desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-        }
-
-        // 모바일 전화번호와 햄버거 버튼 색상 원상복구
-        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
-        if (mobilePhoneBtn) {
-          mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
-          mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
-        }
-
-        if (mobileMenuBtn) {
-          mobileMenuBtn.classList.remove('text-black');
-          mobileMenuBtn.classList.add('text-white');
-        }
-      }
-
-      // 플로팅 버튼 제어 - 히어로 섹션을 벗어나면 표시
-      if (window.scrollY > heroHeight * 0.8) {
-        floatingButtons.classList.add('show');
-      } else {
-        floatingButtons.classList.remove('show');
-      }
-    });
+    // 스크롤 관련 기능들은 nav.js에서 처리됩니다
 
     // ===================================
     // 스탯 섹션 관련 기능 (카운터 애니메이션)
@@ -1659,34 +1195,7 @@
 
     // 페이지 로드 시 초기화
     document.addEventListener('DOMContentLoaded', function () {
-      // 메가메뉴 설정
-      setupMegaMenu();
-
-      // 모바일 메뉴 버튼 이벤트 리스너 추가
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      if (mobileMenuBtn) {
-        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
-      }
-
-      // 모바일 메뉴 오버레이 클릭 시 닫기 (메뉴 영역 외부 클릭)
-      const mobileMenu = document.getElementById('mobile-menu');
-      if (mobileMenu) {
-        mobileMenu.addEventListener('click', function (e) {
-          if (e.target === mobileMenu) {
-            closeMobileMenu();
-          }
-        });
-      }
-
-      // ESC 키로 모바일 메뉴 닫기
-      document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape') {
-          const isMenuOpen = !document.getElementById('mobile-menu').classList.contains('translate-x-full');
-          if (isMenuOpen) {
-            closeMobileMenu();
-          }
-        }
-      });
+      // 네비게이션 관련 설정은 nav.js에서 처리됩니다
 
       // 스탯 섹션 관찰 시작
       const statsSection = document.getElementById('stats');
@@ -1709,152 +1218,79 @@
         }, 5000);
       }
 
-      // 다이어그램은 이미 HTML에 포함되어 있으므로 별도 렌더링 불필요
-      // 머메이드 다이어그램 초기 확대 적용
-      const diagram = document.getElementById('mermaidDiagram');
-      if (diagram) {
-        diagram.style.transform = `scale(${currentZoom})`;
-        diagram.style.transformOrigin = 'top left';
-        diagram.style.width = `${100 * currentZoom}%`;
-        diagram.style.height = `${100 * currentZoom}%`;
+      // 두 개의 다이어그램에 대해 초기 확대 적용
+      const diagramDefense = document.getElementById('mermaidDiagramDefense');
+      if (diagramDefense) {
+        diagramDefense.style.transform = `scale(${currentZoomDefense})`;
+        diagramDefense.style.transformOrigin = 'top left';
+        diagramDefense.style.width = `${100 * currentZoomDefense}%`;
+        diagramDefense.style.height = `${100 * currentZoomDefense}%`;
       }
 
-      // 오버레이 터치/클릭/스크롤 시 사라지게
-      const overlay = document.getElementById('mermaidOverlay');
-      if (overlay) {
-        const hideOverlay = () => {
-          overlay.classList.add('hide');
-          setTimeout(() => { overlay.style.display = 'none'; }, 500);
-        };
-        // 터치, 클릭, 스크롤 모두 감지
-        overlay.addEventListener('touchstart', hideOverlay, { once: true });
-        overlay.addEventListener('click', hideOverlay, { once: true });
-        overlay.addEventListener('wheel', hideOverlay, { once: true });
-        // 다이어그램 컨테이너 스크롤도 감지
-        const mermaidContainer = document.getElementById('mermaidContainer');
-        if (mermaidContainer) {
-          mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+      const diagramComplaint = document.getElementById('mermaidDiagramComplaint');
+      if (diagramComplaint) {
+        diagramComplaint.style.transform = `scale(${currentZoomComplaint})`;
+        diagramComplaint.style.transformOrigin = 'top left';
+        diagramComplaint.style.width = `${100 * currentZoomComplaint}%`;
+        diagramComplaint.style.height = `${100 * currentZoomComplaint}%`;
+      }
+
+      // 오버레이 터치/클릭/스크롤 시 사라지게 - 각 다이어그램에 대해 설정
+      function setupOverlay(overlayId, containerId) {
+        const overlay = document.getElementById(overlayId);
+        if (overlay) {
+          const hideOverlay = () => {
+            overlay.classList.add('hide');
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
+          };
+          // 터치, 클릭, 스크롤 모두 감지
+          overlay.addEventListener('touchstart', hideOverlay, { once: true });
+          overlay.addEventListener('click', hideOverlay, { once: true });
+          overlay.addEventListener('wheel', hideOverlay, { once: true });
+          // 다이어그램 컨테이너 스크롤도 감지
+          const mermaidContainer = document.getElementById(containerId);
+          if (mermaidContainer) {
+            mermaidContainer.addEventListener('scroll', hideOverlay, { once: true });
+          }
         }
       }
+
+      setupOverlay('mermaidOverlayDefense', 'mermaidContainerDefense');
+      setupOverlay('mermaidOverlayComplaint', 'mermaidContainerComplaint');
+    });
+
+    // Alpine.js x-show 전환시 Mermaid 재렌더링을 위한 이벤트 리스너
+    document.addEventListener('alpine:init', () => {
+      Alpine.data('processTab', () => ({
+        activeProcessTab: 'defense',
+        init() {
+          // Alpine 컴포넌트 초기화 시점에 첫 렌더링을 수행합니다.
+          // setTimeout을 사용해 Alpine이 DOM을 업데이트할 시간을 확보합니다.
+          this.$nextTick(() => {
+            setTimeout(() => {
+              renderMermaidDiagrams('defense');
+            }, 100);
+          });
+
+          // activeProcessTab 값이 변경될 때마다 해당 탭의 다이어그램을 렌더링합니다.
+          this.$watch('activeProcessTab', (newTab) => {
+            this.$nextTick(() => {
+              setTimeout(() => {
+                renderMermaidDiagrams(newTab);
+              }, 100);
+            });
+          });
+        }
+      }));
     });
 
     // ===================================
     // 스탯 섹션 관련 기능 (카운터 애니메이션)
     // ===================================
 
-    // 메가메뉴 제어 함수
-    function setupMegaMenu() {
-      const navLinks = document.querySelectorAll('.nav-link');
-      const megaMenu = document.getElementById('mega-menu');
-      const header = document.getElementById('header');
-      let isMenuOpen = false;
-
-      // 각 네비게이션 링크에 마우스 이벤트 추가
-      navLinks.forEach(link => {
-        link.addEventListener('mouseenter', function () {
-          megaMenu.classList.add('active');
-          isMenuOpen = true;
-
-          // 헤더가 투명한 경우 흰색 배경으로 변경
-          if (header.classList.contains('header-transparent')) {
-            header.classList.add('mega-menu-open');
-
-            // 로고 전환
-            document.getElementById('logo-white').classList.add('hidden');
-            document.getElementById('logo-black').classList.remove('hidden');
-
-            // 메뉴 색상 변경
-            const navLinks = header.querySelectorAll('.nav-link');
-            navLinks.forEach(link => {
-              link.classList.remove('text-white', 'hover:text-gray-300');
-              link.classList.add('text-black', 'hover:text-gray-600');
-            });
-
-            // 전화번호 색상 변경
-            const phoneLink = header.querySelector('.hidden.md\\:block');
-            if (phoneLink) {
-              phoneLink.classList.remove('text-white', 'hover:text-gray-300');
-              phoneLink.classList.add('text-black', 'hover:text-gray-600');
-            }
-          }
-        });
-      });
-
-      // 헤더에서 마우스가 벗어날 때 메가메뉴 닫기
-      header.addEventListener('mouseleave', function () {
-        closeMegaMenu();
-      });
-
-      // 메가메뉴에서 마우스가 벗어날 때 닫기
-      megaMenu.addEventListener('mouseleave', function () {
-        closeMegaMenu();
-      });
-
-      // 메가메뉴 닫기 함수
-      function closeMegaMenu() {
-        megaMenu.classList.remove('active');
-        isMenuOpen = false;
-
-        // 스크롤이 상단이면 헤더를 다시 투명하게
-        if (window.scrollY <= 50) {
-          header.classList.remove('mega-menu-open');
-
-          // 로고 전환
-          document.getElementById('logo-black').classList.add('hidden');
-          document.getElementById('logo-white').classList.remove('hidden');
-
-          // 메뉴 색상 원상복구
-          const navLinks = header.querySelectorAll('.nav-link');
-          navLinks.forEach(link => {
-            link.classList.remove('text-black', 'hover:text-gray-600');
-            link.classList.add('text-white', 'hover:text-gray-300');
-          });
-
-          // 전화번호 색상 원상복구
-          const phoneLink = header.querySelector('.hidden.md\\:block');
-          if (phoneLink) {
-            phoneLink.classList.remove('text-black', 'hover:text-gray-600');
-            phoneLink.classList.add('text-white', 'hover:text-gray-300');
-          }
-        }
-      }
-
-      // 페이지 클릭 시 메뉴 닫기
-      document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav-link') && !e.target.closest('.mega-menu')) {
-          closeMegaMenu();
-        }
-      });
-    }
-
-    // 모바일 아코디언 토글 기능
-    function toggleMobileAccordion(id) {
-      const content = document.getElementById(`${id}-content`);
-      const arrow = document.getElementById(`${id}-arrow`);
-
-      if (content.classList.contains('active')) {
-        content.classList.remove('active');
-        arrow.classList.remove('rotate');
-      } else {
-        // 다른 열려있는 아코디언 닫기
-        document.querySelectorAll('.mobile-accordion-content.active').forEach(item => {
-          item.classList.remove('active');
-        });
-        document.querySelectorAll('.mobile-accordion-arrow.rotate').forEach(item => {
-          item.classList.remove('rotate');
-        });
-
-        content.classList.add('active');
-        arrow.classList.add('rotate');
-      }
-    }
+    // 메가메뉴 및 모바일 아코디언 제어는 nav.js에서 처리됩니다
   </script>
 
-  <!-- Mermaid.js 라이브러리 추가 -->
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
-  <script>
-    mermaid.initialize({ startOnLoad: true });
-  </script>
 </body>
 
 </html>

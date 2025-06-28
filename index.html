@@ -1599,6 +1599,166 @@
             console.log('DOM 로드 완료');
 
             // 네비게이션 관련 이벤트는 nav.js에서 처리됩니다
+            
+            // 메인 페이지에서만 투명 네비게이션 효과 적용
+            function initMainPageNavigation() {
+                // Navigation 객체가 로드될 때까지 대기
+                if (typeof Navigation === 'undefined') {
+                    setTimeout(initMainPageNavigation, 100);
+                    return;
+                }
+                const header = document.getElementById('header');
+                const logoWhite = document.getElementById('logo-white');
+                const logoBlack = document.getElementById('logo-black');
+                const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+                function updateNavigation() {
+                    if (window.scrollY > 50) {
+                        // 스크롤된 경우
+                        header.classList.remove('header-transparent');
+                        header.classList.add('header-scrolled');
+
+                        // 메가메뉴가 열려있으면 그대로 유지
+                        if (document.querySelector('.mega-menu.active')) {
+                            header.classList.add('mega-menu-open');
+                        }
+
+                        // 로고 전환
+                        logoWhite.classList.add('hidden');
+                        logoBlack.classList.remove('hidden');
+
+                        // 메뉴 색상 변경
+                        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                        desktopLinks.forEach(el => {
+                            el.classList.remove('text-white', 'hover:text-gray-300');
+                            el.classList.add('text-black', 'hover:text-gray-600');
+                        });
+
+                        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                        if (desktopPhoneBtn) {
+                            desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                            desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                        }
+
+                        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                        if (mobilePhoneBtn) {
+                            mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                            mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                        }
+
+                        if (mobileMenuBtn) {
+                            mobileMenuBtn.classList.remove('text-white');
+                            mobileMenuBtn.classList.add('text-black');
+                        }
+                    } else {
+                        // 맨 위에 있는 경우: 투명 배경
+                        header.classList.remove('header-scrolled');
+                        header.classList.add('header-transparent');
+
+                        // 메가메뉴가 열려있지 않으면 mega-menu-open 클래스 제거
+                        if (!document.querySelector('.mega-menu.active')) {
+                            header.classList.remove('mega-menu-open');
+                        }
+
+                        // 로고 전환
+                        logoBlack.classList.add('hidden');
+                        logoWhite.classList.remove('hidden');
+
+                        // 메뉴 색상 원상복구
+                        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                        desktopLinks.forEach(el => {
+                            el.classList.remove('text-black', 'hover:text-gray-600');
+                            el.classList.add('text-white', 'hover:text-gray-300');
+                        });
+
+                        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                        if (desktopPhoneBtn) {
+                            desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                            desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                        }
+
+                        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                        if (mobilePhoneBtn) {
+                            mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                            mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                        }
+
+                        if (mobileMenuBtn) {
+                            mobileMenuBtn.classList.remove('text-black');
+                            mobileMenuBtn.classList.add('text-white');
+                        }
+                    }
+                }
+
+                // 초기 상태 설정
+                updateNavigation();
+
+                // 스크롤 이벤트 리스너 추가
+                window.addEventListener('scroll', updateNavigation);
+                
+                // 메가메뉴 열림/닫힘 시 색상 업데이트
+                const originalUpdateLogoForMegaMenu = Navigation.updateLogoForMegaMenu;
+                Navigation.updateLogoForMegaMenu = function(isOpen) {
+                    if (window.scrollY <= 50 && isOpen) {
+                        // 스크롤이 맨 위에 있고 메가메뉴가 열린 경우
+                        logoWhite.classList.add('hidden');
+                        logoBlack.classList.remove('hidden');
+                        
+                        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                        desktopLinks.forEach(el => {
+                            el.classList.remove('text-white', 'hover:text-gray-300');
+                            el.classList.add('text-black', 'hover:text-gray-600');
+                        });
+                        
+                        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                        if (desktopPhoneBtn) {
+                            desktopPhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                            desktopPhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                        }
+                        
+                        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                        if (mobilePhoneBtn) {
+                            mobilePhoneBtn.classList.remove('text-white', 'hover:text-gray-300');
+                            mobilePhoneBtn.classList.add('text-black', 'hover:text-gray-600');
+                        }
+                        
+                        if (mobileMenuBtn) {
+                            mobileMenuBtn.classList.remove('text-white');
+                            mobileMenuBtn.classList.add('text-black');
+                        }
+                    } else if (window.scrollY <= 50 && !isOpen) {
+                        // 메가메뉴가 닫히고 스크롤이 맨 위에 있으면 흰색 로고로 복구
+                        logoBlack.classList.add('hidden');
+                        logoWhite.classList.remove('hidden');
+                        
+                        const desktopLinks = header.querySelectorAll('.hidden.md\\:flex a');
+                        desktopLinks.forEach(el => {
+                            el.classList.remove('text-black', 'hover:text-gray-600');
+                            el.classList.add('text-white', 'hover:text-gray-300');
+                        });
+                        
+                        const desktopPhoneBtn = header.querySelector('.hidden.md\\:block');
+                        if (desktopPhoneBtn) {
+                            desktopPhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                            desktopPhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                        }
+                        
+                        const mobilePhoneBtn = header.querySelector('.md\\:hidden.mr-4');
+                        if (mobilePhoneBtn) {
+                            mobilePhoneBtn.classList.remove('text-black', 'hover:text-gray-600');
+                            mobilePhoneBtn.classList.add('text-white', 'hover:text-gray-300');
+                        }
+                        
+                        if (mobileMenuBtn) {
+                            mobileMenuBtn.classList.remove('text-black');
+                            mobileMenuBtn.classList.add('text-white');
+                        }
+                    }
+                };
+            }
+            
+            // 메인 페이지 네비게이션 초기화
+            initMainPageNavigation();
 
             // ESC 키로 모바일 메뉴 닫기
             document.addEventListener('keydown', function (e) {
