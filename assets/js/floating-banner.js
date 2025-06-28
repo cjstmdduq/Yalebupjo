@@ -32,7 +32,7 @@ const FloatingBanner = {
     const style = document.createElement('style');
     style.textContent = `
       /* floating buttons */
-      .floating-buttons{position:fixed;bottom:0;left:0;right:0;background:linear-gradient(135deg,#1e3a8a 0%,#1e40af 100%);box-shadow:0 -5px 20px rgba(0,0,0,.1);transform:translateY(100%);transition:transform .3s ease-in-out;z-index:1000;}
+      .floating-buttons{position:fixed;bottom:0;left:0;right:0;background:#111827;box-shadow:0 -5px 20px rgba(0,0,0,.1);transform:translateY(100%);transition:transform .3s ease-in-out;z-index:1000;}
       .floating-buttons.show{transform:translateY(0);}
       .floating-content{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:15px 0;}
       .floating-info{display:flex;gap:30px;align-items:center;}
@@ -41,7 +41,7 @@ const FloatingBanner = {
       .floating-text{display:flex;flex-direction:column;color:#fff;}
       .floating-label{font-size:12px;opacity:.8;}
       .floating-value{font-size:14px;font-weight:600;}
-      .floating-cta{display:flex;align-items:center;gap:10px;background:#fff;color:#1e3a8a;padding:12px 24px;border-radius:50px;font-weight:700;font-size:18px;transition:.3s;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,.2);}
+      .floating-cta{display:flex;align-items:center;gap:10px;background:#fff;color:#111827;padding:12px 24px;border-radius:50px;font-weight:700;font-size:18px;transition:.3s;text-decoration:none;box-shadow:0 4px 15px rgba(0,0,0,.2);}
       .floating-cta:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.3);}
       
       /* responsive tweaks */
@@ -72,7 +72,7 @@ const FloatingBanner = {
             <div class="floating-info">
               <div class="floating-item">
                 <div class="floating-icon"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <div class="floating-text"><span class="floating-label">상담시간</span><span class="floating-value">평일 09:00-18:00</span></div>
+                <div class="floating-text"><span class="floating-label">상담시간</span><span class="floating-value">24시간 연중무휴</span></div>
               </div>
               <div class="floating-item">
                 <div class="floating-icon"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
