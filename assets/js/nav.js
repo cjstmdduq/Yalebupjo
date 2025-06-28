@@ -168,11 +168,14 @@ const Navigation = {
     render() {
         const basePath = this.getBasePath();
         
-        // 페이지 유형 확인
-        const isMainPage = window.location.pathname === '/' || 
-                          window.location.pathname.endsWith('/index.html') ||
-                          window.location.pathname.endsWith('/Yalebupjo/') ||
-                          window.location.pathname.endsWith('/Yalebupjo/index.html');
+        // 페이지 유형 확인 - 더 정확하게
+        const pathname = window.location.pathname;
+        const isMainPage = pathname === '/' || 
+                          pathname === '/index.html' ||
+                          pathname === '/Yalebupjo/' ||
+                          pathname === '/Yalebupjo/index.html' ||
+                          (pathname.endsWith('/') && pathname.split('/').filter(Boolean).length === 0) ||
+                          (pathname.endsWith('/index.html') && pathname.split('/').filter(Boolean).length === 1);
         
         // 페이지에 따른 초기 스타일 설정
         const headerClass = isMainPage ? 'header-transparent' : 'header-scrolled';
@@ -574,36 +577,76 @@ const Navigation = {
             document.body.insertAdjacentHTML('afterbegin', navHTML);
         }
 
-        // 서브페이지라면 강제로 스타일 한 번 더 적용
-        if (!isMainPage) {
+        // DOM이 렌더링된 후 페이지 타입에 맞는 초기 스타일 적용
+        setTimeout(() => {
             const header = document.getElementById('header');
             const logoWhite = document.getElementById('logo-white');
             const logoBlack = document.getElementById('logo-black');
             const navLinks = document.querySelectorAll('.nav-link');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-            if (header) {
-                header.classList.remove('header-transparent');
-                header.classList.add('header-scrolled');
+            
+            if (!isMainPage) {
+                // 서브페이지: 항상 흰색 배경 네비
+                if (header) {
+                    header.classList.remove('header-transparent');
+                    header.classList.add('header-scrolled');
+                }
+                if (logoWhite) logoWhite.classList.add('hidden');
+                if (logoBlack) logoBlack.classList.remove('hidden');
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('text-white', 'hover:text-gray-300');
+                    link.classList.add('text-black', 'hover:text-gray-600');
+                });
+                
+                if (mobileMenuBtn) {
+                    mobileMenuBtn.classList.remove('hover:bg-white/10', 'text-white');
+                    mobileMenuBtn.classList.add('hover:bg-gray-100', 'text-black');
+                }
+                
+                // 전화번호 링크들도 검정색으로 변경
+                const phoneLinks = document.querySelectorAll('a[href="tel:02-587-7787"]');
+                phoneLinks.forEach(link => {
+                    if (link.closest('#floating-buttons')) return; // 플로팅 버튼 제외
+                    link.classList.remove('text-white', 'hover:text-gray-300');
+                    link.classList.add('text-black', 'hover:text-gray-600');
+                });
+            } else {
+                // 메인페이지: 초기 스크롤 위치 확인하여 적용
+                if (window.scrollY <= 50) {
+                    // 최상단: 투명 네비
+                    if (header) {
+                        header.classList.add('header-transparent');
+                        header.classList.remove('header-scrolled');
+                    }
+                    if (logoWhite) logoWhite.classList.remove('hidden');
+                    if (logoBlack) logoBlack.classList.add('hidden');
+                    
+                    navLinks.forEach(link => {
+                        link.classList.add('text-white', 'hover:text-gray-300');
+                        link.classList.remove('text-black', 'hover:text-gray-600');
+                    });
+                    
+                    if (mobileMenuBtn) {
+                        mobileMenuBtn.classList.add('hover:bg-white/10', 'text-white');
+                        mobileMenuBtn.classList.remove('hover:bg-gray-100', 'text-black');
+                    }
+                    
+                    // 전화번호 링크들도 흰색으로
+                    const phoneLinks = document.querySelectorAll('a[href="tel:02-587-7787"]');
+                    phoneLinks.forEach(link => {
+                        if (link.closest('#floating-buttons')) return;
+                        link.classList.add('text-white', 'hover:text-gray-300');
+                        link.classList.remove('text-black', 'hover:text-gray-600');
+                    });
+                }
             }
-            if (logoWhite) logoWhite.classList.add('hidden');
-            if (logoBlack) logoBlack.classList.remove('hidden');
-            navLinks.forEach(link => {
-                link.classList.remove('text-white', 'hover:text-gray-300');
-                link.classList.add('text-black', 'hover:text-gray-600');
-            });
-            if (mobileMenuBtn) {
-                mobileMenuBtn.classList.remove('hover:bg-white/10');
-                mobileMenuBtn.classList.add('hover:bg-gray-100');
-            }
-        }
+        }, 10);
     },
 
     bindEvents() {
         // DOM이 완전히 로드된 후 이벤트 바인딩
         setTimeout(() => {
-            // 초기 스타일 설정
-            this.handleScroll();
-            
             // 스크롤 이벤트
             window.addEventListener('scroll', this.handleScroll.bind(this));
 
@@ -669,34 +712,31 @@ const Navigation = {
     },
 
     handleScroll() {
-        // 페이지 유형 확인
-        const isMainPage = window.location.pathname === '/' || 
-                          window.location.pathname.endsWith('/index.html') ||
-                          window.location.pathname.endsWith('/Yalebupjo/') ||
-                          window.location.pathname.endsWith('/Yalebupjo/index.html');
         const header = document.getElementById('header');
-        const logoWhite = document.getElementById('logo-white');
-        const logoBlack = document.getElementById('logo-black');
-        const navLinks = document.querySelectorAll('.nav-link');
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        if (!header) return;
 
-        // 서브페이지면 네비게이션 스타일 변경 로직을 아예 실행하지 않음
-        if (!isMainPage) {
-            // 플로팅 버튼만 제어
-            const floatingButtons = document.getElementById('floating-buttons');
-            if (floatingButtons) {
-                const heroHeight = window.innerHeight;
-                if (window.scrollY > heroHeight * 0.8) {
-                    floatingButtons.classList.add('show');
-                } else {
-                    floatingButtons.classList.remove('show');
-                }
-            }
-            return; // 네비게이션 스타일 로직 종료
-        }
+        // 페이지 유형 확인 - 더 정확하게
+        const pathname = window.location.pathname;
+        const isMainPage = pathname === '/' || 
+                        pathname === '/index.html' ||
+                        pathname === '/Yalebupjo/' ||
+                        pathname === '/Yalebupjo/index.html' ||
+                        (pathname.endsWith('/') && pathname.split('/').filter(Boolean).length === 0) ||
+                        (pathname.endsWith('/index.html') && pathname.split('/').filter(Boolean).length === 1);
 
-        // 이하 메인페이지에서만 네비게이션 스타일 변경
+        // 메인페이지가 아니면 네비게이션 스타일 변경 로직을 실행하지 않음
         if (isMainPage) {
+            const logoWhite = document.getElementById('logo-white');
+            const logoBlack = document.getElementById('logo-black');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const megaMenu = document.getElementById('mega-menu');
+
+            // 메가메뉴가 열려있을 때는 스타일 변경을 보류
+            if (megaMenu && megaMenu.classList.contains('active')) {
+                return;
+            }
+
             if (window.scrollY > 50) {
                 header.classList.remove('header-transparent');
                 header.classList.add('header-scrolled');
@@ -707,30 +747,31 @@ const Navigation = {
                     link.classList.add('text-black', 'hover:text-gray-600');
                 });
                 if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.remove('hover:bg-white/10');
-                    mobileMenuBtn.classList.add('hover:bg-gray-100');
+                    mobileMenuBtn.classList.remove('hover:bg-white/10', 'text-white');
+                    mobileMenuBtn.classList.add('hover:bg-gray-100', 'text-black');
                 }
             } else {
-                header.classList.remove('header-scrolled');
                 header.classList.add('header-transparent');
+                header.classList.remove('header-scrolled');
                 if (logoWhite) logoWhite.classList.remove('hidden');
                 if (logoBlack) logoBlack.classList.add('hidden');
                 navLinks.forEach(link => {
-                    link.classList.remove('text-black', 'hover:text-gray-600');
                     link.classList.add('text-white', 'hover:text-gray-300');
+                    link.classList.remove('text-black', 'hover:text-gray-600');
                 });
                 if (mobileMenuBtn) {
-                    mobileMenuBtn.classList.remove('hover:bg-gray-100');
-                    mobileMenuBtn.classList.add('hover:bg-white/10');
+                    mobileMenuBtn.classList.add('hover:bg-white/10', 'text-white');
+                    mobileMenuBtn.classList.remove('hover:bg-gray-100', 'text-black');
                 }
             }
         }
 
-        // 플로팅 버튼 제어 (메인페이지)
+        // 플로팅 버튼 제어 로직 (모든 페이지 공통)
         const floatingButtons = document.getElementById('floating-buttons');
         if (floatingButtons) {
-            const heroHeight = window.innerHeight;
-            if (window.scrollY > heroHeight * 0.8) {
+            // 특정 섹션의 높이를 기준으로 삼거나, 스크롤 위치를 절대값으로 지정할 수 있습니다.
+            // 예: 스크롤이 500px 이상 내려오면 버튼 표시
+            if (window.scrollY > 50) {
                 floatingButtons.classList.add('show');
             } else {
                 floatingButtons.classList.remove('show');
