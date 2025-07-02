@@ -105,17 +105,17 @@
 
 @media(max-width: 767px) {
   .breadcrumb-container {
-    /* --- 수정: 모바일 네비게이션 높이 = 74px (기존보다 10px↓) --- */
-    top: 74px;
+    /* --- 수정: 모바일 네비게이션 높이 = 72px (2px 위로 이동) --- */
+    top: 72px;
   }
   .breadcrumb {
     font-size: 12px;
     /* 모바일 브레드크럼 자체 높이: padding(20px) + font(약 14px) = 약 34px */
     padding: 10px 0;
   }
-  /* --- 수정: 스페이서 높이 = 네비게이션(74px) + 브레드크럼(34px) = 108px --- */
+  /* --- 수정: 스페이서 높이 = 네비게이션(72px) + 브레드크럼(34px) = 106px --- */
   .breadcrumb-spacer {
-    height: 108px;
+    height: 106px;
   }
 }
       `;

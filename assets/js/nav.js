@@ -15,8 +15,16 @@
         isMainPage() {
           const base = this.getBasePath();
           const path = location.pathname.replace(/\/+$/, ''); // 끝 슬래시 제거
+          
+          // file:// 프로토콜 처리
+          if (location.protocol === 'file:') {
+            return path.endsWith('/index.html') || path.endsWith('/Yalebupjo_website/index.html');
+          }
+          
           return (
             path === '' ||
+            path === '/' ||
+            path === '/index.html' ||
             path === `/${base}` ||
             path === `${base}` ||
             path === `${base}/index.html`
@@ -34,6 +42,11 @@
           this.render();
           this.bindEvents();
           this.handleScroll();               // 초기 스크롤 상태 반영
+          
+          // 메인 페이지인 경우 body에 클래스 추가
+          if (this.isMainPage()) {
+            document.body.classList.add('main-page');
+          }
         },
       
         /* ------------------------------------------------------------------
@@ -46,6 +59,19 @@
       .header-transparent {background:transparent;}
       .header-scrolled    {background:#ffffff;}
       .mega-menu-open     {overflow:visible;}
+      
+      /* PC에서 네비게이션 위치 조정 */
+      @media (min-width: 768px) {
+        #header {
+          top: 0px !important;
+        }
+        
+        /* 메인 페이지에서 투명 상태일 때만 두꺼운 네비게이션 */
+        body.main-page #header.header-transparent .container > div {
+          padding-top: 2.5rem !important;
+          padding-bottom: 1.5rem !important;
+        }
+      }
       
       /* mega-menu */
       #mega-menu{display:none;position:absolute;top:100%;left:0;width:100%;background:#fff;border-top:1px solid #e5e7eb;box-shadow:0 15px 30px rgba(0,0,0,.1);z-index:40;}
@@ -69,7 +95,7 @@
       
           /* dynamic values */
           const headerClass   = isMain ? 'header-transparent' : 'header-scrolled';
-          const headerPosition = isMain ? 'top-20' : 'top-0';
+          const headerPosition = isMain ? 'top-0' : 'top-0';
           const textColor     = isMain ? 'text-white' : 'text-black';
           const textHover     = isMain ? 'hover:text-gray-300' : 'hover:text-gray-600';
           const logoWhiteDisp = isMain ? '' : 'hidden';
@@ -79,7 +105,7 @@
           /* nav HTML */
           const navHTML = `
       <nav id="header" class="fixed ${headerPosition} w-full ${headerClass} z-50 transition-all duration-300">
-        <div class="container mx-auto px-10 md:px-4 py-4 flex justify-between items-center relative">
+        <div class="container mx-auto px-4 md:px-4 py-4 flex justify-between items-center relative transition-all duration-300">
           <!-- logo -->
           <div class="flex items-center z-10">
             <a href="${basePath}/index.html">
@@ -108,7 +134,7 @@
       
       
             <!-- hamburger -->
-            <button id="mobile-menu-btn" class="md:hidden ${textColor} ml-2 p-2 ${mobileBtnBg} rounded-lg">
+            <button id="mobile-menu-btn" class="md:hidden ${textColor} ml-4 p-2 ${mobileBtnBg} rounded-lg">
               <svg id="hamburger-icon" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
               </svg>
@@ -374,9 +400,9 @@
           const mobileBtn = document.getElementById('mobile-menu-btn');
           const isMain    = this.isMainPage();
       
-          if (isMain && window.scrollY > 200) {
+          const scrollThreshold = window.innerWidth >= 768 ? 1 : 50;
+          if (isMain && window.scrollY > scrollThreshold) {
             header?.classList.replace('header-transparent', 'header-scrolled');
-            header?.classList.replace('top-20', 'top-0');
             logoWhite?.classList.add('hidden');
             logoBlack?.classList.remove('hidden');
             navLinks.forEach(l => {
@@ -387,7 +413,6 @@
             mobileBtn?.classList.replace('hover:bg-white/10', 'hover:bg-gray-100');
           } else if (isMain) {
             header?.classList.replace('header-scrolled', 'header-transparent');
-            header?.classList.replace('top-0', 'top-20');
             logoWhite?.classList.remove('hidden');
             logoBlack?.classList.add('hidden');
             navLinks.forEach(l => {
@@ -400,7 +425,8 @@
       
           /* floating buttons */
           const float = document.getElementById('floating-buttons');
-          if (float) window.scrollY > 50 ? float.classList.add('show') : float.classList.remove('show');
+          const floatingThreshold = 1;
+          if (float) window.scrollY > floatingThreshold ? float.classList.add('show') : float.classList.remove('show');
         },
       
         toggleMobileMenu() {
@@ -457,7 +483,8 @@
             white?.classList.add('hidden');
             black?.classList.remove('hidden');
           } else {
-            if (window.scrollY > 50) {
+            const megaMenuScrollThreshold = 1;
+            if (window.scrollY > megaMenuScrollThreshold) {
               white?.classList.add('hidden');
               black?.classList.remove('hidden');
             } else {
