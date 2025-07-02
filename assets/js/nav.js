@@ -116,10 +116,11 @@
       
           <!-- desktop menu -->
           <div class="hidden md:flex absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 space-x-8">
-            <a href="#" class="${textColor} ${textHover} transition nav-link">로펌소개</a>
+            <!-- <a href="#" class="${textColor} ${textHover} transition nav-link">로펌소개</a> -->
             <a href="#" class="${textColor} ${textHover} transition nav-link">전문분야</a>
             <a href="${basePath}/cases/index.html" class="${textColor} ${textHover} transition nav-link">주요사건</a>
-            <a href="#" class="${textColor} ${textHover} transition nav-link">전국사무소</a>
+            <a href="${basePath}/location/index.html" class="${textColor} ${textHover} transition nav-link">전국사무소</a>
+            <a href="${basePath}/lawyers/index.html" class="${textColor} ${textHover} transition nav-link">구성원소개</a>
           </div>
       
           <!-- right controls -->
@@ -148,15 +149,15 @@
         <!-- mega menu -->
         <div id="mega-menu" class="mega-menu">
           <div class="container mx-auto px-4 py-8">
-            <div class="grid grid-cols-4 gap-8">
+            <div class="grid grid-cols-3 gap-8">
               <!-- 로펌소개 -->
-              <div>
+              <!-- <div>
                 <h3 class="font-bold text-gray-900 mb-4 text-lg">로펌소개</h3>
                 <ul class="space-y-2">
                   <li><a href="${basePath}/about/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">법인소개</a></li>                  
                   <li><a href="${basePath}/lawyers/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">구성원 소개</a></li>
                 </ul>
-              </div>
+              </div> -->
       
               <!-- 전문분야 -->
               <div>
@@ -183,11 +184,15 @@
                 </ul>
               </div>
       
-              <!-- 전국사무소 -->
+              <!-- 전국사무소 & 구성원 -->
               <div>
                 <h3 class="font-bold text-gray-900 mb-4 text-lg">전국사무소</h3>
                 <ul class="space-y-2">
                   <li><a href="${basePath}/location/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">전국사무소</a></li>
+                </ul>
+                <h3 class="font-bold text-gray-900 mb-4 text-lg mt-6">구성원</h3>
+                <ul class="space-y-2">
+                  <li><a href="${basePath}/lawyers/index.html" class="text-gray-600 hover:text-blue-600 transition block py-1">구성원 소개</a></li>
                 </ul>
               </div>
             </div>
@@ -200,12 +205,12 @@
         </div>
       
         <!-- mobile overlay -->
-        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-black/95 backdrop-blur-lg translate-x-full transition-transform duration-300 z-40">
+        <div id="mobile-menu" class="md:hidden fixed inset-0 bg-white backdrop-blur-lg translate-x-full transition-transform duration-300 z-40">
           <div class="flex flex-col h-full max-h-screen">
             <!-- header -->
-            <div class="flex items-center justify-between p-6 border-b border-white/10">
-              <img src="${basePath}/assets/logo/Yalebupjo_logo_white(temp).png" alt="예일법조" class="h-8">
-              <button onclick="Navigation.closeMobileMenu()" class="text-white hover:text-gray-300 p-2 hover:bg-white/10 rounded-lg transition-colors">
+            <div class="flex items-center justify-between p-6 border-b border-gray-200">
+              <img src="${basePath}/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조" class="h-8">
+              <button onclick="Navigation.closeMobileMenu()" class="text-gray-800 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-lg transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
                 </svg>
@@ -216,8 +221,8 @@
             <div class="flex-1 flex flex-col p-4 min-h-0">
               <nav class="flex-1 space-y-2 overflow-y-auto min-h-0">
       
-                <!-- 로펌소개 -->
-                <div class="border-b border-white/10 pb-2">
+                <!-- 로펌소개 (임시 주석) -->
+                <!-- <div class="border-b border-white/10 pb-2">
                   <button class="w-full flex items-center justify-between text-lg font-bold text-white py-2"
                           onclick="Navigation.toggleMobileAccordion('about')">
                     <span>로펌소개</span>
@@ -229,75 +234,78 @@
                       <a href="${basePath}/lawyers/index.html"      class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">구성원소개</a>
                     </div>
                   </div>
-                </div>
+                </div> -->
       
                 <!-- 전문분야 -->
-                <div class="border-b border-white/10 pb-2">
-                  <button class="w-full flex items-center justify-between text-lg font-bold text-white py-2"
+                <div class="border-b border-gray-200 pb-2">
+                  <button class="w-full flex items-center justify-between text-lg font-medium text-gray-900 py-2"
                           onclick="Navigation.toggleMobileAccordion('expertise')">
                     <span>전문분야</span>
                     <svg class="w-4 h-4 mobile-accordion-arrow" id="expertise-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
                   <div class="mobile-accordion-content" id="expertise-content">
                     <div class="pl-3 space-y-1 mt-1">
-                      <a href="${basePath}/criminal/index.html"   class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">형사</a>
-                      <a href="${basePath}/civil/index.html"      class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">민사</a>
-                      <a href="${basePath}/realestate/index.html" class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">부동산</a>
-                      <a href="${basePath}/traffic/index.html"    class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">교통사고</a>
-                      <a href="${basePath}/corporate/index.html"  class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">기업</a>
-                      <a href="${basePath}/family/index.html"     class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">가사</a>
+                      <a href="${basePath}/criminal/index.html"   class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">형사</a>
+                      <a href="${basePath}/civil/index.html"      class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">민사</a>
+                      <a href="${basePath}/realestate/index.html" class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">부동산</a>
+                      <a href="${basePath}/traffic/index.html"    class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">교통사고</a>
+                      <a href="${basePath}/corporate/index.html"  class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">기업</a>
+                      <a href="${basePath}/family/index.html"     class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">가사</a>
                     </div>
                   </div>
                 </div>
       
                 <!-- 전국사무소 -->
-                <div class="border-b border-white/10 pb-2">
-                  <button class="w-full flex items-center justify-between text-lg font-bold text-white py-2"
+                <div class="border-b border-gray-200 pb-2">
+                  <button class="w-full flex items-center justify-between text-lg font-medium text-gray-900 py-2"
                           onclick="Navigation.toggleMobileAccordion('location')">
                     <span>전국사무소</span>
                     <svg class="w-4 h-4 mobile-accordion-arrow" id="location-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
                   <div class="mobile-accordion-content" id="location-content">
                     <div class="pl-3 space-y-1 mt-1">
-                      <a href="${basePath}/location/index.html" class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">전국사무소</a>
+                      <a href="${basePath}/location/index.html" class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">전국사무소</a>
                     </div>
                   </div>
                 </div>
       
                 <!-- 주요사건 -->
-                <div class="border-b border-white/10 pb-2">
-                  <button class="w-full flex items-center justify-between text-lg font-bold text-white py-2"
+                <div class="border-b border-gray-200 pb-2">
+                  <button class="w-full flex items-center justify-between text-lg font-medium text-gray-900 py-2"
                           onclick="Navigation.toggleMobileAccordion('cases')">
                     <span>주요사건</span>
                     <svg class="w-4 h-4 mobile-accordion-arrow" id="cases-arrow" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                   </button>
                   <div class="mobile-accordion-content" id="cases-content">
                     <div class="pl-3 space-y-1 mt-1">
-                      <a href="${basePath}/cases/index.html"                    class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">전체 사건</a>
-                      <a href="${basePath}/cases/index.html?category=민사"      class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">민사소송</a>
-                      <a href="${basePath}/cases/index.html?category=형사"      class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">형사소송</a>
-                      <a href="${basePath}/cases/index.html?category=가사"      class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">가사소송</a>
-                      <a href="${basePath}/cases/index.html?category=부동산"    class="block text-gray-300 hover:text-white transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">부동산소송</a>
+                      <a href="${basePath}/cases/index.html"                    class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">전체 사건</a>
+                      <a href="${basePath}/cases/index.html?category=민사"      class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">민사소송</a>
+                      <a href="${basePath}/cases/index.html?category=형사"      class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">형사소송</a>
+                      <a href="${basePath}/cases/index.html?category=가사"      class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">가사소송</a>
+                      <a href="${basePath}/cases/index.html?category=부동산"    class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">부동산소송</a>
                     </div>
                   </div>
                 </div>
       
+                <!-- 구성원소개 단일 메뉴 -->
+                <a href="${basePath}/lawyers/index.html" class="block text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors py-2 border-b border-gray-200" onclick="Navigation.closeMobileMenu()">구성원소개</a>
+                
                 <!-- 상담예약 단일 메뉴 -->
-                <a href="#" class="block text-lg font-medium text-white hover:text-gray-300 transition-colors py-2 border-b border-white/10" onclick="Navigation.closeMobileMenu()">상담예약</a>
+                <a href="#" class="block text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors py-2 border-b border-gray-200" onclick="Navigation.closeMobileMenu()">상담예약</a>
               </nav>
       
               <!-- footer -->
-              <div class="mt-6 pt-6 border-t border-white/10 space-y-6 flex-shrink-0">
-                <a href="tel:02-587-7787" class="block bg-white text-black rounded-2xl p-6 hover:bg-gray-100 transition-colors">
+              <div class="mt-6 pt-6 border-t border-gray-200 space-y-6 flex-shrink-0">
+                <a href="tel:02-587-7787" class="block bg-[#1e3a8a] text-white rounded-2xl p-6 hover:bg-[#1e40af] transition-colors">
                   <div class="flex items-center justify-between">
                     <div>
-                      <div class="text-sm text-gray-600 mb-1">대표 상담 전화</div>
+                      <div class="text-sm text-blue-100 mb-1">대표 상담 전화</div>
                       <div class="text-2xl font-bold">02-587-7787</div>
                     </div>
-                    <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <svg class="w-8 h-8 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   </div>
                 </a>
-                <div class="text-center text-white/70">
+                <div class="text-center text-gray-600">
                   <div class="text-sm">평일 09:00 - 18:00</div>
                   <div class="text-xs mt-1">24시간 상담 접수 가능</div>
                 </div>

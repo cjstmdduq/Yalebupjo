@@ -5,8 +5,13 @@
     "title": "대표변호사",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/01.Ha_Young_Joo.png",
-    "specialties": ["형사법 전문", "법학박사"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법 전문",
+      "법학박사"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "ha@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -25,7 +30,10 @@
       "형사사건",
       "무죄변론"
     ],
-    "cases": [1, 7]
+    "cases": [
+      1,
+      7
+    ]
   },
   {
     "id": "um-woon-yong",
@@ -33,8 +41,15 @@
     "title": "대표변호사",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/02.Um_Woon_Yong.png",
-    "specialties": ["농축산법", "의료법", "수의사"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "농축산법",
+      "의료법",
+      "수의사"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "um@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -57,7 +72,9 @@
       "의료법",
       "기업자문"
     ],
-    "cases": [5]
+    "cases": [
+      5
+    ]
   },
   {
     "id": "kim-jin-hwan",
@@ -65,8 +82,14 @@
     "title": "대표변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/06.Kim_Jin_Hwan.png",
-    "specialties": ["기업법무", "45회 사법시험"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "기업법무",
+      "45회 사법시험"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "kimjh@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -87,7 +110,9 @@
       "M&A",
       "기업자문"
     ],
-    "cases": [5, 11, 17]
+    "cases": [
+      2
+    ]
   },
   {
     "id": "choi-sang-moo",
@@ -95,8 +120,14 @@
     "title": "대표변호사",
     "office": "울산 지점",
     "photo": "../assets/lawyers/03.Choi_Sang_Moo.png",
-    "specialties": ["기업회생", "수사심의위원"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "기업회생",
+      "수사심의위원"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "choi@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [],
@@ -112,7 +143,9 @@
       "기업구조조정",
       "중소기업법률"
     ],
-    "cases": []
+    "cases": [
+      3
+    ]
   },
   {
     "id": "jung-hwan-hee",
@@ -120,8 +153,14 @@
     "title": "대표변호사",
     "office": "대구 지점",
     "photo": "../assets/lawyers/04.Jung_Hwan_Hee.png",
-    "specialties": ["법학박사", "변호사시험출제위원"],
-    "categories": ["민사", "형사"],
+    "specialties": [
+      "법학박사",
+      "변호사시험출제위원"
+    ],
+    "categories": [
+      "민사",
+      "형사"
+    ],
     "email": "jung@yalebupjo.com",
     "phone": "053-587-7787",
     "education": [
@@ -140,7 +179,9 @@
       "형사소송",
       "공정거래"
     ],
-    "cases": [2, 8, 14]
+    "cases": [
+      8
+    ]
   },
   {
     "id": "jo-sung-jeon",
@@ -148,8 +189,13 @@
     "title": "대표변호사",
     "office": "청주 지점",
     "photo": "../assets/lawyers/05.Jo_Sung_Jeon.png",
-    "specialties": ["민사법 전문", "집회시위자문위원"],
-    "categories": ["민사"],
+    "specialties": [
+      "민사법 전문",
+      "집회시위자문위원"
+    ],
+    "categories": [
+      "민사"
+    ],
     "email": "jo@yalebupjo.com",
     "phone": "043-587-7787",
     "education": [
@@ -177,8 +223,14 @@
     "title": "대표변호사",
     "office": "대전 지점",
     "photo": "../assets/lawyers/07.Jeon_Jung_Soo.png",
-    "specialties": ["前 군판사", "육군 검찰관"],
-    "categories": ["형사", "민사"],
+    "specialties": [
+      "前 군판사",
+      "육군 검찰관"
+    ],
+    "categories": [
+      "형사",
+      "민사"
+    ],
     "email": "jeon@yalebupjo.com",
     "phone": "042-587-7787",
     "education": [
@@ -205,8 +257,14 @@
     "title": "대표변호사",
     "office": "대전 지점",
     "photo": "../assets/lawyers/08.Yang_Hee_Sun.png",
-    "specialties": ["前 철도공사법무팀장", "43회 사법시험"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "前 철도공사법무팀장",
+      "43회 사법시험"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "yang@yalebupjo.com",
     "phone": "042-587-7787",
     "education": [
@@ -236,8 +294,13 @@
     "title": "소속변호사",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/09.Song_Chul_Hoon.png",
-    "specialties": ["형사법", "연세대 법대"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "연세대 법대"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "song@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -264,8 +327,13 @@
     "title": "소속변호사",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/10.Son_Woo_Tae.png",
-    "specialties": ["형사법", "前 검사장"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "前 검사장"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "son@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -292,8 +360,13 @@
     "title": "소속변호사",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/11.Lee_Kyung_Chang.png",
-    "specialties": ["민사법", "서울대 법대"],
-    "categories": ["민사"],
+    "specialties": [
+      "민사법",
+      "서울대 법대"
+    ],
+    "categories": [
+      "민사"
+    ],
     "email": "lee@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -321,8 +394,13 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/12.Kwak_Jung_Ki.png",
-    "specialties": ["형사법", "前 경찰청"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "前 경찰청"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "kwak@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -353,8 +431,13 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/13.Ye_Sang_Gyun.png",
-    "specialties": ["형사법", "前 공수처"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "前 공수처"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "ye@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -383,8 +466,14 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/14.Park_Jung_Goo.png",
-    "specialties": ["민사법", "51회 사법시험"],
-    "categories": ["민사", "부동산"],
+    "specialties": [
+      "민사법",
+      "51회 사법시험"
+    ],
+    "categories": [
+      "민사",
+      "부동산"
+    ],
     "email": "park@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -408,7 +497,7 @@
       "채권회수",
       "부동산소송"
     ],
-    "cases": [3, 9, 15]
+    "cases": []
   },
   {
     "id": "song-hyun-seok",
@@ -416,8 +505,13 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/15.Song_Hyun_Seok.png",
-    "specialties": ["형사법", "동아대 로스쿨"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "동아대 로스쿨"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "songhs@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -447,8 +541,14 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/16.Choi_Han_Wool.png",
-    "specialties": ["금융법", "9회 변호사시험"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "금융법",
+      "9회 변호사시험"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "choihw@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -473,8 +573,14 @@
     "title": "소속변호사",
     "office": "서울 강남 분사무소",
     "photo": "../assets/lawyers/17.Lee_Sang_Min.png",
-    "specialties": ["농축산의료법", "수의사"],
-    "categories": ["기업", "민사"],
+    "specialties": [
+      "농축산의료법",
+      "수의사"
+    ],
+    "categories": [
+      "기업",
+      "민사"
+    ],
     "email": "leesm@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -506,8 +612,13 @@
     "title": "소속변호사",
     "office": "울산 지점",
     "photo": "../assets/lawyers/18.Kim_Gyu_Cheol.png",
-    "specialties": ["형사법", "前 군판사"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "前 군판사"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "kimgc@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -534,8 +645,14 @@
     "title": "소속변호사",
     "office": "울산 지점",
     "photo": "../assets/lawyers/19.Cheon_Seong_Yeon.png",
-    "specialties": ["가사법 전문", "건설법"],
-    "categories": ["가사", "부동산"],
+    "specialties": [
+      "가사법 전문",
+      "건설법"
+    ],
+    "categories": [
+      "가사",
+      "부동산"
+    ],
     "email": "cheon@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -553,7 +670,9 @@
       "건설분쟁",
       "부동산등기"
     ],
-    "cases": [6, 12, 18]
+    "cases": [
+      6
+    ]
   },
   {
     "id": "go-eun-bit",
@@ -561,8 +680,13 @@
     "title": "소속변호사",
     "office": "울산 지점",
     "photo": "../assets/lawyers/20.Go_Eun_Bit.png",
-    "specialties": ["행정법", "경희대"],
-    "categories": ["민사"],
+    "specialties": [
+      "행정법",
+      "경희대"
+    ],
+    "categories": [
+      "민사"
+    ],
     "email": "go@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -586,8 +710,13 @@
     "title": "소속변호사 (예일)",
     "office": "서울 본사 (공동)",
     "photo": "../assets/lawyers/21.Han_Woong.png",
-    "specialties": ["특허법", "38회 사법시험"],
-    "categories": ["기업"],
+    "specialties": [
+      "특허법",
+      "38회 사법시험"
+    ],
+    "categories": [
+      "기업"
+    ],
     "email": "han@yalebupjo.com",
     "phone": "02-587-7787",
     "education": [
@@ -617,8 +746,13 @@
     "title": "변호사",
     "office": "울산",
     "photo": "../assets/lawyers/26.Lee_Jong_Ryeol.png",
-    "specialties": ["민사법", "서울대 법학과"],
-    "categories": ["민사"],
+    "specialties": [
+      "민사법",
+      "서울대 법학과"
+    ],
+    "categories": [
+      "민사"
+    ],
     "email": "leejr@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -643,8 +777,13 @@
     "title": "변호사",
     "office": "울산",
     "photo": "../assets/lawyers/27.Park_Sung_Jin.png",
-    "specialties": ["형사법", "50회 사법시험"],
-    "categories": ["형사"],
+    "specialties": [
+      "형사법",
+      "50회 사법시험"
+    ],
+    "categories": [
+      "형사"
+    ],
     "email": "parksj@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -671,8 +810,13 @@
     "title": "변호사",
     "office": "울산",
     "photo": "../assets/lawyers/28.Jung_Eun_Kyung.png",
-    "specialties": ["이혼 전문", "민사법"],
-    "categories": ["가사"],
+    "specialties": [
+      "이혼 전문",
+      "민사법"
+    ],
+    "categories": [
+      "가사"
+    ],
     "email": "jungek@yalebupjo.com",
     "phone": "052-587-7787",
     "education": [
@@ -696,8 +840,13 @@
     "title": "손해사정사",
     "office": "광주 지점",
     "photo": "../assets/lawyers/22.Lee_Ki_Chang.png",
-    "specialties": ["손해사정", "10년 경력"],
-    "categories": ["교통사고"],
+    "specialties": [
+      "손해사정",
+      "10년 경력"
+    ],
+    "categories": [
+      "교통사고"
+    ],
     "email": "leekc@yalebupjo.com",
     "phone": "062-587-7787",
     "education": [
@@ -717,7 +866,9 @@
       "인신사고 배상",
       "보험분쟁"
     ],
-    "cases": [4, 10, 16]
+    "cases": [
+      4
+    ]
   },
   {
     "id": "go-young-soo",
@@ -725,8 +876,13 @@
     "title": "손해사정사",
     "office": "광주 지점",
     "photo": "../assets/lawyers/23.Go_Young_Soo.png",
-    "specialties": ["손해사정", "임상병리사"],
-    "categories": ["교통사고"],
+    "specialties": [
+      "손해사정",
+      "임상병리사"
+    ],
+    "categories": [
+      "교통사고"
+    ],
     "email": "goys@yalebupjo.com",
     "phone": "062-587-7787",
     "education": [
@@ -758,8 +914,13 @@
     "title": "손해사정사",
     "office": "광주 지점",
     "photo": "../assets/lawyers/24.Park_Sung_Yoon.png",
-    "specialties": ["손해사정", "前 H화재"],
-    "categories": ["교통사고"],
+    "specialties": [
+      "손해사정",
+      "前 H화재"
+    ],
+    "categories": [
+      "교통사고"
+    ],
     "email": "parksy@yalebupjo.com",
     "phone": "062-587-7787",
     "education": [],
@@ -786,8 +947,13 @@
     "title": "손해사정사",
     "office": "광주 지점",
     "photo": "../assets/lawyers/25.Lee_Yong_Jae.png",
-    "specialties": ["손해사정", "방사선사"],
-    "categories": ["교통사고"],
+    "specialties": [
+      "손해사정",
+      "방사선사"
+    ],
+    "categories": [
+      "교통사고"
+    ],
     "email": "leeyj@yalebupjo.com",
     "phone": "062-587-7787",
     "education": [],

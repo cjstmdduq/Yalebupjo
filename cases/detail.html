@@ -52,9 +52,8 @@
     <script src="../assets/js/breadcrumb.js"></script>
     <script src="../assets/js/footer.js"></script>
 </head>
-<body class="bg-gray-50 text-gray-900">
+<body class="bg-white text-gray-900">
     <!-- Navigation will be inserted here by nav.js -->
-    <div style="height: 80px;"></div>
     
     <!-- 로딩 상태 -->
     <div id="loading" class="min-h-screen flex items-center justify-center">
@@ -66,46 +65,37 @@
 
     <!-- 메인 컨텐츠 -->
     <main id="content" class="hidden">
-        <!-- 사건 헤더 -->
-        <section class="relative h-[60vh] flex items-center bg-gradient-to-b from-gray-900 to-gray-800 overflow-hidden">
-            <div class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-gray-900/50"></div>
-            <div class="absolute inset-0">
-                <div class="h-full w-full bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%23ffffff" fill-opacity="0.03"%3E%3Cpath d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-30"></div>
-            </div>
-            <div class="container mx-auto px-6 md:px-12 relative z-10">
-                <div class="max-w-5xl">
-                    <div class="flex items-center gap-4 mb-6">
-                        <span id="case-category" class="px-5 py-2.5 bg-white text-gray-900 rounded-full text-sm font-semibold shadow-lg"></span>
-                        <span id="case-date" class="text-gray-300 text-base"></span>
+        <!-- 간단한 페이지 헤더 -->
+        <section class="bg-white py-12 border-b">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <div class="flex items-center gap-3 mb-4">
+                        <span id="case-category" class="text-sm font-medium text-gray-600"></span>
                     </div>
-                    <h1 id="case-title" class="text-4xl md:text-6xl font-bold mb-6 text-white"></h1>
-                    <p id="case-summary" class="text-xl md:text-2xl text-gray-300 leading-relaxed"></p>
+                    <h1 id="case-title" class="text-3xl md:text-4xl font-bold text-gray-900 mb-4"></h1>
+                    <p id="case-summary" class="text-gray-600 text-lg leading-relaxed"></p>
                 </div>
             </div>
         </section>
 
-        <div class="container mx-auto px-6 md:px-12 py-16">
+        <div class="container mx-auto px-6 md:px-12 py-16 bg-white">
             <div class="max-w-4xl mx-auto">
                 <!-- 기본 정보 카드 -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100">
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 mb-10">
                     <h2 class="text-3xl font-bold mb-8 text-gray-900">사건 개요</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="bg-gray-50 rounded-xl p-6">
+                        <div class="border border-gray-200 rounded-xl p-6">
                             <h3 class="text-sm text-gray-500 mb-2 font-medium uppercase tracking-wider">분야</h3>
                             <p id="case-category-detail" class="text-lg font-semibold text-gray-900"></p>
                         </div>
-                        <div class="bg-gray-50 rounded-xl p-6">
-                            <h3 class="text-sm text-gray-500 mb-2 font-medium uppercase tracking-wider">판결일</h3>
-                            <p id="case-date-detail" class="text-lg font-semibold text-gray-900"></p>
-                        </div>
-                        <div class="bg-gray-50 rounded-xl p-6">
+                        <div class="border border-gray-200 rounded-xl p-6">
                             <h3 class="text-sm text-gray-500 mb-2 font-medium uppercase tracking-wider">결과</h3>
                             <p id="case-result-detail" class="text-lg font-semibold text-gray-900"></p>
                         </div>
-                        <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-xl p-6">
-                            <h3 class="text-sm text-gray-600 mb-4 font-medium uppercase tracking-wider">담당변호사</h3>
+                        <div class="border border-gray-200 rounded-xl p-6">
+                            <h3 class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">담당변호사</h3>
                             <div class="flex items-center gap-4">
-                                <img id="lawyer-photo" src="../assets/images/lawyer-placeholder.svg" alt="담당변호사" class="w-20 h-20 rounded-full object-cover bg-white border-4 border-white shadow-lg">
+                                <img id="lawyer-photo" src="../assets/images/lawyer-placeholder.svg" alt="담당변호사" class="w-20 h-20 rounded-full object-cover bg-gray-100">
                                 <div>
                                     <p id="lawyer-name" class="text-lg font-bold text-gray-900">김법무 변호사</p>
                                     <p id="lawyer-specialty" class="text-base text-gray-600">형사전문</p>
@@ -116,14 +106,14 @@
                 </div>
 
                 <!-- 사건 배경 및 결과 -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100">
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 mb-10">
                     <h2 class="text-3xl font-bold mb-8 text-gray-900">사건 배경</h2>
                     <div class="space-y-6">
                         <p id="background" class="text-gray-700 leading-relaxed text-lg"></p>
                         <div class="mt-8 pt-8 border-t border-gray-200">
                             <h3 class="text-xl font-bold mb-4 text-gray-900">최종 결과</h3>
                             <div class="flex items-start gap-6">
-                                <span id="result" class="px-6 py-3 rounded-full font-bold text-base flex-shrink-0 shadow-md"></span>
+                                <span id="result" class="px-6 py-3 font-bold text-base flex-shrink-0"></span>
                                 <p id="outcome" class="text-gray-700 text-lg leading-relaxed"></p>
                             </div>
                         </div>
@@ -131,7 +121,7 @@
                 </div>
 
                 <!-- 변호 전략 -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100">
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 mb-10">
                     <h2 class="text-3xl font-bold mb-8 text-gray-900">변호 전략</h2>
                     <ul id="strategy-points" class="space-y-4">
                         <!-- JavaScript로 동적 생성 -->
@@ -139,34 +129,34 @@
                 </div>
                 
                 <!-- 도전 과제 -->
-                <div class="bg-white rounded-2xl shadow-xl p-8 mb-10 border border-gray-100">
+                <div class="bg-white border border-gray-200 rounded-2xl p-8 mb-10">
                     <h2 class="text-3xl font-bold mb-8 text-gray-900">도전 과제</h2>
                     <p id="challenges" class="text-gray-700 leading-relaxed text-lg"></p>
                 </div>
 
                 <!-- 하단 액션 -->
                 <div class="flex justify-between items-center mb-16">
-                    <a href="index.html" class="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 font-medium">
+                    <a href="index.html" class="inline-flex items-center gap-2 text-gray-600 hover:text-gray-900 font-medium">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
                         </svg>
                         목록으로 돌아가기
                     </a>
-                    <button onclick="window.print()" class="px-6 py-3 bg-gray-100 hover:bg-gray-200 rounded-lg font-medium transition-colors">
+                    <button onclick="window.print()" class="px-6 py-3 border border-gray-200 rounded-lg hover:border-gray-300 font-medium transition-colors">
                         인쇄하기
                     </button>
                 </div>
             </div>
             
             <!-- 같은 분야 사건 -->
-            <section class="bg-gray-900 py-20">
+            <section class="bg-white py-20">
                 <div class="container mx-auto px-6 md:px-12">
                     <!-- 헤더 -->
                     <div class="text-center mb-12">
-                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-gray-900">
                             같은 분야 사건 보기
                         </h2>
-                        <p class="text-xl text-gray-300">
+                        <p class="text-xl text-gray-600">
                             유사한 사건의 성공 사례를 확인해보세요
                         </p>
                     </div>
@@ -181,9 +171,9 @@
                     <!-- 더보기 버튼 -->
                     <div class="text-center mt-12">
                         <a id="more-cases-btn" href="index.html" 
-                            class="inline-flex items-center gap-3 bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-blue-700 transition-all duration-300 group">
+                            class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 text-lg font-medium hover:bg-gray-800 transition-colors">
                             더 많은 사건 보기
-                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12" />
                             </svg>
                         </a>
@@ -219,13 +209,11 @@
 
                 // 헤더 정보
                 document.getElementById('case-category').textContent = caseData.category;
-                document.getElementById('case-date').textContent = formatDate(caseData.date);
                 document.getElementById('case-title').textContent = caseData.title;
                 document.getElementById('case-summary').textContent = caseData.summary;
 
                 // 기본 정보
                 document.getElementById('case-category-detail').textContent = caseData.category;
-                document.getElementById('case-date-detail').textContent = formatDate(caseData.date);
                 document.getElementById('case-result-detail').textContent = caseData.result;
                 
                 // 담당변호사 정보
@@ -242,7 +230,7 @@
                 // 결과
                 const resultElement = document.getElementById('result');
                 resultElement.textContent = caseData.result;
-                resultElement.className = `px-4 py-2 rounded-full font-medium ${getResultClass(caseData.result)}`;
+                resultElement.className = `px-4 py-2 font-bold text-base ${getResultClass(caseData.result).replace('bg-', 'text-').replace('-100', '-700')}`;
                 
                 document.getElementById('outcome').textContent = caseData.details.outcome || '';
 
@@ -306,7 +294,6 @@
             // 같은 카테고리의 다른 사건들 필터링
             const relatedCases = allCases
                 .filter(c => c.category === currentCase.category && c.id !== currentCase.id)
-                .sort((a, b) => new Date(b.date) - new Date(a.date)) // 최신순 정렬
                 .slice(0, 4); // 최대 4개
             
             if (relatedCases.length === 0) {
@@ -326,17 +313,16 @@
             }
             
             relatedContainer.innerHTML = relatedCases.map(caseItem => `
-                <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 cursor-pointer group border border-gray-100" onclick="window.location.href='detail.html?id=${caseItem.id}'">
+                <div class="bg-white rounded-2xl p-8 hover:border-gray-300 transition-all cursor-pointer group border border-gray-200" onclick="window.location.href='detail.html?id=${caseItem.id}'">
                     <!-- 카테고리 및 날짜 -->
                     <div class="flex justify-between items-center mb-6">
-                        <span class="inline-block px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white text-sm font-semibold rounded-full shadow-md">
+                        <span class="text-sm font-medium text-gray-600">
                             ${caseItem.category}
                         </span>
-                        <span class="text-gray-500 text-sm font-medium">${formatDate(caseItem.date).split('년')[0]}</span>
                     </div>
                     
                     <!-- 제목 -->
-                    <h3 class="text-2xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4 line-clamp-2 group-hover:text-gray-700 transition-colors">
                         ${caseItem.title}
                     </h3>
                     
@@ -346,25 +332,18 @@
                     </p>
                     
                     <!-- 결과 및 화살표 -->
-                    <div class="flex justify-between items-center pt-6 border-t border-gray-100">
-                        <span class="font-bold text-base ${getResultClass(caseItem.result).replace('bg-', 'text-').replace('-100', '-700')}">
+                    <div class="flex justify-between items-center pt-6 border-t border-gray-200">
+                        <span class="font-medium text-base ${getResultClass(caseItem.result).replace('bg-', 'text-').replace('-100', '-700')}">
                             ${caseItem.result}
                         </span>
-                        <div class="w-12 h-12 bg-gradient-to-r from-gray-100 to-gray-200 rounded-full flex items-center justify-center group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300 shadow-md">
-                            <svg class="w-6 h-6 text-gray-600 group-hover:text-white transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12" />
-                            </svg>
-                        </div>
+                        <svg class="w-5 h-5 text-gray-400 group-hover:text-gray-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
                     </div>
                 </div>
             `).join('');
         }
 
-        // 날짜 포맷
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            return `${date.getFullYear()}년 ${date.getMonth() + 1}월 ${date.getDate()}일`;
-        }
 
         // 결과에 따른 클래스 반환
         function getResultClass(result) {
@@ -396,7 +375,15 @@
 
         // 케이스에 맞는 변호사 찾기
         function findLawyerForCase(lawyers, caseData) {
-            // 먼저 case ID로 직접 매칭된 변호사 찾기
+            // lawyerId로 먼저 찾기
+            if (caseData.lawyerId) {
+                const lawyerById = lawyers.find(lawyer => lawyer.id === caseData.lawyerId);
+                if (lawyerById) {
+                    return lawyerById;
+                }
+            }
+            
+            // 없으면 case ID로 직접 매칭된 변호사 찾기
             const lawyerWithCase = lawyers.find(lawyer => 
                 lawyer.cases && lawyer.cases.includes(caseData.id)
             );

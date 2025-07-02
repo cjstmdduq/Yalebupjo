@@ -15,8 +15,8 @@
       "lng": 127.0292881
     },
     "lawyers": {
-      "representative": ["kim-beopmu", "lee-jungui"],
-      "members": ["park-minsu", "choi-youngmin", "jung-soojin", "kang-donghoon"]
+      "representative": ["ha-young-joo", "um-woon-yong"],
+      "members": []
     },
     "specialties": ["기업법무", "M&A", "금융", "부동산", "형사"],
     "image": "../assets/images/office-seoul.jpg (더미데이터)"
@@ -37,8 +37,8 @@
       "lng": 127.0506378
     },
     "lawyers": {
-      "representative": ["song-jihoon"],
-      "members": ["kim-taehyung", "lee-minjae"]
+      "representative": ["kim-jin-hwan"],
+      "members": []
     },
     "specialties": ["스타트업 법률자문", "지적재산권", "국제거래"],
     "image": "../assets/images/office-gangnam.jpg (더미데이터)"
@@ -59,8 +59,8 @@
       "lng": 129.3113596
     },
     "lawyers": {
-      "representative": ["kim-dongsoo"],
-      "members": ["park-jiyoung", "lee-sangwoo"]
+      "representative": ["choi-sang-moo"],
+      "members": []
     },
     "specialties": ["해양·조선", "산업재해", "노동법", "건설"],
     "image": "../assets/images/office-ulsan.jpg (더미데이터)"
@@ -81,8 +81,8 @@
       "lng": 128.5930643
     },
     "lawyers": {
-      "representative": ["choi-seonghyun"],
-      "members": ["kim-yeonsu", "park-junho"]
+      "representative": [],
+      "members": ["lee-gi-chang"]
     },
     "specialties": ["의료소송", "보험", "교통사고", "부동산"],
     "image": "../assets/images/office-daegu.jpg (더미데이터)"
@@ -103,8 +103,8 @@
       "lng": 127.4890319
     },
     "lawyers": {
-      "representative": ["lee-jaehyun"],
-      "members": ["kim-sunghoon", "park-soyeon"]
+      "representative": [],
+      "members": ["cheon-sung-yeon"]
     },
     "specialties": ["건설·부동산", "행정소송", "농업법인", "중소기업"],
     "image": "../assets/images/office-cheongju.jpg (더미데이터)"
@@ -125,8 +125,8 @@
       "lng": 127.3845475
     },
     "lawyers": {
-      "representative": ["jung-hyunwoo"],
-      "members": ["lee-dongmin", "kim-jiwon"]
+      "representative": [],
+      "members": ["jeong-hwan-hee"]
     },
     "specialties": ["특허·지식재산권", "정부계약", "공공기관 자문"],
     "image": "../assets/images/office-daejeon.jpg (더미데이터)"
@@ -147,8 +147,8 @@
       "lng": 126.9198675
     },
     "lawyers": {
-      "representative": ["park-sanghoon"],
-      "members": ["choi-eunji", "kim-minseok"]
+      "representative": [],
+      "members": []
     },
     "specialties": ["문화·예술 법률", "프랜차이즈", "소비자보호"],
     "image": "../assets/images/office-gwangju.jpg (더미데이터)"

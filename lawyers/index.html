@@ -138,7 +138,7 @@
     </section>
 
     <!-- 변호사 목록 섹션 -->
-    <main class="py-16 sm:py-24 bg-white">
+    <main class="py-12 bg-white">
         <div class="container mx-auto px-6 md:px-12">
             <!-- 변호사 목록이 여기에 동적으로 삽입됩니다. -->
             <div id="lawyer-list-container">
@@ -217,18 +217,35 @@
 
                 let filterHTML = '';
                 filters.forEach((filter, index) => {
+                    const isActive = index === 0;
                     filterHTML += `
-                        <button class="filter-btn px-4 py-2 rounded-full border border-gray-300 text-sm font-medium hover:bg-gray-100 transition-all ${index === 0 ? 'active' : ''}" data-filter="${filterMap[filter]}">
+                        <button class="filter-btn px-4 py-2 rounded-2xl font-medium transition-colors whitespace-nowrap ${isActive ? 'text-white' : 'text-gray-600 hover:text-white'}" 
+                                style="${isActive ? 'background-color: #1e3a8a' : 'transition: all 0.3s ease'}" 
+                                onmouseover="if(!this.classList.contains('active')) this.style.backgroundColor='#1e3a8a'" 
+                                onmouseout="if(!this.classList.contains('active')) this.style.backgroundColor='transparent'" 
+                                data-filter="${filterMap[filter]}">
                             ${filter}
                         </button>
                     `;
                 });
                 filterContainer.innerHTML = filterHTML;
 
-                filterContainer.querySelectorAll('.filter-btn').forEach(btn => {
+                filterContainer.querySelectorAll('.filter-btn').forEach((btn, index) => {
+                    if (index === 0) btn.classList.add('active');
+                    
                     btn.addEventListener('click', function() {
-                        filterContainer.querySelector('.filter-btn.active').classList.remove('active');
-                        this.classList.add('active');
+                        // 모든 버튼 스타일 초기화
+                        filterContainer.querySelectorAll('.filter-btn').forEach(b => {
+                            b.style.backgroundColor = 'transparent';
+                            b.classList.remove('text-white', 'active');
+                            b.classList.add('text-gray-600');
+                        });
+                        
+                        // 선택된 버튼 스타일 적용
+                        this.classList.remove('text-gray-600');
+                        this.classList.add('text-white', 'active');
+                        this.style.backgroundColor = '#1e3a8a';
+                        
                         filterAndRender();
                     });
                 });
