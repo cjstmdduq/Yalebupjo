@@ -169,6 +169,7 @@
                   <li><a href="${basePath}/traffic/index.html"    class="text-gray-600 hover:text-blue-600 transition block py-1">교통사고</a></li>
                   <li><a href="${basePath}/corporate/index.html"  class="text-gray-600 hover:text-blue-600 transition block py-1">기업</a></li>
                   <li><a href="${basePath}/family/index.html"     class="text-gray-600 hover:text-blue-600 transition block py-1">가사</a></li>
+                  <li><a href="${basePath}/notary/index.html"     class="text-gray-600 hover:text-blue-600 transition block py-1">공증센터</a></li>
                 </ul>
               </div>
       
@@ -251,6 +252,7 @@
                       <a href="${basePath}/traffic/index.html"    class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">교통사고</a>
                       <a href="${basePath}/corporate/index.html"  class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">기업</a>
                       <a href="${basePath}/family/index.html"     class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">가사</a>
+                      <a href="${basePath}/notary/index.html"     class="block text-gray-600 hover:text-gray-900 transition-colors py-1.5" onclick="Navigation.closeMobileMenu()">공증센터</a>
                     </div>
                   </div>
                 </div>

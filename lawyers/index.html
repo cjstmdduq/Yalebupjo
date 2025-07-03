@@ -201,7 +201,7 @@
 
             // --- 필터 버튼 설정 ---
             function setupFilters() {
-                const filters = ['전체', '대표변호사', '소속변호사', '손해사정사', '형사', '민사', '기업', '가사', '부동산', '교통사고'];
+                const filters = ['전체', '대표변호사', '소속변호사', '손해사정사', '형사', '민사', '기업', '가사', '부동산', '교통사고', '공증센터'];
                 const filterMap = {
                     '전체': 'all', 
                     '대표변호사': 'representative', 
@@ -212,7 +212,8 @@
                     '기업': 'corporate',
                     '가사': 'family',
                     '부동산': 'realestate',
-                    '교통사고': 'traffic'
+                    '교통사고': 'traffic',
+                    '공증센터': 'notary'
                 };
 
                 let filterHTML = '';
@@ -278,6 +279,8 @@
                         return lawyer.categories && lawyer.categories.includes('부동산');
                     } else if (activeFilter === 'traffic') {
                         return lawyer.categories && lawyer.categories.includes('교통사고');
+                    } else if (activeFilter === 'notary') {
+                        return lawyer.categories && lawyer.categories.includes('공증센터');
                     }
                 }).filter(lawyer => {
                     // 2. 검색어 필터링
