@@ -1,7 +1,7 @@
 [
   {
     "id": "seoul",
-    "name": "서울 본사",
+    "name": "서울 서초 본사",
     "address": "서울특별시 서초구 반포대로 98 일신빌딩 4층",
     "tel": "02-587-7787 / 02-591-4111",
     "fax": "02-587-7788 (더미데이터)",
@@ -13,6 +13,10 @@
     "coordinates": {
       "lat": 37.4923615,
       "lng": 127.0292881
+    },
+    "svgCoordinates": {
+      "x": 265,
+      "y": 265
     },
     "lawyers": {
       "representative": ["ha-young-joo", "um-woon-yong"],
@@ -36,6 +40,10 @@
       "lat": 37.5080776,
       "lng": 127.0506378
     },
+    "svgCoordinates": {
+      "x": 285,
+      "y": 260
+    },
     "lawyers": {
       "representative": ["kim-jin-hwan"],
       "members": []
@@ -45,7 +53,7 @@
   },
   {
     "id": "ulsan",
-    "name": "울산 지점",
+    "name": "울산 분사무소",
     "address": "울산광역시 남구 문수로 312 2-3층",
     "tel": "052-221-7100",
     "fax": "052-221-7101 (더미데이터)",
@@ -58,6 +66,10 @@
       "lat": 35.5383773,
       "lng": 129.3113596
     },
+    "svgCoordinates": {
+      "x": 670,
+      "y": 665
+    },
     "lawyers": {
       "representative": ["choi-sang-moo"],
       "members": []
@@ -67,7 +79,7 @@
   },
   {
     "id": "daegu",
-    "name": "대구 지점",
+    "name": "대구 분사무소",
     "address": "대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호",
     "tel": "053-756-9072",
     "fax": "053-756-9073 (더미데이터)",
@@ -80,16 +92,20 @@
       "lat": 35.8666024,
       "lng": 128.5930643
     },
+    "svgCoordinates": {
+      "x": 520,
+      "y": 620
+    },
     "lawyers": {
-      "representative": [],
-      "members": ["lee-gi-chang"]
+      "representative": ["jung-hwan-hee"],
+      "members": []
     },
     "specialties": ["의료소송", "보험", "교통사고", "부동산"],
     "image": "../assets/images/office-daegu.jpg (더미데이터)"
   },
   {
     "id": "cheongju",
-    "name": "청주 지점",
+    "name": "청주 분사무소",
     "address": "충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호",
     "tel": "043-298-0201",
     "fax": "043-298-0202 (더미데이터)",
@@ -102,16 +118,20 @@
       "lat": 36.6424341,
       "lng": 127.4890319
     },
+    "svgCoordinates": {
+      "x": 335,
+      "y": 460
+    },
     "lawyers": {
-      "representative": [],
-      "members": ["cheon-sung-yeon"]
+      "representative": ["jo-sung-jeon"],
+      "members": []
     },
     "specialties": ["건설·부동산", "행정소송", "농업법인", "중소기업"],
     "image": "../assets/images/office-cheongju.jpg (더미데이터)"
   },
   {
     "id": "daejeon",
-    "name": "대전 지점",
+    "name": "대전 분사무소",
     "address": "대전 서구 둔산로123번길 21 엠시티타워 701호",
     "tel": "0507-1444-8003 / 042-489-1970",
     "fax": "042-489-1971 (더미데이터)",
@@ -124,16 +144,20 @@
       "lat": 36.3504119,
       "lng": 127.3845475
     },
+    "svgCoordinates": {
+      "x": 325,
+      "y": 500
+    },
     "lawyers": {
-      "representative": [],
-      "members": ["jeong-hwan-hee"]
+      "representative": ["jeon-jung-soo", "yang-hee-sun"],
+      "members": []
     },
     "specialties": ["특허·지식재산권", "정부계약", "공공기관 자문"],
     "image": "../assets/images/office-daejeon.jpg (더미데이터)"
   },
   {
     "id": "gwangju",
-    "name": "광주 지점",
+    "name": "광주 분사무소",
     "address": "광주광역시 서구 화개중앙로 59 5층",
     "tel": "0507-1329-4973",
     "fax": "062-236-7788 (더미데이터)",
@@ -145,6 +169,10 @@
     "coordinates": {
       "lat": 35.1468067,
       "lng": 126.9198675
+    },
+    "svgCoordinates": {
+      "x": 235,
+      "y": 760
     },
     "lawyers": {
       "representative": [],

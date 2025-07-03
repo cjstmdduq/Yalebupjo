@@ -49,17 +49,30 @@ const Footer = {
                     </ul>
                 </div>
 
+                <!-- 주요사건 -->
+                <div>
+                    <h4 class="text-white font-bold mb-4">주요사건</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="${basePath}/cases/index.html?category=형사" class="text-gray-400 hover:text-white transition">형사사건</a></li>
+                        <li><a href="${basePath}/cases/index.html?category=민사" class="text-gray-400 hover:text-white transition">민사소송</a></li>
+                        <li><a href="${basePath}/cases/index.html?category=교통사고" class="text-gray-400 hover:text-white transition">교통사고</a></li>
+                        <li><a href="${basePath}/cases/index.html?category=부동산" class="text-gray-400 hover:text-white transition">부동산분쟁</a></li>
+                        <li><a href="${basePath}/cases/index.html?category=기업" class="text-gray-400 hover:text-white transition">기업법무</a></li>
+                        <li><a href="${basePath}/cases/index.html?category=가사" class="text-gray-400 hover:text-white transition">가사사건</a></li>
+                    </ul>
+                </div>
+
                 <!-- 전국지사 -->
                 <div>
                     <h4 class="text-white font-bold mb-4">전국지사</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울본사</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">서울강남</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">울산</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">대구</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">청주</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">대전</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition">광주</a></li>
+                        <li><a href="${basePath}/location/index.html?office=seoul" class="text-gray-400 hover:text-white transition">서울본사</a></li>
+                        <li><a href="${basePath}/location/index.html?office=gangnam" class="text-gray-400 hover:text-white transition">서울강남</a></li>
+                        <li><a href="${basePath}/location/index.html?office=ulsan" class="text-gray-400 hover:text-white transition">울산</a></li>
+                        <li><a href="${basePath}/location/index.html?office=daegu" class="text-gray-400 hover:text-white transition">대구</a></li>
+                        <li><a href="${basePath}/location/index.html?office=cheongju" class="text-gray-400 hover:text-white transition">청주</a></li>
+                        <li><a href="${basePath}/location/index.html?office=daejeon" class="text-gray-400 hover:text-white transition">대전</a></li>
+                        <li><a href="${basePath}/location/index.html?office=gwangju" class="text-gray-400 hover:text-white transition">광주</a></li>
                     </ul>
                 </div>
             </div>

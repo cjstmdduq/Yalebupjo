@@ -284,6 +284,48 @@
             overflow: hidden;
         }
 
+        /* SVG 지도 스타일 */
+        #korea-map svg {
+            transition: all 0.3s ease;
+        }
+        
+        .office-marker {
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+        }
+        
+        .office-marker:hover {
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+        }
+        
+        /* 마커 점핑 애니메이션 */
+        @keyframes markerJump {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        /* 마커 바운스 애니메이션 */
+        @keyframes markerBounce {
+            0% {
+                transform: translateY(0);
+            }
+            25% {
+                transform: translateY(-15px);
+            }
+            50% {
+                transform: translateY(0);
+            }
+            75% {
+                transform: translateY(-8px);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
         /* 타이핑 애니메이션 */
         .typing-animation {
             overflow: hidden;
@@ -899,84 +941,78 @@
                     전국 사무소 안내
                 </h2>
                 <p class="text-xl text-gray-600">
-                    지도를 터치하여 가까운 사무소의 위치를 확인해보세요
+                    지도를 클릭하여 가까운 사무소의 위치를 확인해보세요
                 </p>
             </div>
 
-            <div class="max-w-6xl mx-auto">
-                <!-- 지도 영역 -->
-                <div id="map" class="bg-gray-100 rounded-2xl overflow-hidden mb-8" style="height: 450px;">
-                    <!-- 지도가 여기에 로드됩니다 -->
-                    <div id="map-loading" class="map-loading">
-                        <div class="text-center">
-                            <div
-                                class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
-                                <svg class="w-8 h-8 text-gray-600" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                    </path>
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                                </svg>
+            <div class="max-w-7xl mx-auto">
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- 왼쪽: SVG 지도 -->
+                    <div class="relative">
+                        <div class="bg-gray-50 rounded-2xl p-8 shadow-sm">
+                            <div id="korea-map" class="relative w-full" style="max-width: 500px; margin: 0 auto;">
+                                <!-- SVG 지도가 여기에 로드됩니다 -->
                             </div>
-                            <p class="text-gray-600 text-lg font-medium">지도 로딩 중...</p>
-                            <p class="text-gray-500 text-sm mt-2">네이버 맵을 불러오고 있습니다</p>
                         </div>
                     </div>
-                </div>
-                <!-- 지점 선택 버튼들 -->
-                <div class="flex flex-wrap justify-center gap-2 mb-12">
-                    <button
-                        class="px-6 py-2.5 bg-gray-900 text-white rounded-full text-sm font-medium transition-colors"
-                        onclick="showOffice('seoul')">
-                        서울 본사
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('gangnam')">
-                        서울 강남
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('ulsan')">
-                        울산
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('daegu')">
-                        대구
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('cheongju')">
-                        청주
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('daejeon')">
-                        대전
-                    </button>
-                    <button
-                        class="px-6 py-2.5 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-colors"
-                        onclick="showOffice('gwangju')">
-                        광주
-                    </button>
-                </div>
-
-                <div id="office-info" class="border border-gray-200 rounded-2xl p-8">
-                    <div class="text-center py-12">
-                        <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
-                                </path>
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                            </svg>
+                    
+                    <!-- 오른쪽: 사무소 정보 -->
+                    <div class="flex flex-col">
+                        <!-- 지점 선택 버튼들 -->
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <button
+                                class="px-5 py-2 bg-gray-900 text-white rounded-full text-sm font-medium transition-all office-btn"
+                                data-office="seoul">
+                                서울 본사
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="gangnam">
+                                서울 강남
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="ulsan">
+                                울산
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="daegu">
+                                대구
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="cheongju">
+                                청주
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="daejeon">
+                                대전
+                            </button>
+                            <button
+                                class="px-5 py-2 bg-gray-100 text-gray-700 rounded-full text-sm font-medium hover:bg-gray-200 transition-all office-btn"
+                                data-office="gwangju">
+                                광주
+                            </button>
                         </div>
-                        <h3 class="text-lg font-medium text-gray-900 mb-2">지점을 선택해주세요</h3>
-                        <p class="text-gray-500">위의 버튼을 클릭하여 원하는 지점 정보를 확인하실 수 있습니다.</p>
+
+                        <!-- 사무소 상세 정보 -->
+                        <div id="office-info" class="border border-gray-200 rounded-2xl p-8 flex-1">
+                            <div class="text-center py-12">
+                                <div class="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                        </path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                    </svg>
+                                </div>
+                                <h3 class="text-lg font-medium text-gray-900 mb-2">지점을 선택해주세요</h3>
+                                <p class="text-gray-500">지도나 버튼을 클릭하여 원하는 지점 정보를 확인하실 수 있습니다.</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1050,312 +1086,329 @@
         // 전역 변수 선언
         // ===================================
 
-        // 네이버 맵 관련 변수
-        let map = null;
-        let markers = [];
-        let currentOffice = 'null';
-        let mapInitialized = false;
+        // SVG 지도 관련 변수
+        let currentOffice = null;
+        let mapLoaded = false;
+        let officesData = null;
 
-        // 지점별 좌표 정보
-        const officeLocations = {
-            seoul: {
-                lat: 37.4890973155091,
-                lng: 127.009460493994,
-                name: '서울 본사',
-                address: '서울특별시 서초구 반포대로 98 일신빌딩 4층'
-            },
-            gangnam: {
-                lat: 37.5027877189554,
-                lng: 127.040637438123,
-                name: '서울 강남 분사무소',
-                address: '서울특별시 강남구 테헤란로37길 7 12층'
-            },
-            ulsan: {
-                lat: 35.5352418294233,
-                lng: 129.287582730308,
-                name: '울산 지점',
-                address: '울산광역시 남구 문수로 312 2-3층'
-            },
-            daegu: {
-                lat: 35.8583102481025,
-                lng: 128.624460988698,
-                name: '대구 지점',
-                address: '대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호'
-            },
-            cheongju: {
-                lat: 36.61203063119757,
-                lng: 127.46646261061888,
-                name: '청주 지점',
-                address: '충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호'
-            },
-            daejeon: {
-                lat: 36.3522602215555,
-                lng: 127.387265177983,
-                name: '대전 지점',
-                address: '대전 서구 둔산로123번길 21 엠시티타워 701호'
-            },
-            gwangju: {
-                lat: 35.1249436144535,
-                lng: 126.855408859749,
-                name: '광주 지점',
-                address: '광주광역시 서구 화개중앙로 59 5층'
+        // ===================================
+        // SVG 지도 관련 함수들
+        // ===================================
+
+        // 사무소 데이터 로드
+        async function loadOfficesData() {
+            try {
+                const response = await fetch('./data/offices.json');
+                if (!response.ok) throw new Error('사무소 데이터 로드 실패');
+                officesData = await response.json();
+                return officesData;
+            } catch (error) {
+                console.error('사무소 데이터 로드 실패:', error);
+                return [];
             }
-        };
-
-        // ===================================
-        // 네이버 맵 관련 함수들 (개선된 버전)
-        // ===================================
-
-        // 네이버 맵 API 콜백 함수 - API 스크립트에서 자동 호출됨
-        function initNaverMap() {
-            console.log('네이버 맵 API 로드 완료');
-
-            // 잠깐 대기 후 지도 초기화 (DOM 준비 확인)
-            setTimeout(() => {
-                if (document.readyState === 'loading') {
-                    document.addEventListener('DOMContentLoaded', initMap);
-                } else {
-                    initMap();
-                }
-            }, 100);
         }
 
-        // 네이버 맵 초기화 함수 (개선된 버전)
-        function initMap() {
-            console.log('지도 초기화 시작...');
-
-            // 네이버 맵 API 확인
-            if (typeof naver === 'undefined' || !naver.maps) {
-                console.error('네이버 맵 API가 로드되지 않았습니다.');
-                showMapError('네이버 맵 API 로드 실패');
-                return;
-            }
-
-            // 지도 컨테이너 확인
-            const mapContainer = document.getElementById('map');
+        // SVG 지도 로드 및 초기화
+        async function loadSVGMap() {
+            const mapContainer = document.getElementById('korea-map');
             if (!mapContainer) {
-                console.error('지도 컨테이너를 찾을 수 없습니다.');
+                console.error('지도 컨테이너를 찾을 수 없습니다');
                 return;
             }
 
             try {
-                // 로딩 메시지 숨기기
-                const loadingElement = document.getElementById('map-loading');
-                if (loadingElement) {
-                    loadingElement.style.display = 'none';
+                console.log('지도 로드 시작...');
+                // 사무소 데이터와 SVG 파일 동시 로드
+                const [offices, svgResponse] = await Promise.all([
+                    loadOfficesData(),
+                    fetch('assets/map/map.svg')
+                ]);
+                
+                console.log('사무소 데이터:', offices);
+                
+                if (!svgResponse.ok) {
+                    throw new Error(`SVG 로드 실패: ${svgResponse.status}`);
                 }
-
-                // 서울 본사를 중심으로 지도 초기화
-                const mapOptions = {
-                    center: new naver.maps.LatLng(officeLocations.seoul.lat, officeLocations.seoul.lng),
-                    zoom: 15,
-                    mapTypeControl: true,
-                    mapTypeControlOptions: {
-                        style: naver.maps.MapTypeControlStyle.BUTTON,
-                        position: naver.maps.Position.TOP_RIGHT
-                    },
-                    zoomControl: true,
-                    zoomControlOptions: {
-                        style: naver.maps.ZoomControlStyle.LARGE,
-                        position: naver.maps.Position.TOP_LEFT
-                    },
-                    logoControl: false,
-                    mapDataControl: false
-                };
-
-                map = new naver.maps.Map(mapContainer, mapOptions);
-                mapInitialized = true;
-
-                console.log('지도 초기화 성공');
-
-                // 지도 로드 완료 후 마커 추가
-                naver.maps.Event.once(map, 'idle', function () {
-                    console.log('지도 로드 완료, 마커 추가 중...');
-                    addAllMarkers();
-                    // 기본 지점 선택 (서울 본사)
-                    selectOffice('seoul');
-                });
-
+                
+                const svgText = await svgResponse.text();
+                console.log('SVG 텍스트 길이:', svgText.length);
+                
+                mapContainer.innerHTML = svgText;
+                initializeSVGMap();
             } catch (error) {
-                console.error('지도 초기화 중 오류 발생:', error);
-                showMapError('지도 초기화 실패: ' + error.message);
+                console.error('지도 초기화 실패:', error);
+                mapContainer.innerHTML = '<p class="text-center text-gray-500">지도를 불러올 수 없습니다.</p>';
             }
         }
 
-        // 모든 지점에 마커 추가 (개선된 버전)
-        function addAllMarkers() {
-            if (!map || !mapInitialized) {
-                console.error('지도가 초기화되지 않았습니다.');
+        // SVG 지도 초기화
+        function initializeSVGMap() {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) return;
+
+            // SVG 스타일 조정
+            svg.style.width = '100%';
+            svg.style.height = 'auto';
+            
+            // 지역별 색상 설정
+            const regions = svg.querySelectorAll('polyline, path');
+            regions.forEach(region => {
+                region.style.fill = '#e5e7eb';
+                region.style.stroke = '#9ca3af';
+                region.style.strokeWidth = '1';
+                region.style.cursor = 'pointer';
+                region.style.transition = 'all 0.3s ease';
+                
+                // 호버 효과
+                region.addEventListener('mouseenter', function() {
+                    this.style.fill = '#d1d5db';
+                });
+                
+                region.addEventListener('mouseleave', function() {
+                    this.style.fill = '#e5e7eb';
+                });
+            });
+
+            // 사무소 위치에 마커 추가
+            addOfficeMarkers();
+            
+            // 기본 선택: 서울 본사
+            selectOffice('seoul');
+            mapLoaded = true;
+        }
+
+        // SVG 지도에 사무소 마커 추가
+        function addOfficeMarkers() {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) {
+                console.error('SVG 요소를 찾을 수 없습니다');
                 return;
             }
 
-            try {
-                // 기존 마커 제거
-                Object.values(markers).forEach(marker => {
-                    if (marker) marker.setMap(null);
-                });
-                markers = {};
-
-                Object.keys(officeLocations).forEach(key => {
-                    const office = officeLocations[key];
-
-                    const marker = new naver.maps.Marker({
-                        position: new naver.maps.LatLng(office.lat, office.lng),
-                        map: map,
-                        title: office.name,
-                        icon: {
-                            url: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`
-                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="40" viewBox="0 0 32 40">
-                                     <path d="M16 0C7.163 0 0 7.163 0 16c0 8.837 16 24 16 24s16-15.163 16-24C32 7.163 24.837 0 16 0z" fill="#dc2626"/>
-                                     <circle cx="16" cy="16" r="8" fill="white"/>
-                                     <circle cx="16" cy="16" r="4" fill="#dc2626"/>
-                                 </svg>
-                             `),
-                            size: new naver.maps.Size(32, 40),
-                            anchor: new naver.maps.Point(16, 40),
-                            scaledSize: new naver.maps.Size(32, 40)
-                        }
-                    });
-
-                    // 마커 클릭 이벤트 (무한 루프 방지)
-                    naver.maps.Event.addListener(marker, 'click', function () {
-                        selectOffice(key);
-                    });
-
-                    markers[key] = marker;
-                });
-
-                console.log('마커 추가 완료:', Object.keys(markers).length + '개');
-
-            } catch (error) {
-                console.error('마커 추가 중 오류 발생:', error);
-            }
-        }
-
-        // 🗺️ 안전한 지도 표시 함수 (무한 루프 방지)
-        function showOfficeOnMapSafe(officeKey) {
-            if (!map || !mapInitialized || !officeLocations[officeKey]) {
-                console.error('지도 또는 지점 정보가 없습니다:', officeKey);
+            if (!officesData || officesData.length === 0) {
+                console.error('사무소 데이터가 없습니다');
                 return;
             }
 
-            try {
-                const office = officeLocations[officeKey];
-                const position = new naver.maps.LatLng(office.lat, office.lng);
+            console.log('마커 추가 시작, 사무소 개수:', officesData.length);
 
-                // 지도 중심을 해당 지점으로 이동
-                map.setCenter(position);
-                map.setZoom(16);
+            // SVG viewBox를 가져와서 비율 계산
+            const viewBox = svg.getAttribute('viewBox')?.split(' ') || [0, 0, 800, 1200];
+            const svgWidth = parseFloat(viewBox[2]);
+            const svgHeight = parseFloat(viewBox[3]);
 
-                // 기존 정보창 모두 닫기
-                if (window.currentInfoWindow) {
-                    window.currentInfoWindow.close();
-                }
+            // 마커 그룹 생성
+            const markersGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            markersGroup.setAttribute('id', 'office-markers');
 
-                // 새 정보창 생성
-                const infoWindow = new naver.maps.InfoWindow({
-                    content: `
-                        <div style="
-                            padding: 16px; 
-                            min-width: 200px; 
-                            font-family: 'Pretendard', sans-serif;
-                            line-height: 1.5;
-                        ">
-                            <h4 style="
-                                margin: 0 0 8px 0; 
-                                font-size: 16px; 
-                                font-weight: bold; 
-                                color: #1f2937;
-                            ">${office.name}</h4>
-                            <p style="
-                                margin: 0 0 8px 0; 
-                                font-size: 13px; 
-                                color: #6b7280;
-                            ">${office.address}</p>
-                            <a href="https://map.naver.com/v5/search/${encodeURIComponent(office.address)}" 
-                               target="_blank" 
-                               style="
-                                   color: #2563eb; 
-                                   text-decoration: none; 
-                                   font-size: 12px;
-                                   font-weight: 500;
-                               ">
-                                길찾기 →
-                            </a>
-                        </div>
-                    `,
-                    backgroundColor: 'white',
-                    borderColor: '#e5e7eb',
-                    borderWidth: 1,
-                    anchorSize: new naver.maps.Size(10, 10),
-                    pixelOffset: new naver.maps.Point(0, -10)
+            officesData.forEach(office => {
+                console.log(`마커 추가: ${office.id}`, office.svgCoordinates);
+                // 마커 그룹
+                const markerGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                markerGroup.setAttribute('class', 'office-marker');
+                markerGroup.setAttribute('data-office', office.id);
+                markerGroup.style.cursor = 'pointer';
+
+                // 지도핀 모양 마커 생성
+                const pinGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                pinGroup.setAttribute('transform', `translate(${office.svgCoordinates.x - 12}, ${office.svgCoordinates.y - 32})`);
+                
+                // 핀 모양 path
+                const pin = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pin.setAttribute('d', 'M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20s12-11 12-20c0-6.627-5.373-12-12-12z');
+                pin.setAttribute('fill', '#6b7280'); // 기본 회색
+                pin.setAttribute('stroke', 'white');
+                pin.setAttribute('stroke-width', '1.5');
+                pin.style.transition = 'fill 0.3s ease';
+                pin.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))';
+
+                // 핀 내부 원
+                const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                innerCircle.setAttribute('cx', '12');
+                innerCircle.setAttribute('cy', '12');
+                innerCircle.setAttribute('r', '4');
+                innerCircle.setAttribute('fill', 'white');
+                
+                // 텍스트 배경 (가독성을 위해)
+                const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                const textWidth = office.name.length * 7; // 대략적인 텍스트 너비
+                textBg.setAttribute('x', 12 - textWidth/2);
+                textBg.setAttribute('y', '32');
+                textBg.setAttribute('width', textWidth);
+                textBg.setAttribute('height', '16');
+                textBg.setAttribute('rx', '8');
+                textBg.setAttribute('fill', 'white');
+                textBg.setAttribute('fill-opacity', '0.9');
+                textBg.style.pointerEvents = 'none';
+                
+                // 사무소 이름 텍스트
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '12');
+                text.setAttribute('y', '44'); // 핀 아래
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-weight', '600');
+                text.setAttribute('fill', '#1f2937');
+                text.setAttribute('font-family', 'Pretendard, sans-serif');
+                text.style.pointerEvents = 'none'; // 텍스트가 클릭을 방해하지 않도록
+                text.textContent = office.name;
+
+                // 마커 클릭 이벤트
+                markerGroup.addEventListener('click', () => selectOffice(office.id));
+                
+                // 호버 효과 - 색상 변경만
+                markerGroup.addEventListener('mouseenter', function() {
+                    if (currentOffice !== office.id) {
+                        pin.setAttribute('fill', '#9ca3af'); // 밝은 회색
+                    }
+                });
+                
+                markerGroup.addEventListener('mouseleave', function() {
+                    if (currentOffice !== office.id) {
+                        pin.setAttribute('fill', '#6b7280'); // 기본 회색
+                    }
                 });
 
-                if (markers[officeKey]) {
-                    infoWindow.open(map, markers[officeKey]);
-                    window.currentInfoWindow = infoWindow;
+                // 요소들을 그룹에 추가
+                pinGroup.appendChild(pin);
+                pinGroup.appendChild(innerCircle);
+                pinGroup.appendChild(textBg);
+                pinGroup.appendChild(text);
+                markerGroup.appendChild(pinGroup);
+                markersGroup.appendChild(markerGroup);
+            });
+
+            svg.appendChild(markersGroup);
+        }
+
+        // SVG 지도에서 사무소 강조 표시
+        function highlightOfficeOnMap(officeKey) {
+            // 모든 마커 초기화 (회색으로)
+            const allPins = document.querySelectorAll('.office-marker path');
+            allPins.forEach(pin => {
+                pin.setAttribute('fill', '#6b7280'); // 회색
+            });
+
+            // 선택된 마커 강조 (네이비로)
+            const selectedMarker = document.querySelector(`.office-marker[data-office="${officeKey}"]`);
+            if (selectedMarker) {
+                const pin = selectedMarker.querySelector('path');
+                const pinGroup = selectedMarker.querySelector('g');
+                
+                pin.setAttribute('fill', '#1e3a8a'); // 네이비
+                
+                // 선택된 마커 강조 (애니메이션 없이)
+                pin.style.filter = 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))';
+                
+                // 지도 확대
+                zoomToOffice(officeKey);
+            }
+        }
+        
+        // 선택된 사무소로 지도 확대 (부드러운 카메라 이동)
+        function zoomToOffice(officeKey) {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) return;
+            
+            const office = officesData?.find(o => o.id === officeKey);
+            if (!office) return;
+            
+            // 현재 viewBox 값 가져오기
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const [currentX, currentY, currentWidth, currentHeight] = currentViewBox;
+            
+            // 목표 viewBox 계산
+            const zoomLevel = 2;
+            const targetWidth = 800 / zoomLevel;
+            const targetHeight = 1200 / zoomLevel;
+            const targetX = Math.max(0, Math.min(office.svgCoordinates.x - targetWidth / 2, 800 - targetWidth));
+            const targetY = Math.max(0, Math.min(office.svgCoordinates.y - targetHeight / 2 - 30, 1200 - targetHeight));
+            
+            // 애니메이션 설정
+            const duration = 800; // 0.8초
+            const easing = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out
+            const startTime = Date.now();
+            
+            // 애니메이션 함수
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easing(progress);
+                
+                // 보간된 값 계산
+                const x = currentX + (targetX - currentX) * easedProgress;
+                const y = currentY + (targetY - currentY) * easedProgress;
+                const width = currentWidth + (targetWidth - currentWidth) * easedProgress;
+                const height = currentHeight + (targetHeight - currentHeight) * easedProgress;
+                
+                svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
                 }
-
-                console.log('지도 표시 완료:', office.name);
-
-            } catch (error) {
-                console.error('지점 표시 중 오류 발생:', error);
             }
+            
+            // 애니메이션 시작
+            requestAnimationFrame(animate);
+        }
+        
+        // 지도 리셋 (전체 보기) - 부드러운 카메라 이동
+        function resetMapZoom() {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) return;
+            
+            // 현재 viewBox 값 가져오기
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const [currentX, currentY, currentWidth, currentHeight] = currentViewBox;
+            
+            // 목표 viewBox (전체 지도)
+            const targetX = 0;
+            const targetY = 0;
+            const targetWidth = 800;
+            const targetHeight = 1200;
+            
+            // 애니메이션 설정
+            const duration = 800; // 0.8초
+            const easing = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out
+            const startTime = Date.now();
+            
+            // 애니메이션 함수
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easing(progress);
+                
+                // 보간된 값 계산
+                const x = currentX + (targetX - currentX) * easedProgress;
+                const y = currentY + (targetY - currentY) * easedProgress;
+                const width = currentWidth + (targetWidth - currentWidth) * easedProgress;
+                const height = currentHeight + (targetHeight - currentHeight) * easedProgress;
+                
+                svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            // 애니메이션 시작
+            requestAnimationFrame(animate);
         }
 
-        // 지도 에러 표시 함수
-        function showMapError(errorMessage) {
-            const loadingElement = document.getElementById('map-loading');
-            if (loadingElement) {
-                loadingElement.innerHTML = `
-                    <div class="text-center">
-                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                            <svg class="w-8 h-8 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
-                                </path>
-                            </svg>
-                        </div>
-                        <p class="text-gray-600 text-lg font-medium">지도 로드 실패</p>
-                        <p class="text-gray-500 text-sm mt-2">${errorMessage}</p>
-                        <div class="mt-4 text-left max-w-md mx-auto">
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>서울 본사:</strong> 서초구 반포대로 98</p>
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>서울 강남:</strong> 강남구 테헤란로37길 7</p>
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>울산:</strong> 남구 문수로 312</p>
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>대구:</strong> 수성구 달구벌대로480길 9</p>
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>청주:</strong> 서원구 산남로70번길 18</p>
-                            <p class="text-sm text-gray-600 mb-2">📍 <strong>대전:</strong> 서구 둔산로123번길 21</p>
-                            <p class="text-sm text-gray-600">📍 <strong>광주:</strong> 서구 화개중앙로 59</p>
-                        </div>
-                    </div>
-                `;
-            }
-        }
-
-        // 🎯 지점 버튼 상태 업데이트 (안전 버전)
+        // 버튼 상태 업데이트
         function updateOfficeButtons(selectedOffice) {
-            try {
-                const buttons = document.querySelectorAll('[onclick^="showOffice"]');
-                buttons.forEach(btn => {
+            const buttons = document.querySelectorAll('.office-btn');
+            buttons.forEach(btn => {
+                if (btn.dataset.office === selectedOffice) {
+                    btn.classList.remove('bg-gray-100', 'text-gray-700');
+                    btn.classList.add('bg-gray-900', 'text-white');
+                } else {
                     btn.classList.remove('bg-gray-900', 'text-white');
                     btn.classList.add('bg-gray-100', 'text-gray-700');
-                });
-
-                // 선택된 버튼 찾기
-                const selectedButton = Array.from(buttons).find(btn =>
-                    btn.getAttribute('onclick').includes(`'${selectedOffice}'`)
-                );
-
-                if (selectedButton) {
-                    selectedButton.classList.remove('bg-gray-100', 'text-gray-700');
-                    selectedButton.classList.add('bg-gray-900', 'text-white');
                 }
-
-                console.log('버튼 상태 업데이트 완료:', selectedOffice);
-            } catch (error) {
-                console.error('버튼 업데이트 중 오류 발생:', error);
-            }
+            });
         }
+
 
 
 
@@ -1377,113 +1430,71 @@
         // 3. 전국 지사 섹션 관련 기능
         // ===================================
 
-        // 📍 마스터 함수: 모든 지점 선택 로직을 제어하는 단일 함수
+        // 사무소 선택 함수
         function selectOffice(officeKey) {
-            console.log('지점 선택:', officeKey);
-
-            // 🛡️ 무한 루프 방지 방어 코드
-            if (currentOffice === officeKey) {
-                console.log('이미 선택된 지점입니다. 중복 실행 방지.');
-                return; // 같은 지점이면 즉시 종료
-            }
-
-            // ✅ currentOffice 변수 업데이트
+            const office = officesData?.find(o => o.id === officeKey);
+            if (!office) return;
+            
+            // 중복 선택 방지
+            if (currentOffice === officeKey) return;
+            
             currentOffice = officeKey;
-
-            // 🎯 1. 지점 버튼 UI 업데이트
+            
+            // 1. 버튼 상태 업데이트
             updateOfficeButtons(officeKey);
-
-            // 🗺️ 2. 지도에 해당 위치 표시 (지도가 초기화된 경우만)
-            if (mapInitialized && map) {
-                showOfficeOnMapSafe(officeKey);
+            
+            // 2. SVG 지도에서 강조
+            if (mapLoaded) {
+                highlightOfficeOnMap(officeKey);
             }
-
-            // 📋 3. 하단 상세 정보창 업데이트
-            const officeInfo = getOfficeInfo(officeKey);
-            if (officeInfo) {
-                updateOfficeDisplay(officeInfo);
-            }
+            
+            // 3. 사무소 정보 표시
+            updateOfficeDisplay(office);
         }
 
-        // 🏢 지점 정보 데이터 반환 함수
-        function getOfficeInfo(officeKey) {
-            const officeInfoData = {
-                seoul: {
-                    name: '서울 본사',
-                    address: '서울특별시 서초구 반포대로 98 일신빌딩 4층',
-                    phone: '02-587-7787 / 02-591-4111',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '3호선 고속터미널역 도보 8분',
-                    bus: '반포대로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                gangnam: {
-                    name: '서울 강남 분사무소',
-                    address: '서울특별시 강남구 테헤란로37길 7 12층',
-                    phone: '02-587-7787',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '2호선 역삼역 도보 5분',
-                    bus: '강남역, 역삼역 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                ulsan: {
-                    name: '울산 지점',
-                    address: '울산광역시 남구 문수로 312 2-3층',
-                    phone: '052-221-7100',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '울산 시내버스 이용',
-                    bus: '문수로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                daegu: {
-                    name: '대구 지점',
-                    address: '대구 수성구 달구벌대로480길 9 범어네거리 클래시아 4층 410호',
-                    phone: '053-756-9072',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '2호선 수성구청역 도보 10분',
-                    bus: '달구벌대로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                cheongju: {
-                    name: '청주 지점',
-                    address: '충북 청주시 서원구 산남로70번길 18 뉴월드프라자 301호',
-                    phone: '043-298-0201',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '청주 시내버스 이용',
-                    bus: '산남로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                daejeon: {
-                    name: '대전 지점',
-                    address: '대전 서구 둔산로123번길 21 엠시티타워 701호',
-                    phone: '0507-1444-8003 / 042-489-1970',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '1호선 정부청사역 도보 5분',
-                    bus: '둔산로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                },
-                gwangju: {
-                    name: '광주 지점',
-                    address: '광주광역시 서구 화개중앙로 59 5층',
-                    phone: '0507-1329-4973',
-                    hours: '평일 09:00 - 18:00',
-                    subway: '광주 시내버스 이용',
-                    bus: '화개중앙로 주요 노선',
-                    parking: '건물 내 주차장 이용 가능'
-                }
-            };
 
-            return officeInfoData[officeKey] || null;
-        }
-
-        // 🔄 기존 showOffice 함수는 selectOffice로 리다이렉트
-        function showOffice(office) {
-            selectOffice(office);
-        }
 
         // 지점 정보 표시 업데이트 함수
-        function updateOfficeDisplay(office) {
+        async function updateOfficeDisplay(office) {
             const officeInfoContainer = document.getElementById('office-info');
+            
+            // 변호사 데이터 로드
+            const lawyersMap = await loadLawyersData();
+            
+            // 대표변호사 정보 가져오기
+            let representatives = [];
+            if (office.lawyers && office.lawyers.representative) {
+                // 강남의 경우 특별 처리 - 하영주, 엄운용, 김진환 순서
+                if (office.id === 'gangnam') {
+                    const order = ['ha-young-joo', 'um-woon-yong', 'kim-jin-hwan'];
+                    representatives = order.map(id => lawyersMap.get(id)).filter(Boolean);
+                } else {
+                    representatives = office.lawyers.representative.map(id => lawyersMap.get(id)).filter(Boolean);
+                }
+            }
+            
+            // 대표변호사 HTML 생성
+            const representativesHTML = representatives.length > 0 ? `
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <h4 class="text-lg font-bold text-gray-900 mb-4">대표변호사</h4>
+                    <div class="space-y-3">
+                        ${representatives.map(lawyer => `
+                            <div class="flex items-center gap-3">
+                                ${lawyer.photo ? 
+                                    `<img src="${lawyer.photo.replace('../assets/', 'assets/')}" alt="${lawyer.name}" class="w-12 h-12 rounded-full object-cover">` :
+                                    `<div class="w-12 h-12 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold">
+                                        ${lawyer.name.charAt(0)}
+                                    </div>`
+                                }
+                                <div>
+                                    <div class="font-medium text-gray-900">${lawyer.name} ${lawyer.title}</div>
+                                    <div class="text-sm text-gray-600">${lawyer.specialties ? lawyer.specialties.join(', ') : ''}</div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            ` : '';
 
             officeInfoContainer.innerHTML = `
                 <div class="grid md:grid-cols-2 gap-8">
@@ -1498,7 +1509,7 @@
                             </div>
                             <div>
                                 <dt class="font-medium text-gray-900 mb-1">전화</dt>
-                                <dd>${office.phone}</dd>
+                                <dd>${office.tel}</dd>
                             </div>
                             <div>
                                 <dt class="font-medium text-gray-900 mb-1">운영시간</dt>
@@ -1512,7 +1523,7 @@
                         </a>
                     </div>
 
-                    <!-- 오른쪽 - 교통편 -->
+                    <!-- 오른쪽 - 교통편 및 대표변호사 -->
                     <div>
                         <h4 class="text-lg font-bold text-gray-900 mb-4">교통편</h4>
                         <ul class="space-y-2 text-gray-600">
@@ -1520,6 +1531,8 @@
                             <li>• 버스: ${office.bus}</li>
                             <li>• 주차: ${office.parking}</li>
                         </ul>
+                        
+                        ${representativesHTML}
                     </div>
                 </div>
             `;
@@ -1595,38 +1608,51 @@
 
             // 블로그 스타일 리스트 HTML 생성
             const listHTML = cases.map((caseItem, index) => `
-                <article class="border-b border-gray-200 pb-4 hover:bg-gray-50 -mx-4 px-4 py-4 rounded-lg transition-colors cursor-pointer" onclick="showCasePreview(${caseItem.id})">
-                    <div class="flex items-start justify-between gap-6">
-                        <div class="flex-1">
-                            <!-- 카테고리 및 날짜 -->
-                            <div class="flex items-center gap-3 mb-2">
-                                <span class="text-sm text-gray-600 font-medium">
-                                    ${caseItem.category}
-                                </span>
+                <article class="border-b border-gray-200 pb-4 hover:bg-gray-50 -mx-4 px-4 py-4 rounded-lg transition-colors">
+                    <div class="lg:cursor-pointer" onclick="showCasePreview(${caseItem.id})">
+                        <div class="flex items-start justify-between gap-6">
+                            <div class="flex-1">
+                                <!-- 카테고리 및 날짜 -->
+                                <div class="flex items-center gap-3 mb-2">
+                                    <span class="text-sm text-gray-600 font-medium">
+                                        ${caseItem.category}
+                                    </span>
+                                </div>
+                                
+                                <!-- 제목 -->
+                                <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
+                                    ${caseItem.title}
+                                </h3>
+                                
+                                <!-- 요약 -->
+                                <p class="text-gray-600 line-clamp-2">
+                                    ${caseItem.summary}
+                                </p>
+                                
+                                <!-- 결과 -->
+                                <div class="mt-3">
+                                    <span class="text-sm text-gray-500">${caseItem.result}</span>
+                                </div>
                             </div>
                             
-                            <!-- 제목 -->
-                            <h3 class="text-lg font-bold text-gray-900 mb-2 hover:text-blue-600 transition-colors">
-                                ${caseItem.title}
-                            </h3>
-                            
-                            <!-- 요약 -->
-                            <p class="text-gray-600 line-clamp-2">
-                                ${caseItem.summary}
-                            </p>
-                            
-                            <!-- 결과 -->
-                            <div class="mt-3">
-                                <span class="text-sm text-gray-500">${caseItem.result}</span>
+                            <!-- 화살표 (PC에서만 표시) -->
+                            <div class="hidden lg:flex flex-shrink-0 text-gray-400">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
                             </div>
                         </div>
-                        
-                        <!-- 화살표 -->
-                        <div class="flex-shrink-0 text-gray-400">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    </div>
+                    
+                    <!-- 자세히보기 버튼 (모든 디바이스) -->
+                    <div class="mt-4">
+                        <a href="cases/detail.html?id=${caseItem.id}" 
+                           class="inline-flex items-center gap-2 text-sm text-blue-600 font-medium hover:text-blue-700">
+                            자세히 보기
+                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
                             </svg>
-                        </div>
+                        </a>
                     </div>
                 </article>
             `).join('');
@@ -1721,7 +1747,7 @@
                         <div class="bg-gray-50 rounded-xl p-4">
                             <div class="flex items-center gap-4">
                                 ${lawyer.photo ? 
-                                    `<img src="${lawyer.photo}" alt="${lawyer.name}" class="w-16 h-16 rounded-full object-cover">` :
+                                    `<img src="${lawyer.photo.replace('../assets/', 'assets/')}" alt="${lawyer.name}" class="w-16 h-16 rounded-full object-cover">` :
                                     `<div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center text-gray-600 font-bold text-xl">
                                         ${lawyer.name.charAt(0)}
                                     </div>`
@@ -1958,25 +1984,20 @@
                 }
             });
 
-            // 네이버 맵이 아직 로드되지 않았으면 대기
-            if (!mapInitialized && typeof naver !== 'undefined' && naver.maps) {
-                console.log('지연된 지도 초기화 시도...');
-                initMap();
-            }
+            // SVG 지도 로드
+            loadSVGMap();
+            
+            // 버튼 클릭 이벤트 리스너 추가
+            document.querySelectorAll('.office-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    selectOffice(this.dataset.office);
+                });
+            });
 
             // 성공사례 데이터 로드
             loadSuccessCases();
         });
 
-        // 네이버 맵 API 로드 실패 시 대체 처리
-        window.addEventListener('load', function () {
-            setTimeout(() => {
-                if (!mapInitialized) {
-                    console.log('지도 초기화 실패, 대체 컨텐츠 표시');
-                    showMapError('네이버 맵 API 로드 타임아웃');
-                }
-            }, 5000); // 5초 후에도 로드되지 않으면 에러 표시
-        });
     </script>
 </body>
 

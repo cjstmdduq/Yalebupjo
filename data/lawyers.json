@@ -3,7 +3,7 @@
     "id": "ha-young-joo",
     "name": "하영주",
     "title": "대표변호사",
-    "office": "서울 본사 (공동)",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/01.Ha_Young_Joo.png",
     "specialties": [
       "형사법 전문",
@@ -39,7 +39,7 @@
     "id": "um-woon-yong",
     "name": "엄운용",
     "title": "대표변호사",
-    "office": "서울 본사 (공동)",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/02.Um_Woon_Yong.png",
     "specialties": [
       "농축산법",
@@ -125,7 +125,7 @@
     "id": "choi-sang-moo",
     "name": "최상무",
     "title": "대표변호사",
-    "office": "울산 지점",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/03.Choi_Sang_Moo.png",
     "specialties": [
       "기업회생",
@@ -158,7 +158,7 @@
     "id": "jung-hwan-hee",
     "name": "정환희",
     "title": "대표변호사",
-    "office": "대구 지점",
+    "office": "대구 분사무소",
     "photo": "../assets/lawyers/04.Jung_Hwan_Hee.png",
     "specialties": [
       "법학박사",
@@ -194,7 +194,7 @@
     "id": "jo-sung-jeon",
     "name": "조성전",
     "title": "대표변호사",
-    "office": "청주 지점",
+    "office": "청주 분사무소",
     "photo": "../assets/lawyers/05.Jo_Sung_Jeon.png",
     "specialties": [
       "민사법 전문",
@@ -228,7 +228,7 @@
     "id": "jeon-jung-soo",
     "name": "전정수",
     "title": "대표변호사",
-    "office": "대전 지점",
+    "office": "대전 분사무소",
     "photo": "../assets/lawyers/07.Jeon_Jung_Soo.png",
     "specialties": [
       "前 군판사",
@@ -262,7 +262,7 @@
     "id": "yang-hee-sun",
     "name": "양희선",
     "title": "대표변호사",
-    "office": "대전 지점",
+    "office": "대전 분사무소",
     "photo": "../assets/lawyers/08.Yang_Hee_Sun.png",
     "specialties": [
       "前 철도공사법무팀장",
@@ -299,7 +299,7 @@
     "id": "song-chul-hoon",
     "name": "송철훈",
     "title": "소속변호사",
-    "office": "서울 본사 (공동)",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/09.Song_Chul_Hoon.png",
     "specialties": [
       "형사법",
@@ -332,7 +332,7 @@
     "id": "son-woo-tae",
     "name": "손우태",
     "title": "소속변호사",
-    "office": "서울 본사 (공동)",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/10.Son_Woo_Tae.png",
     "specialties": [
       "형사법",
@@ -365,7 +365,7 @@
     "id": "lee-kyung-chang",
     "name": "이경창",
     "title": "소속변호사",
-    "office": "서울 본사 (공동)",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/11.Lee_Kyung_Chang.png",
     "specialties": [
       "민사법",
@@ -617,7 +617,7 @@
     "id": "kim-gyu-cheol",
     "name": "김규철",
     "title": "소속변호사",
-    "office": "울산 지점",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/18.Kim_Gyu_Cheol.png",
     "specialties": [
       "형사법",
@@ -650,7 +650,7 @@
     "id": "cheon-seong-yeon",
     "name": "천성연",
     "title": "소속변호사",
-    "office": "울산 지점",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/19.Cheon_Seong_Yeon.png",
     "specialties": [
       "가사법 전문",
@@ -685,7 +685,7 @@
     "id": "go-eun-bit",
     "name": "고은빛",
     "title": "소속변호사",
-    "office": "울산 지점",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/20.Go_Eun_Bit.png",
     "specialties": [
       "행정법",
@@ -714,8 +714,8 @@
   {
     "id": "han-woong",
     "name": "한웅",
-    "title": "소속변호사 (예일)",
-    "office": "서울 본사 (공동)",
+    "title": "소속변호사",
+    "office": "서울 본사",
     "photo": "../assets/lawyers/21.Han_Woong.png",
     "specialties": [
       "특허법",
@@ -751,7 +751,7 @@
     "id": "lee-jong-ryeol",
     "name": "이종렬",
     "title": "변호사",
-    "office": "울산",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/26.Lee_Jong_Ryeol.png",
     "specialties": [
       "민사법",
@@ -782,7 +782,7 @@
     "id": "park-sung-jin",
     "name": "박성진",
     "title": "변호사",
-    "office": "울산",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/27.Park_Sung_Jin.png",
     "specialties": [
       "형사법",
@@ -815,7 +815,7 @@
     "id": "jung-eun-kyung",
     "name": "정은경",
     "title": "변호사",
-    "office": "울산",
+    "office": "울산 분사무소",
     "photo": "../assets/lawyers/28.Jung_Eun_Kyung.png",
     "specialties": [
       "이혼 전문",
@@ -845,7 +845,7 @@
     "id": "lee-ki-chang",
     "name": "이기창",
     "title": "손해사정사",
-    "office": "광주 지점",
+    "office": "광주 분사무소",
     "photo": "../assets/lawyers/22.Lee_Ki_Chang.png",
     "specialties": [
       "손해사정",
@@ -881,7 +881,7 @@
     "id": "go-young-soo",
     "name": "고영수",
     "title": "손해사정사",
-    "office": "광주 지점",
+    "office": "광주 분사무소",
     "photo": "../assets/lawyers/23.Go_Young_Soo.png",
     "specialties": [
       "손해사정",
@@ -919,7 +919,7 @@
     "id": "park-sung-yoon",
     "name": "박성윤",
     "title": "손해사정사",
-    "office": "광주 지점",
+    "office": "광주 분사무소",
     "photo": "../assets/lawyers/24.Park_Sung_Yoon.png",
     "specialties": [
       "손해사정",
@@ -952,7 +952,7 @@
     "id": "lee-yong-jae",
     "name": "이용재",
     "title": "손해사정사",
-    "office": "광주 지점",
+    "office": "광주 분사무소",
     "photo": "../assets/lawyers/25.Lee_Yong_Jae.png",
     "specialties": [
       "손해사정",

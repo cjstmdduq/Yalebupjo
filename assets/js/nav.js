@@ -128,7 +128,6 @@
             <!-- desktop tel -->
             <a href="tel:02-587-7787" class="hidden md:block ${textColor} ${textHover} transition-colors">
               <div class="text-right">
-                <div class="text-sm opacity-80 font-medium">상담문의</div>
                 <div class="text-xl font-bold">02-587-7787</div>
               </div>
             </a>
@@ -198,10 +197,6 @@
               </div>
             </div>
       
-            <!-- 하단 상담 안내 -->
-            <div class="mt-8 pt-6 border-t border-gray-200 text-center">
-              <p class="text-gray-600">빠른 상담이 필요하신가요? <span class="font-bold text-gray-900">02-587-7787</span> 로 연락주세요. <span class="text-sm text-gray-500">(평일 09:00-18:00)</span></p>
-            </div>
           </div>
         </div>
       
@@ -210,7 +205,9 @@
           <div class="flex flex-col h-full max-h-screen">
             <!-- header -->
             <div class="flex items-center justify-between p-6 border-b border-gray-200">
-              <img src="${basePath}/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조" class="h-8">
+              <a href="${basePath}/index.html" onclick="Navigation.closeMobileMenu()">
+                <img src="${basePath}/assets/logo/Yalebupjo_logo_basic(temp).png" alt="예일법조" class="h-8">
+              </a>
               <button onclick="Navigation.closeMobileMenu()" class="text-gray-800 hover:text-gray-600 p-2 hover:bg-gray-100 rounded-lg transition-colors">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
@@ -292,25 +289,18 @@
                 <!-- 구성원소개 단일 메뉴 -->
                 <a href="${basePath}/lawyers/index.html" class="block text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors py-2 border-b border-gray-200" onclick="Navigation.closeMobileMenu()">구성원소개</a>
                 
-                <!-- 상담예약 단일 메뉴 -->
-                <a href="#" class="block text-lg font-medium text-gray-900 hover:text-gray-600 transition-colors py-2 border-b border-gray-200" onclick="Navigation.closeMobileMenu()">상담예약</a>
               </nav>
       
               <!-- footer -->
               <div class="mt-6 pt-6 border-t border-gray-200 space-y-6 flex-shrink-0">
-                <a href="tel:02-587-7787" class="block bg-[#1e3a8a] text-white rounded-2xl p-6 hover:bg-[#1e40af] transition-colors">
+                <a href="tel:02-587-7787" class="block bg-[#0f172a] text-white rounded-2xl p-6 hover:bg-[#1e293b] transition-colors">
                   <div class="flex items-center justify-between">
                     <div>
-                      <div class="text-sm text-blue-100 mb-1">대표 상담 전화</div>
                       <div class="text-2xl font-bold">02-587-7787</div>
                     </div>
-                    <svg class="w-8 h-8 text-blue-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
                   </div>
                 </a>
-                <div class="text-center text-gray-600">
-                  <div class="text-sm">평일 09:00 - 18:00</div>
-                  <div class="text-xs mt-1">24시간 상담 접수 가능</div>
-                </div>
               </div>
             </div>
           </div>
@@ -321,21 +311,6 @@
       <div id="floating-buttons" class="floating-buttons">
         <div class="container mx-auto px-4">
           <div class="floating-content">
-            <!-- info -->
-            <div class="floating-info">
-              <div class="floating-item">
-                <div class="floating-icon"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <div class="floating-text"><span class="floating-label">상담시간</span><span class="floating-value">평일 09:00-18:00</span></div>
-              </div>
-              <div class="floating-item">
-                <div class="floating-icon"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg></div>
-                <div class="floating-text"><span class="floating-label">빠른상담</span><span class="floating-value">30분 내 연락</span></div>
-              </div>
-              <div class="floating-item">
-                <div class="floating-icon"><svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg></div>
-                <div class="floating-text"><span class="floating-label">온라인</span><span class="floating-value">24시간 접수</span></div>
-              </div>
-            </div>
             <!-- CTA -->
             <a href="tel:02-587-7787" class="floating-cta">
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>

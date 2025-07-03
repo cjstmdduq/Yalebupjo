@@ -84,15 +84,15 @@
                 <div class="bg-white border border-gray-200 rounded-2xl p-8 mb-10">
                     <h2 class="text-3xl font-bold mb-8 text-gray-900">사건 개요</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                        <div class="border border-gray-200 rounded-xl p-6">
+                        <div class="p-6">
                             <h3 class="text-sm text-gray-500 mb-2 font-medium uppercase tracking-wider">분야</h3>
                             <p id="case-category-detail" class="text-lg font-semibold text-gray-900"></p>
                         </div>
-                        <div class="border border-gray-200 rounded-xl p-6">
+                        <div class="p-6">
                             <h3 class="text-sm text-gray-500 mb-2 font-medium uppercase tracking-wider">결과</h3>
                             <p id="case-result-detail" class="text-lg font-semibold text-gray-900"></p>
                         </div>
-                        <div class="border border-gray-200 rounded-xl p-6">
+                        <div class="p-6">
                             <h3 class="text-sm text-gray-500 mb-4 font-medium uppercase tracking-wider">담당변호사</h3>
                             <div class="flex items-center gap-4">
                                 <img id="lawyer-photo" src="../assets/images/lawyer-placeholder.svg" alt="담당변호사" class="w-20 h-20 rounded-full object-cover bg-gray-100">
@@ -142,9 +142,6 @@
                         </svg>
                         목록으로 돌아가기
                     </a>
-                    <button onclick="window.print()" class="px-6 py-3 border border-gray-200 rounded-lg hover:border-gray-300 font-medium transition-colors">
-                        인쇄하기
-                    </button>
                 </div>
             </div>
             
@@ -171,7 +168,7 @@
                     <!-- 더보기 버튼 -->
                     <div class="text-center mt-12">
                         <a id="more-cases-btn" href="index.html" 
-                            class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 text-lg font-medium hover:bg-gray-800 transition-colors">
+                            class="inline-flex items-center gap-3 bg-gray-900 text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-800 transition-colors">
                             더 많은 사건 보기
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5-5 5M6 12h12" />

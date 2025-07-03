@@ -60,9 +60,6 @@
     <script src="../assets/js/floating-banner.js"></script>
     <script src="../assets/js/breadcrumb.js"></script>
     <script src="../assets/js/footer.js"></script>
-    
-    <!-- 네이버 맵 API -->
-    <script type="text/javascript" src="https://openapi.map.naver.com/openapi/v3/maps.js?ncpClientId=YOUR_CLIENT_ID"></script>
 </head>
 <body class="bg-white text-gray-900">
     <!-- Navigation will be inserted here by nav.js -->
@@ -111,7 +108,7 @@
             <div class="max-w-6xl mx-auto">
                 <!-- 지도 섹션 -->
                 <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden mb-12">
-                    <div id="map" class="h-[500px]">
+                    <div id="korea-map" class="h-[500px] relative">
                         <div class="map-loading">
                             <div class="text-center">
                                 <div class="w-16 h-16 bg-gray-300 rounded-full flex items-center justify-center mx-auto mb-4 animate-pulse">
@@ -172,9 +169,11 @@
                             </svg>
                             <span id="office-tel-text">02-587-7787</span>
                         </a>
+                        <!-- 온라인 상담 신청 (구현 예정)
                         <a href="../contact/index.html" class="inline-flex items-center justify-center gap-2 bg-white/20 text-white py-3 px-6 rounded-lg font-medium hover:bg-white/30 transition-colors">
                             온라인 상담 신청
                         </a>
+                        -->
                     </div>
                 </div>
             </div>
@@ -185,8 +184,7 @@
         let officesData = [];
         let lawyersData = [];
         let currentOffice = null;
-        let map = null;
-        let marker = null;
+        let mapLoaded = false;
 
         // URL 파라미터에서 사무소 ID 가져오기
         function getOfficeFromUrl() {
@@ -325,40 +323,243 @@
 
         // 지도 업데이트
         function updateMap(office) {
-            if (typeof naver === 'undefined' || !naver.maps) {
-                console.log('네이버 맵 API가 로드되지 않았습니다.');
-                return;
-            }
-
-            const position = new naver.maps.LatLng(office.coordinates.lat, office.coordinates.lng);
-
-            if (!map) {
-                // 지도 초기화
-                map = new naver.maps.Map('map', {
-                    center: position,
-                    zoom: 16
-                });
+            // SVG 지도가 로드되어 있지 않으면 로드
+            if (!mapLoaded) {
+                loadSVGMap();
             } else {
-                // 기존 지도 중심 이동
-                map.setCenter(position);
+                // 이미 로드된 경우 해당 오피스 강조
+                highlightOfficeOnMap(office.id);
             }
-
-            // 마커 업데이트
-            if (marker) {
-                marker.setMap(null);
-            }
-
-            marker = new naver.maps.Marker({
-                position: position,
-                map: map,
-                title: office.name,
-                icon: {
-                    content: `<div class="bg-blue-600 text-white px-4 py-2 rounded-full text-sm font-medium shadow-lg">
-                                ${office.name}
-                             </div>`,
-                    anchor: new naver.maps.Point(60, 20)
+        }
+        
+        // SVG 지도 로드
+        async function loadSVGMap() {
+            const mapContainer = document.getElementById('korea-map');
+            mapContainer.innerHTML = ''; // 로딩 메시지 제거
+            
+            try {
+                // SVG 파일 로드
+                const response = await fetch('../assets/map/map.svg');
+                const svgText = await response.text();
+                
+                // SVG를 컨테이너에 추가
+                mapContainer.innerHTML = svgText;
+                const svg = mapContainer.querySelector('svg');
+                
+                if (svg) {
+                    // SVG 스타일 설정
+                    svg.style.width = '100%';
+                    svg.style.height = '100%';
+                    svg.style.transition = 'all 0.5s ease-in-out';
+                    
+                    // 마커 추가
+                    addOfficeMarkers(svg);
+                    
+                    mapLoaded = true;
+                    
+                    // 현재 선택된 오피스 강조
+                    if (currentOffice) {
+                        highlightOfficeOnMap(currentOffice.id);
+                    }
                 }
+            } catch (error) {
+                console.error('SVG 지도 로드 실패:', error);
+                mapContainer.innerHTML = '<div class="flex items-center justify-center h-full text-gray-500">지도를 불러올 수 없습니다.</div>';
+            }
+        }
+        
+        // 오피스 마커 추가
+        function addOfficeMarkers(svg) {
+            const markersGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+            markersGroup.setAttribute('id', 'office-markers');
+            
+            officesData.forEach(office => {
+                // 마커 그룹
+                const markerGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                markerGroup.setAttribute('class', 'office-marker');
+                markerGroup.setAttribute('data-office', office.id);
+                markerGroup.style.cursor = 'pointer';
+                
+                // 지도핀 모양 마커 생성
+                const pinGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+                pinGroup.setAttribute('transform', `translate(${office.svgCoordinates.x - 12}, ${office.svgCoordinates.y - 32})`);
+                
+                // 핀 모양 path
+                const pin = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                pin.setAttribute('d', 'M12 0C5.373 0 0 5.373 0 12c0 9 12 20 12 20s12-11 12-20c0-6.627-5.373-12-12-12z');
+                pin.setAttribute('fill', '#6b7280'); // 기본 회색
+                pin.setAttribute('stroke', 'white');
+                pin.setAttribute('stroke-width', '1.5');
+                pin.style.transition = 'fill 0.3s ease';
+                pin.style.filter = 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))';
+                
+                // 핀 내부 원
+                const innerCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                innerCircle.setAttribute('cx', '12');
+                innerCircle.setAttribute('cy', '12');
+                innerCircle.setAttribute('r', '4');
+                innerCircle.setAttribute('fill', 'white');
+                
+                // 텍스트 배경
+                const textBg = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                const textWidth = office.name.length * 7;
+                textBg.setAttribute('x', 12 - textWidth/2);
+                textBg.setAttribute('y', '32');
+                textBg.setAttribute('width', textWidth);
+                textBg.setAttribute('height', '16');
+                textBg.setAttribute('rx', '8');
+                textBg.setAttribute('fill', 'white');
+                textBg.setAttribute('fill-opacity', '0.9');
+                textBg.style.pointerEvents = 'none';
+                
+                // 사무소 이름 텍스트
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', '12');
+                text.setAttribute('y', '44');
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('font-size', '11');
+                text.setAttribute('font-weight', '600');
+                text.setAttribute('fill', '#1f2937');
+                text.setAttribute('font-family', 'Pretendard, sans-serif');
+                text.style.pointerEvents = 'none';
+                text.textContent = office.name;
+                
+                // 마커 클릭 이벤트
+                markerGroup.addEventListener('click', () => selectOffice(office.id));
+                
+                // 호버 효과
+                markerGroup.addEventListener('mouseenter', function() {
+                    if (currentOffice?.id !== office.id) {
+                        pin.setAttribute('fill', '#9ca3af');
+                    }
+                });
+                
+                markerGroup.addEventListener('mouseleave', function() {
+                    if (currentOffice?.id !== office.id) {
+                        pin.setAttribute('fill', '#6b7280');
+                    }
+                });
+                
+                // 요소들을 그룹에 추가
+                pinGroup.appendChild(pin);
+                pinGroup.appendChild(innerCircle);
+                pinGroup.appendChild(textBg);
+                pinGroup.appendChild(text);
+                markerGroup.appendChild(pinGroup);
+                markersGroup.appendChild(markerGroup);
             });
+            
+            svg.appendChild(markersGroup);
+        }
+        
+        // SVG 지도에서 사무소 강조 표시
+        function highlightOfficeOnMap(officeId) {
+            // 모든 마커 초기화
+            const allPins = document.querySelectorAll('.office-marker path');
+            allPins.forEach(pin => {
+                pin.setAttribute('fill', '#6b7280');
+            });
+            
+            // 선택된 마커 강조
+            const selectedMarker = document.querySelector(`.office-marker[data-office="${officeId}"]`);
+            if (selectedMarker) {
+                const pin = selectedMarker.querySelector('path');
+                pin.setAttribute('fill', '#1e3a8a');
+                pin.style.filter = 'drop-shadow(0 4px 8px rgba(0,0,0,0.3))';
+                
+                // 지도 확대
+                zoomToOffice(officeId);
+            }
+        }
+        
+        // 선택된 사무소로 지도 확대 (부드러운 카메라 이동)
+        function zoomToOffice(officeKey) {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) return;
+            
+            const office = officesData?.find(o => o.id === officeKey);
+            if (!office) return;
+            
+            // 현재 viewBox 값 가져오기
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const [currentX, currentY, currentWidth, currentHeight] = currentViewBox;
+            
+            // 목표 viewBox 계산
+            const zoomLevel = 2;
+            const targetWidth = 800 / zoomLevel;
+            const targetHeight = 1200 / zoomLevel;
+            const targetX = Math.max(0, Math.min(office.svgCoordinates.x - targetWidth / 2, 800 - targetWidth));
+            const targetY = Math.max(0, Math.min(office.svgCoordinates.y - targetHeight / 2 - 30, 1200 - targetHeight));
+            
+            // 애니메이션 설정
+            const duration = 800;
+            const easing = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            const startTime = Date.now();
+            
+            // 애니메이션 함수
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easing(progress);
+                
+                // 보간된 값 계산
+                const x = currentX + (targetX - currentX) * easedProgress;
+                const y = currentY + (targetY - currentY) * easedProgress;
+                const width = currentWidth + (targetWidth - currentWidth) * easedProgress;
+                const height = currentHeight + (targetHeight - currentHeight) * easedProgress;
+                
+                svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            // 애니메이션 시작
+            requestAnimationFrame(animate);
+        }
+        
+        // 지도 리셋 (전체 보기)
+        function resetMapZoom() {
+            const svg = document.querySelector('#korea-map svg');
+            if (!svg) return;
+            
+            // 현재 viewBox 값 가져오기
+            const currentViewBox = svg.getAttribute('viewBox').split(' ').map(Number);
+            const [currentX, currentY, currentWidth, currentHeight] = currentViewBox;
+            
+            // 목표 viewBox (전체 지도)
+            const targetX = 0;
+            const targetY = 0;
+            const targetWidth = 800;
+            const targetHeight = 1200;
+            
+            // 애니메이션 설정
+            const duration = 800;
+            const easing = (t) => t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+            const startTime = Date.now();
+            
+            // 애니메이션 함수
+            function animate() {
+                const elapsed = Date.now() - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const easedProgress = easing(progress);
+                
+                // 보간된 값 계산
+                const x = currentX + (targetX - currentX) * easedProgress;
+                const y = currentY + (targetY - currentY) * easedProgress;
+                const width = currentWidth + (targetWidth - currentWidth) * easedProgress;
+                const height = currentHeight + (targetHeight - currentHeight) * easedProgress;
+                
+                svg.setAttribute('viewBox', `${x} ${y} ${width} ${height}`);
+                
+                if (progress < 1) {
+                    requestAnimationFrame(animate);
+                }
+            }
+            
+            // 애니메이션 시작
+            requestAnimationFrame(animate);
         }
 
         // 페이지 제목 업데이트
@@ -387,15 +588,32 @@
         function updateMembers(office) {
             const membersContainer = document.getElementById('members-info');
             
-            // 대표변호사
-            const representatives = office.lawyers.representative
-                .map(id => lawyersData.find(l => l.id === id))
-                .filter(Boolean);
+            // 해당 사무소에 속한 모든 변호사 찾기
+            const officeNames = {
+                'seoul': ['서울 본사', '서울 서초 본사', '서울 본사 (공동)'],
+                'gangnam': ['서울 강남', '서울 강남 분사무소', '강남 지점'],
+                'ulsan': ['울산', '울산 지점'],
+                'daegu': ['대구', '대구 지점'],
+                'cheongju': ['청주', '청주 지점'],
+                'daejeon': ['대전', '대전 지점'],
+                'gwangju': ['광주', '광주 지점']
+            };
             
-            // 소속변호사
-            const members = office.lawyers.members
-                .map(id => lawyersData.find(l => l.id === id))
-                .filter(Boolean);
+            const possibleNames = officeNames[office.id] || [office.name];
+            
+            // 해당 사무소의 모든 구성원 찾기
+            const allMembers = lawyersData.filter(lawyer => {
+                return possibleNames.some(name => lawyer.office && lawyer.office.includes(name));
+            });
+            
+            // 대표변호사와 일반 구성원 분리
+            const representatives = allMembers.filter(lawyer => 
+                lawyer.title && (lawyer.title.includes('대표변호사') || lawyer.title.includes('책임변호사'))
+            );
+            
+            const members = allMembers.filter(lawyer => 
+                !lawyer.title || (!lawyer.title.includes('대표변호사') && !lawyer.title.includes('책임변호사'))
+            );
             
             let html = '';
             
@@ -411,11 +629,11 @@
                 `;
             }
             
-            // 소속변호사 섹션
+            // 소속 구성원 섹션
             if (members.length > 0) {
                 html += `
                     <div>
-                        <h3 class="text-xl font-bold mb-6 text-gray-800">소속변호사</h3>
+                        <h3 class="text-xl font-bold mb-6 text-gray-800">소속 구성원</h3>
                         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                             ${members.map(lawyer => createLawyerCard(lawyer, false)).join('')}
                         </div>
@@ -428,15 +646,22 @@
         
         // 변호사 카드 생성
         function createLawyerCard(lawyer, isRepresentative) {
+            const photoUrl = lawyer.photo ? lawyer.photo.replace('../assets/', '../assets/') : '';
+            const specialties = lawyer.specialties ? lawyer.specialties.join(' · ') : '';
+            
             if (isRepresentative) {
                 return `
                     <div class="bg-white border border-gray-200 rounded-2xl p-6 hover:border-gray-300 transition-all">
                         <div class="text-center">
-                            <img src="${lawyer.photo}" alt="${lawyer.name}" 
-                                 class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">
+                            ${photoUrl ? 
+                                `<img src="${photoUrl}" alt="${lawyer.name}" class="w-32 h-32 rounded-full mx-auto mb-4 object-cover">` :
+                                `<div class="w-32 h-32 bg-gray-300 rounded-full mx-auto mb-4 flex items-center justify-center text-gray-600 font-bold text-2xl">
+                                    ${lawyer.name.charAt(0)}
+                                </div>`
+                            }
                             <h4 class="text-xl font-bold text-gray-900 mb-1">${lawyer.name}</h4>
-                            <p class="text-gray-600 mb-3">${lawyer.title}</p>
-                            <p class="text-sm text-gray-500 mb-4">${lawyer.specialty}</p>
+                            <p class="text-gray-600 mb-3">${lawyer.title || '변호사'}</p>
+                            ${specialties ? `<p class="text-sm text-gray-500 mb-4">${specialties}</p>` : ''}
                             <div class="flex flex-wrap gap-2 justify-center">
                                 ${(lawyer.expertise || []).slice(0, 3).map(exp => 
                                     `<span class="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full">${exp}</span>`
@@ -448,11 +673,15 @@
             } else {
                 return `
                     <div class="bg-white border border-gray-200 rounded-xl p-4 hover:border-gray-300 transition-all text-center">
-                        <img src="${lawyer.photo}" alt="${lawyer.name}" 
-                             class="w-20 h-20 rounded-full mx-auto mb-3 object-cover">
+                        ${photoUrl ? 
+                            `<img src="${photoUrl}" alt="${lawyer.name}" class="w-20 h-20 rounded-full mx-auto mb-3 object-cover">` :
+                            `<div class="w-20 h-20 bg-gray-300 rounded-full mx-auto mb-3 flex items-center justify-center text-gray-600 font-bold text-xl">
+                                ${lawyer.name.charAt(0)}
+                            </div>`
+                        }
                         <h4 class="font-bold text-gray-900">${lawyer.name}</h4>
-                        <p class="text-sm text-gray-600 mb-1">${lawyer.title}</p>
-                        <p class="text-xs text-gray-500">${lawyer.specialty}</p>
+                        <p class="text-sm text-gray-600 mb-1">${lawyer.title || '구성원'}</p>
+                        ${specialties ? `<p class="text-xs text-gray-500">${specialties}</p>` : ''}
                     </div>
                 `;
             }
