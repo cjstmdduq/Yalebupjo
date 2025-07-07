@@ -81,7 +81,7 @@
   border-bottom: 1px solid #e5e7eb;
   position: fixed;
   /* --- 수정: 데스크톱 네비게이션 높이 = 77px (기존보다 5px↓) --- */
-  top: 77px;
+  top: 72px;
   left: 0;
   right: 0;
   z-index: 40;

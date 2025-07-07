@@ -74,7 +74,7 @@
       }
       
       /* mega-menu */
-      #mega-menu{display:none;position:absolute;top:100%;left:0;width:100%;background:#fff;border-top:1px solid #e5e7eb;box-shadow:0 15px 30px rgba(0,0,0,.1);z-index:40;}
+      #mega-menu{display:none;position:absolute;top:100%;left:0;width:100%;background:#fff;border-top:1px solid #e5e7eb;z-index:40;}
       #mega-menu.active{display:block;}
       
       /* mobile accordion */
